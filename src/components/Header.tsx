@@ -27,7 +27,7 @@ const Header = () => {
           <div className="hidden md:block">
             <Link 
               to="/casino" 
-              className={`mr-1 rounded-t-md px-6 py-3 font-semibold uppercase tracking-wide transition-transform hover:scale-105 ${
+              className={`mr-1 rounded-t-md px-6 py-3 font-semibold uppercase tracking-wide transition-all hover:scale-105 ${
                 activeTab === "casino" 
                   ? "bg-[#0D7E3E] text-white" 
                   : "bg-[#1A2C38] text-white/70 hover:text-white"
@@ -38,7 +38,7 @@ const Header = () => {
             </Link>
             <Link 
               to="/sports" 
-              className={`rounded-t-md px-6 py-3 font-semibold uppercase tracking-wide transition-transform hover:scale-105 ${
+              className={`rounded-t-md px-6 py-3 font-semibold uppercase tracking-wide transition-all hover:scale-105 ${
                 activeTab === "sports" 
                   ? "bg-[#FF6B01] text-white" 
                   : "bg-[#1A2C38] text-white/70 hover:text-white"
@@ -66,7 +66,7 @@ const Header = () => {
             Login
           </Button>
           <Button 
-            className="bg-[#1A9AEF] text-white transition-transform hover:scale-105 hover:bg-[#0F8CDD]"
+            className="bg-[#1A9AEF] text-white transition-all hover:scale-105 hover:bg-[#0F8CDD]"
           >
             Register
           </Button>
