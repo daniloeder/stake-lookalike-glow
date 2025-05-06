@@ -1,41 +1,60 @@
 
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const tabs = [
-  { id: "casino", label: "Casino", icon: "🎰" },
-  { id: "sports", label: "Sports", icon: "⚽" },
-  { id: "promotions", label: "Promotions", icon: "🎁" },
-  { id: "live", label: "Live", icon: "📺" },
-];
+interface TabBarProps {
+  defaultTab?: string;
+  showArrows?: boolean;
+  small?: boolean;
+}
 
-const TabBar = () => {
-  const [activeTab, setActiveTab] = useState("sports");
+const TabBar = ({ defaultTab = "all", showArrows = false, small = false }: TabBarProps) => {
+  const [activeTab, setActiveTab] = useState(defaultTab);
   
+  const tabs = [
+    { id: "all", label: "All Games" },
+    { id: "favourites", label: "Favourites" },
+    { id: "recent", label: "Recent" },
+    { id: "hot", label: "Hot Games" },
+    { id: "new", label: "New Games" },
+    { id: "slots", label: "Slots" },
+    { id: "live", label: "Live Casino" },
+    { id: "stake", label: "Stake Originals" },
+    { id: "shows", label: "Game Shows" },
+    { id: "table", label: "Table Games" },
+  ];
+
   return (
-    <div className="relative mb-4 flex items-center border-b border-gray-800 bg-[#0F1923] px-4">
-      <div className="flex overflow-x-auto">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            className={`flex items-center px-4 py-2 text-sm font-medium transition-transform hover:scale-105 ${
-              tab.id === activeTab 
-                ? "border-b-2 border-[#1A9AEF] text-white" 
-                : "text-gray-400 hover:text-white"
-            }`}
-            onClick={() => setActiveTab(tab.id)}
-          >
-            <span className="mr-2">{tab.icon}</span>
-            <span>{tab.label}</span>
+    <div className="relative mb-4 px-4 overflow-hidden">
+      <div className="flex items-center justify-between">
+        {showArrows && (
+          <button className="flex-none p-1 mr-2 rounded-full bg-[#17242D] text-gray-400 hover:bg-[#1A2C38] hover:text-white">
+            <ChevronLeft className="h-4 w-4" />
           </button>
-        ))}
-      </div>
-      
-      <div className="ml-auto">
-        <button className="flex items-center space-x-1 rounded bg-[#17242D] px-3 py-1.5 text-xs text-white hover:bg-[#1A2C38] hover:text-white">
-          <span>All Games</span>
-          <ChevronDown className="h-3 w-3" />
-        </button>
+        )}
+        
+        <div className="flex overflow-x-auto no-scrollbar py-2">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              className={`whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-medium transition-transform hover:scale-105 mr-2 ${
+                tab.id === activeTab
+                  ? "bg-[#1A9AEF] text-white"
+                  : "bg-[#17242D] text-white hover:bg-[#1A2C38]"
+              }`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+        
+        {showArrows && (
+          <button className="flex-none p-1 ml-2 rounded-full bg-[#17242D] text-gray-400 hover:bg-[#1A2C38] hover:text-white">
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        )}
       </div>
     </div>
   );

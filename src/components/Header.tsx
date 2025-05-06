@@ -1,11 +1,20 @@
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Header = () => {
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState<"casino" | "sports">("sports");
+
+  useEffect(() => {
+    if (location.pathname.includes("/casino")) {
+      setActiveTab("casino");
+    } else {
+      setActiveTab("sports");
+    }
+  }, [location]);
 
   return (
     <header className="border-b border-gray-800 bg-[#0F1923]">
@@ -20,7 +29,7 @@ const Header = () => {
               to="/casino" 
               className={`mr-1 rounded-t-md px-6 py-3 font-semibold uppercase tracking-wide transition-transform hover:scale-105 ${
                 activeTab === "casino" 
-                  ? "bg-[#0F1923] text-white" 
+                  ? "bg-[#0D7E3E] text-white" 
                   : "bg-[#1A2C38] text-white/70 hover:text-white"
               }`}
               onClick={() => setActiveTab("casino")}
@@ -28,7 +37,7 @@ const Header = () => {
               Casino
             </Link>
             <Link 
-              to="/" 
+              to="/sports" 
               className={`rounded-t-md px-6 py-3 font-semibold uppercase tracking-wide transition-transform hover:scale-105 ${
                 activeTab === "sports" 
                   ? "bg-[#FF6B01] text-white" 

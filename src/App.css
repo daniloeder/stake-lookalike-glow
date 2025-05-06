@@ -50,6 +50,10 @@ body {
   @apply bg-[#17242D] text-white hover:bg-[#0F1923];
 }
 
+.stake-button-orange {
+  @apply bg-[#FF6B01] text-white hover:bg-[#e05c00];
+}
+
 /* Animation effects */
 .hover-scale {
   @apply transition-transform duration-200 hover:scale-105;
@@ -67,6 +71,16 @@ body {
 .game-card:hover {
   transform: scale(1.05);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Hide scrollbar for clean UI */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Enhance dropdowns */
@@ -122,4 +136,26 @@ body {
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 300ms, transform 300ms;
+}
+
+/* Custom shadows for cards */
+.stake-card-shadow {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Live badge pulse */
+.live-badge {
+  animation: livePulse 1.5s infinite;
+}
+
+@keyframes livePulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
 }
