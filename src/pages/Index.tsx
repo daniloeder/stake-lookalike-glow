@@ -3,6 +3,10 @@ import { useState } from "react";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import SearchBar from "@/components/SearchBar";
+import BettingTable from "@/components/BettingTable";
+import PromoBanners from "@/components/PromoBanners";
+import FAQ from "@/components/FAQ";
+import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -20,22 +24,22 @@ const Index = () => {
           <div className="flex h-[260px] items-center justify-between bg-[#0F1923] px-16">
             <div className="max-w-lg">
               <h1 className="mb-6 text-4xl font-bold text-white">World's Largest Online Casino and Sportsbook</h1>
-              <Button className="mb-4 bg-[#1A9AEF] px-8 py-2 font-semibold text-white hover:bg-[#0F8CDD]">
+              <Button className="mb-4 bg-[#1A9AEF] px-8 py-2 font-semibold text-white transition-transform hover:scale-105 hover:bg-[#0F8CDD]">
                 Register
               </Button>
               <div>
                 <p className="mb-2 text-sm text-gray-400">Or sign up with</p>
                 <div className="flex gap-2">
-                  <button className="flex h-8 w-8 items-center justify-center rounded-full bg-[#3B5998] text-white">f</button>
-                  <button className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#0F8CDD]">G</button>
-                  <button className="flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] text-white">W</button>
-                  <button className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5865F2] text-white">D</button>
+                  <button className="flex h-8 w-8 items-center justify-center rounded-full bg-[#3B5998] text-white transition-transform hover:scale-110">f</button>
+                  <button className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#0F8CDD] transition-transform hover:scale-110">G</button>
+                  <button className="flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] text-white transition-transform hover:scale-110">W</button>
+                  <button className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5865F2] text-white transition-transform hover:scale-110">D</button>
                 </div>
               </div>
             </div>
             
             <div className="hidden gap-4 lg:flex">
-              <div className="overflow-hidden rounded-md bg-[#17242D]">
+              <div className="overflow-hidden rounded-md bg-[#17242D] transition-transform hover:scale-105">
                 <div className="flex items-center justify-between p-3">
                   <div className="flex items-center">
                     <span className="mr-2 text-lg">🎰</span>
@@ -46,7 +50,7 @@ const Index = () => {
                 <img src="public/lovable-uploads/0b97a448-73a0-467a-9f19-7c2e8abc678c.png" alt="Casino" className="h-32 w-full object-cover" />
               </div>
               
-              <div className="overflow-hidden rounded-md bg-[#17242D]">
+              <div className="overflow-hidden rounded-md bg-[#17242D] transition-transform hover:scale-105">
                 <div className="flex items-center justify-between p-3">
                   <div className="flex items-center">
                     <span className="mr-2 text-lg">⚽</span>
@@ -80,7 +84,10 @@ const Index = () => {
               
               <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-8">
                 {Array.from({ length: 8 }).map((_, index) => (
-                  <div key={index} className="group relative aspect-[3/4] overflow-hidden rounded-md bg-gradient-to-b from-pink-500 to-purple-600">
+                  <div 
+                    key={index} 
+                    className="group relative aspect-[3/4] overflow-hidden rounded-md bg-gradient-to-b from-pink-500 to-purple-600 transition-transform hover:scale-105"
+                  >
                     <div className="absolute left-2 top-2">
                       <span className="rounded bg-[#0F1923]/80 px-2 py-1 text-sm font-bold text-white">{index + 1}</span>
                     </div>
@@ -134,7 +141,10 @@ const Index = () => {
               
               <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-8">
                 {Array.from({ length: 8 }).map((_, index) => (
-                  <div key={index} className="relative aspect-[3/4] overflow-hidden rounded-md bg-gradient-to-b from-blue-500 to-green-600">
+                  <div 
+                    key={index} 
+                    className="relative aspect-[3/4] overflow-hidden rounded-md bg-gradient-to-b from-blue-500 to-green-600 transition-transform hover:scale-105"
+                  >
                     <div className="absolute left-2 top-2">
                       <span className="rounded bg-[#0F1923]/80 px-2 py-1 text-sm font-bold text-white">{index + 1}</span>
                     </div>
@@ -148,7 +158,19 @@ const Index = () => {
                 ))}
               </div>
             </div>
+
+            {/* Add the PromoBanners component */}
+            <PromoBanners />
+
+            {/* Add the BettingTable component */}
+            <BettingTable />
+
+            {/* Add the FAQ component */}
+            <FAQ />
           </div>
+          
+          {/* Add Footer */}
+          <Footer />
         </main>
       </div>
     </div>

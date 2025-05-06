@@ -18,7 +18,7 @@ const Header = () => {
           <div className="hidden md:block">
             <Link 
               to="/casino" 
-              className={`mr-1 rounded-t-md px-6 py-3 font-semibold uppercase tracking-wide ${
+              className={`mr-1 rounded-t-md px-6 py-3 font-semibold uppercase tracking-wide transition-transform hover:scale-105 ${
                 activeTab === "casino" 
                   ? "bg-[#0F1923] text-white" 
                   : "bg-[#1A2C38] text-white/70 hover:text-white"
@@ -29,7 +29,7 @@ const Header = () => {
             </Link>
             <Link 
               to="/" 
-              className={`rounded-t-md px-6 py-3 font-semibold uppercase tracking-wide ${
+              className={`rounded-t-md px-6 py-3 font-semibold uppercase tracking-wide transition-transform hover:scale-105 ${
                 activeTab === "sports" 
                   ? "bg-[#FF6B01] text-white" 
                   : "bg-[#1A2C38] text-white/70 hover:text-white"
@@ -50,10 +50,15 @@ const Header = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="ghost" className="hidden text-white hover:bg-[#1A2C38] hover:text-white sm:inline-flex">
+          <Button 
+            variant="ghost" 
+            className="hidden text-white transition-colors hover:bg-[#1A2C38] hover:text-white sm:inline-flex"
+          >
             Login
           </Button>
-          <Button className="bg-[#1A9AEF] hover:bg-[#0F8CDD] text-white">
+          <Button 
+            className="bg-[#1A9AEF] text-white transition-transform hover:scale-105 hover:bg-[#0F8CDD]"
+          >
             Register
           </Button>
         </div>

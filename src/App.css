@@ -39,7 +39,7 @@ body {
 
 /* Button styles */
 .stake-button {
-  @apply rounded px-4 py-2 font-medium transition-colors;
+  @apply rounded px-4 py-2 font-medium transition-colors transition-transform hover:scale-105;
 }
 
 .stake-button-primary {
@@ -48,4 +48,78 @@ body {
 
 .stake-button-secondary {
   @apply bg-[#17242D] text-white hover:bg-[#0F1923];
+}
+
+/* Animation effects */
+.hover-scale {
+  @apply transition-transform duration-200 hover:scale-105;
+}
+
+.hover-bright {
+  @apply transition-all duration-200 hover:brightness-110;
+}
+
+.game-card {
+  @apply relative overflow-hidden rounded-md transition-all duration-200;
+  transform-origin: center;
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhance dropdowns */
+.sidebar-dropdown {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.sidebar-dropdown.open {
+  max-height: 500px;
+}
+
+/* Pulse animation for live indicators */
+.pulse-dot {
+  @apply h-2 w-2 rounded-full bg-green-500;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 1;
+  }
+}
+
+/* Page transitions */
+.page-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.page-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-exit-active {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 300ms, transform 300ms;
 }

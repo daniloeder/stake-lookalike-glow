@@ -9,7 +9,7 @@ const SearchBar = () => {
         <input
           type="text"
           placeholder="Search your game"
-          className="w-full rounded-md border border-gray-700 bg-[#17242D] py-2 pl-10 pr-4 text-sm text-white placeholder-gray-400 focus:border-[#1A9AEF] focus:outline-none"
+          className="w-full rounded-md border border-gray-700 bg-[#17242D] py-2 pl-10 pr-4 text-sm text-white placeholder-gray-400 focus:border-[#1A9AEF] focus:outline-none focus:ring-1 focus:ring-[#1A9AEF]"
         />
       </div>
     </div>
