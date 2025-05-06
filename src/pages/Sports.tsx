@@ -6,7 +6,7 @@ import SearchBar from "@/components/SearchBar";
 import Footer from "@/components/Footer";
 import TabBar from "@/components/TabBar";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 
 // Sports sections data
