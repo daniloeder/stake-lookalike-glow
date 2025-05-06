@@ -54,14 +54,15 @@ export default {
 					foreground: 'hsl(var(--card-foreground))'
 				},
 				stake: {
-					dark: "#1A1F2C",
-					darker: "#141821",
-					blue: "#33C3F0",
-					brightBlue: "#0FA0CE",
-					gray: "#8E9196",
-					darkGray: "#222222",
+					dark: "#0F1923",
+					darker: "#0A1218",
+					blue: "#1A9AEF", 
+					brightBlue: "#0F8CDD",
+					orange: "#FF6B01",
 					green: "#10B981",
 					red: "#EF4444",
+					navBg: "#1A2C38",
+					cardBg: "#17242D",
 				},
 			},
 			borderRadius: {

@@ -1,42 +1,51 @@
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #0F1923;
+  color: white;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Navigation styling */
+.stake-nav-button {
+  @apply px-4 py-2 font-semibold uppercase transition-colors;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.stake-nav-button.active {
+  @apply bg-[#FF6B01] text-white;
 }
 
-.card {
-  padding: 2em;
+/* Card styling */
+.sports-card {
+  @apply relative overflow-hidden rounded-md transition-transform hover:scale-105;
 }
 
-.read-the-docs {
-  color: #888;
+.sports-card-content {
+  @apply absolute inset-0 flex flex-col items-center justify-end p-4 text-white;
+}
+
+.sports-card-title {
+  @apply text-xl font-bold uppercase tracking-wider;
+}
+
+/* Button styles */
+.stake-button {
+  @apply rounded px-4 py-2 font-medium transition-colors;
+}
+
+.stake-button-primary {
+  @apply bg-[#1A9AEF] text-white hover:bg-[#0F8CDD];
+}
+
+.stake-button-secondary {
+  @apply bg-[#17242D] text-white hover:bg-[#0F1923];
 }
