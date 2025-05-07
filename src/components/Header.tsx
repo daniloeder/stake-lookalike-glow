@@ -1,46 +1,12 @@
 
-import { Link, useLocation } from "react-router-dom";
-import { Menu } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
 
 const Header = () => {
-  const location = useLocation();
-  const [activeTab, setActiveTab] = useState<"casino" | "sports">("sports");
-
-  useEffect(() => {
-    if (location.pathname.includes("/casino")) {
-      setActiveTab("casino");
-    } else {
-      setActiveTab("sports");
-    }
-  }, [location]);
-
   return (
     <header className="header">
       <div className="header-container">
         <div className="header-left">
-          <Button variant="ghost" size="icon" className="menu-button">
-            <Menu className="menu-icon" />
-          </Button>
-          
-          <div className="nav-tabs">
-            <Link 
-              to="/casino" 
-              className={`nav-tab ${activeTab === "casino" ? "casino-active" : "casino-inactive"}`}
-              onClick={() => setActiveTab("casino")}
-            >
-              Casino
-            </Link>
-            <Link 
-              to="/sports" 
-              className={`nav-tab ${activeTab === "sports" ? "sports-active" : "sports-inactive"}`}
-              onClick={() => setActiveTab("sports")}
-            >
-              Sports
-            </Link>
-          </div>
-          
           <Link to="/" className="logo-link">
             <img 
               src="public/lovable-uploads/f5e5c414-4cd6-431f-a438-5ecffedb9217.png" 
@@ -75,15 +41,25 @@ const styles = `
   background-color: #0F1923;
   height: 56px;
   z-index: 950;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
 }
 
 .header-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
+  padding: 0 1rem;
   height: 100%;
+  margin-left: 240px;
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar-collapsed .header-container {
+  margin-left: 60px;
 }
 
 .header-left {
@@ -91,72 +67,9 @@ const styles = `
   align-items: center;
 }
 
-.menu-button {
-  margin-right: 1rem;
-  color: white;
-}
-
-@media (min-width: 768px) {
-  .menu-button {
-    display: none;
-  }
-}
-
-.menu-icon {
-  height: 1.25rem;
-  width: 1.25rem;
-}
-
-.nav-tabs {
-  display: flex;
-  gap: 4px;
-}
-
-.nav-tab {
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  transition: all 0.2s;
-  text-decoration: none;
-}
-
-.nav-tab:hover {
-  transform: scale(1.05);
-}
-
-.casino-active {
-  background-color: #0D7E3E;
-  color: white;
-}
-
-.casino-inactive {
-  background-color: #1A2C38;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.casino-inactive:hover {
-  color: white;
-}
-
-.sports-active {
-  background-color: #FF6B01;
-  color: white;
-}
-
-.sports-inactive {
-  background-color: #1A2C38;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.sports-inactive:hover {
-  color: white;
-}
-
 .logo-link {
-  margin-left: 2rem;
+  display: flex;
+  align-items: center;
 }
 
 .logo {
@@ -189,6 +102,12 @@ const styles = `
 .register-button:hover {
   transform: scale(1.05);
   background-color: #0F8CDD;
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    margin-left: 0;
+  }
 }
 `;
 

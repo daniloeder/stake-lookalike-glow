@@ -1,15 +1,9 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { Menu } from "lucide-react";
 
 // Import SVG icons
-import homeIcon from "../assets/icons/home.svg";
-import trophyIcon from "../assets/icons/trophy.svg";
-import gamepadIcon from "../assets/icons/gamepad.svg";
-import walletIcon from "../assets/icons/wallet.svg";
-import usersIcon from "../assets/icons/users.svg";
-import starIcon from "../assets/icons/star.svg";
-import globeIcon from "../assets/icons/globe.svg";
 import chevronDownIcon from "../assets/icons/chevron-down.svg";
 import chevronRightIcon from "../assets/icons/chevron-right.svg";
 
@@ -31,14 +25,8 @@ interface SidebarSubItem {
 
 const sidebarItems: SidebarItem[] = [
   {
-    id: "home",
-    icon: homeIcon,
-    label: "Home",
-    path: "/",
-  },
-  {
     id: "promotions",
-    icon: starIcon,
+    icon: "gift", // Will be replaced with SVG
     label: "Promotions",
     expandable: true,
     children: [
@@ -49,30 +37,32 @@ const sidebarItems: SidebarItem[] = [
     ],
   },
   {
-    id: "sports",
-    icon: trophyIcon,
-    label: "Sports",
-    children: [
-      { id: "live", label: "Live", path: "/sports/live" },
-      { id: "upcoming", label: "Upcoming", path: "/sports/upcoming" },
-      { id: "results", label: "Results", path: "/sports/results" },
-      { id: "promotions", label: "Promotions", path: "/sports/promotions" },
-    ],
+    id: "affiliate",
+    icon: "badge", // Will be replaced with SVG
+    label: "Affiliate",
+    path: "/affiliate",
   },
   {
-    id: "casino",
-    icon: gamepadIcon,
-    label: "Casino",
-    children: [
-      { id: "slots", label: "Slots", path: "/casino/slots" },
-      { id: "live-casino", label: "Live Casino", path: "/casino/live" },
-      { id: "table-games", label: "Table Games", path: "/casino/table-games" },
-      { id: "game-shows", label: "Game Shows", path: "/casino/game-shows" },
-    ],
+    id: "vip-club",
+    icon: "crown", // Will be replaced with SVG
+    label: "VIP Club",
+    path: "/vip",
+  },
+  {
+    id: "blog",
+    icon: "file-text", // Will be replaced with SVG
+    label: "Blog",
+    path: "/blog",
+  },
+  {
+    id: "forum",
+    icon: "message-circle", // Will be replaced with SVG
+    label: "Forum",
+    path: "/forum",
   },
   {
     id: "sponsorships",
-    icon: usersIcon,
+    icon: "trophy", // Will be replaced with SVG
     label: "Sponsorships",
     expandable: true,
     children: [
@@ -97,8 +87,20 @@ const sidebarItems: SidebarItem[] = [
     ],
   },
   {
+    id: "responsible-gambling",
+    icon: "shield", // Will be replaced with SVG
+    label: "Responsible Gambling",
+    path: "/responsible-gambling",
+  },
+  {
+    id: "live-support",
+    icon: "headset", // Will be replaced with SVG
+    label: "Live Support",
+    path: "/support",
+  },
+  {
     id: "language",
-    icon: globeIcon,
+    icon: "globe", // Will be replaced with SVG
     label: "Language: English",
     expandable: true,
     children: [
@@ -120,18 +122,23 @@ const sidebarItems: SidebarItem[] = [
       { id: "arabic", label: "اَلْعَرَبِيَّةُ", path: "/language/arabic", isLanguageOption: true },
     ],
   },
-  {
-    id: "wallet",
-    icon: walletIcon,
-    label: "Wallet",
-    path: "/wallet",
-  },
 ];
 
 const Sidebar = () => {
+  const location = useLocation();
   const [openItems, setOpenItems] = useState<string[]>([]);
   const [collapsed, setCollapsed] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("english");
+  const [activeTab, setActiveTab] = useState<"casino" | "sports">("sports");
+
+  // Set active tab based on current path
+  useState(() => {
+    if (location.pathname.includes("/casino")) {
+      setActiveTab("casino");
+    } else {
+      setActiveTab("sports");
+    }
+  });
 
   const toggleItem = (id: string) => {
     if (openItems.includes(id)) {
@@ -145,36 +152,53 @@ const Sidebar = () => {
     setSelectedLanguage(id);
   };
 
+  const toggleSidebar = () => {
+    setCollapsed(!collapsed);
+  };
+
   return (
     <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
-      <button className="collapse-button" onClick={() => setCollapsed(!collapsed)}>
-        <img 
-          src={collapsed ? chevronRightIcon : chevronDownIcon} 
-          alt={collapsed ? "Expand" : "Collapse"} 
-          className="collapse-icon"
-        />
-      </button>
+      <div className="sidebar-header">
+        <button className="toggle-button" onClick={toggleSidebar}>
+          <Menu className="toggle-icon" />
+        </button>
+        
+        <div className="nav-tabs">
+          <Link 
+            to="/casino" 
+            className={`nav-tab ${activeTab === "casino" ? "casino-active" : "casino-inactive"}`}
+            onClick={() => setActiveTab("casino")}
+          >
+            Casino
+          </Link>
+          <Link 
+            to="/sports" 
+            className={`nav-tab ${activeTab === "sports" ? "sports-active" : "sports-inactive"}`}
+            onClick={() => setActiveTab("sports")}
+          >
+            Sports
+          </Link>
+        </div>
+      </div>
       
       <div className="sidebar-content">
         {sidebarItems.map((item) => (
           <div key={item.id} className="sidebar-item-container">
-            {item.children ? (
-              <div className={`collapsible-item ${item.expandable ? 'expandable' : ''}`}>
+            {item.children && item.expandable ? (
+              <div className="collapsible-item expandable">
                 <button
                   className="sidebar-item-button"
                   onClick={() => toggleItem(item.id)}
                 >
                   <span className="sidebar-icon">
-                    <img src={item.icon} alt={item.label} />
+                    {/* Icon placeholder */}
                   </span>
                   <span className="sidebar-label">{item.label}</span>
-                  {item.expandable && (
-                    <img 
-                      src={chevronDownIcon} 
-                      alt="expand" 
-                      className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`} 
-                    />
-                  )}
+                  <img 
+                    src={chevronRightIcon} 
+                    alt="expand" 
+                    className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`} 
+                  />
                 </button>
 
                 <div className={`dropdown-content ${openItems.includes(item.id) ? 'expanded' : ''}`}>
@@ -199,7 +223,7 @@ const Sidebar = () => {
             ) : (
               <Link to={item.path || "#"} className="sidebar-item-link">
                 <span className="sidebar-icon">
-                  <img src={item.icon} alt={item.label} />
+                  {/* Icon placeholder */}
                 </span>
                 <span className="sidebar-label">{item.label}</span>
               </Link>
@@ -224,6 +248,8 @@ const styles = `
   overflow-y: auto;
   transition: width 0.3s ease;
   z-index: 900;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar.collapsed {
@@ -231,35 +257,82 @@ const styles = `
   overflow: visible;
 }
 
-.collapse-button {
-  position: absolute;
-  right: -12px;
-  top: 20px;
-  width: 24px;
-  height: 24px;
-  background-color: #1A1F2C;
-  border: 1px solid #333;
-  border-radius: 50%;
-  color: #fff;
+.sidebar-header {
+  padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 901;
-  padding: 0;
+  border-bottom: 1px solid #1a2c38;
 }
 
-.collapse-icon {
-  width: 16px;
-  height: 16px;
-  color: #fff;
+.toggle-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.nav-tab {
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+.nav-tab:hover {
+  opacity: 0.9;
+}
+
+.casino-active {
+  background-color: #0D7E3E;
+  color: white;
+}
+
+.casino-inactive {
+  background-color: #1A2C38;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.casino-inactive:hover {
+  color: white;
+}
+
+.sports-active {
+  background-color: #FF6B01;
+  color: white;
+}
+
+.sports-inactive {
+  background-color: #1A2C38;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.sports-inactive:hover {
+  color: white;
 }
 
 .sidebar-content {
-  padding: 1rem 0.5rem;
+  padding: 0.75rem 0;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  flex: 1;
 }
 
 .sidebar-item-container {
@@ -273,7 +346,6 @@ const styles = `
   align-items: center;
   width: 100%;
   padding: 0.75rem 1rem;
-  border-radius: 4px;
   background: none;
   border: none;
   color: #e5e7eb;
@@ -299,12 +371,6 @@ const styles = `
   flex-shrink: 0;
 }
 
-.sidebar-icon img {
-  width: 20px;
-  height: 20px;
-  color: #e5e7eb;
-}
-
 .sidebar-label {
   flex: 1;
   white-space: nowrap;
@@ -319,7 +385,7 @@ const styles = `
 }
 
 .dropdown-icon.rotated {
-  transform: rotate(180deg);
+  transform: rotate(90deg);
 }
 
 .dropdown-content {
@@ -335,7 +401,7 @@ const styles = `
 
 .dropdown-item {
   display: block;
-  padding: 0.5rem 1rem 0.5rem 2.75rem;
+  padding: 0.5rem 1rem 0.5rem 1.5rem;
   color: #9ca3af;
   font-size: 0.875rem;
   text-decoration: none;
@@ -351,7 +417,7 @@ const styles = `
 .language-option {
   display: flex;
   align-items: center;
-  padding: 0.5rem 1rem 0.5rem 2.75rem;
+  padding: 0.5rem 1rem 0.5rem 1.5rem;
   color: #9ca3af;
   font-size: 0.875rem;
   cursor: pointer;
@@ -394,8 +460,18 @@ const styles = `
 
 /* Collapsed state styles */
 .sidebar.collapsed .sidebar-label,
-.sidebar.collapsed .dropdown-icon {
+.sidebar.collapsed .dropdown-icon,
+.sidebar.collapsed .nav-tab {
   display: none;
+}
+
+.sidebar.collapsed .toggle-button {
+  margin-right: 0;
+}
+
+.sidebar.collapsed .sidebar-header {
+  justify-content: center;
+  padding: 0.75rem 0;
 }
 
 .sidebar.collapsed .dropdown-content {
@@ -419,6 +495,23 @@ const styles = `
 
 .sidebar.collapsed .sidebar-icon {
   margin-right: 0;
+}
+
+.sidebar.collapsed .sidebar-item-button,
+.sidebar.collapsed .sidebar-item-link {
+  justify-content: center;
+  padding: 0.75rem 0;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 1000;
+  }
+  
+  .sidebar.active {
+    transform: translateX(0);
+  }
 }
 `;
 
