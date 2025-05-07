@@ -49,32 +49,32 @@ const sportCategories = [
 
 const SportCategories = () => {
   return (
-    <div className="mb-8">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="flex items-center text-lg font-bold text-white">
-          <span className="mr-2">🏆</span> Top Sports
+    <div className="sport-categories">
+      <div className="sport-categories-header">
+        <h2 className="section-title">
+          <span className="emoji">🏆</span> Top Sports
         </h2>
-        <div className="flex space-x-2">
-          <Button size="icon" variant="outline" className="h-8 w-8 rounded-full border-gray-700 bg-stake-darker text-gray-400 hover:bg-stake-dark hover:text-white">
-            <ChevronLeft className="h-4 w-4" />
+        <div className="nav-buttons">
+          <Button size="icon" variant="outline" className="nav-button">
+            <ChevronLeft className="button-icon" />
           </Button>
-          <Button size="icon" variant="outline" className="h-8 w-8 rounded-full border-gray-700 bg-stake-darker text-gray-400 hover:bg-stake-dark hover:text-white">
-            <ChevronRight className="h-4 w-4" />
+          <Button size="icon" variant="outline" className="nav-button">
+            <ChevronRight className="button-icon" />
           </Button>
         </div>
       </div>
       
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
+      <div className="sport-cards-grid">
         {sportCategories.map((sport) => (
-          <div key={sport.id} className="sports-card h-36 w-full">
-            <div className={`absolute inset-0 bg-gradient-to-b ${sport.color} opacity-90`}></div>
+          <div key={sport.id} className="sport-card">
+            <div className={`card-overlay ${sport.color}`}></div>
             <img 
               src={sport.image} 
               alt={sport.name}
-              className="h-full w-full object-cover"
+              className="sport-image"
             />
-            <div className="sports-card-content">
-              <h3 className="sports-card-title">{sport.name}</h3>
+            <div className="sport-card-content">
+              <h3 className="sport-name">{sport.name}</h3>
             </div>
           </div>
         ))}
@@ -82,5 +82,157 @@ const SportCategories = () => {
     </div>
   );
 };
+
+// CSS styles
+const styles = `
+.sport-categories {
+  margin-bottom: 2rem;
+}
+
+.sport-categories-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: white;
+}
+
+.emoji {
+  margin-right: 0.5rem;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav-button {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 9999px;
+  border: 1px solid #374151;
+  background-color: #0A1218;
+  color: #9ca3af;
+}
+
+.nav-button:hover {
+  background-color: #0F1923;
+  color: white;
+}
+
+.button-icon {
+  height: 1rem;
+  width: 1rem;
+}
+
+.sport-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .sport-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .sport-cards-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .sport-cards-grid {
+    grid-template-columns: repeat(7, 1fr);
+  }
+}
+
+.sport-card {
+  position: relative;
+  height: 9rem;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.sport-card:hover {
+  transform: scale(1.05);
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.9;
+}
+
+.from-green-500.to-green-600 {
+  background: linear-gradient(to bottom, #10b981, #059669);
+}
+
+.from-blue-500.to-blue-600 {
+  background: linear-gradient(to bottom, #3b82f6, #2563eb);
+}
+
+.from-orange-500.to-red-500 {
+  background: linear-gradient(to bottom, #f97316, #ef4444);
+}
+
+.from-red-500.to-red-600 {
+  background: linear-gradient(to bottom, #ef4444, #dc2626);
+}
+
+.from-orange-400.to-orange-500 {
+  background: linear-gradient(to bottom, #fb923c, #f97316);
+}
+
+.from-pink-500.to-pink-600 {
+  background: linear-gradient(to bottom, #ec4899, #db2777);
+}
+
+.from-red-600.to-red-700 {
+  background: linear-gradient(to bottom, #dc2626, #b91c1c);
+}
+
+.sport-image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.sport-card-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1rem;
+  color: white;
+}
+
+.sport-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+`;
+
+// Add styles to document
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = styles;
+  document.head.appendChild(styleElement);
+}
 
 export default SportCategories;

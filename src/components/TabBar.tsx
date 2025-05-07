@@ -74,29 +74,25 @@ const TabBar = ({
   }, []);
   
   return (
-    <div className={`relative mb-4 px-4 overflow-hidden ${className}`}>
-      <div className="flex items-center justify-between">
+    <div className={`tab-bar ${className}`}>
+      <div className="tab-bar-container">
         {showArrows && showLeftArrow && (
           <button 
-            className="flex-none p-1 mr-2 rounded-full bg-[#17242D] text-gray-400 hover:bg-[#1A2C38] hover:text-white z-10"
+            className="tab-arrow left-arrow"
             onClick={() => scrollTabs("left")}
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="arrow-icon" />
           </button>
         )}
         
         <div 
           ref={tabsContainerRef}
-          className="flex overflow-x-auto no-scrollbar py-2 flex-1"
+          className="tabs-container"
         >
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              className={`whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-medium transition-transform hover:scale-105 mr-2 ${
-                tab.id === activeTab
-                  ? "bg-[#1A9AEF] text-white"
-                  : "bg-[#17242D] text-white hover:bg-[#1A2C38]"
-              }`}
+              className={`tab ${tab.id === activeTab ? "active-tab" : "inactive-tab"}`}
               onClick={() => handleTabClick(tab.id)}
             >
               {tab.label}
@@ -106,15 +102,113 @@ const TabBar = ({
         
         {showArrows && showRightArrow && (
           <button 
-            className="flex-none p-1 ml-2 rounded-full bg-[#17242D] text-gray-400 hover:bg-[#1A2C38] hover:text-white z-10"
+            className="tab-arrow right-arrow"
             onClick={() => scrollTabs("right")}
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="arrow-icon" />
           </button>
         )}
       </div>
     </div>
   );
 };
+
+// CSS styles
+const styles = `
+.tab-bar {
+  position: relative;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+  overflow: hidden;
+}
+
+.tab-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tab-arrow {
+  display: flex;
+  flex: none;
+  padding: 0.25rem;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+  border-radius: 9999px;
+  background-color: #17242D;
+  color: #9ca3af;
+  z-index: 10;
+  border: none;
+  cursor: pointer;
+}
+
+.tab-arrow:hover {
+  background-color: #1A2C38;
+  color: white;
+}
+
+.left-arrow {
+  margin-right: 0.5rem;
+}
+
+.right-arrow {
+  margin-left: 0.5rem;
+}
+
+.arrow-icon {
+  height: 1rem;
+  width: 1rem;
+}
+
+.tabs-container {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0.5rem 0;
+  flex: 1;
+}
+
+.tabs-container::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  white-space: nowrap;
+  border-radius: 9999px;
+  padding: 0.375rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: transform 0.2s;
+  margin-right: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.tab:hover {
+  transform: scale(1.05);
+}
+
+.active-tab {
+  background-color: #1A9AEF;
+  color: white;
+}
+
+.inactive-tab {
+  background-color: #17242D;
+  color: white;
+}
+
+.inactive-tab:hover {
+  background-color: #1A2C38;
+}
+`;
+
+// Add styles to document
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = styles;
+  document.head.appendChild(styleElement);
+}
 
 export default TabBar;

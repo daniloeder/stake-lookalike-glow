@@ -17,56 +17,48 @@ const Header = () => {
   }, [location]);
 
   return (
-    <header className="border-b border-gray-800 bg-[#0F1923]">
-      <div className="flex items-center justify-between px-4 py-2">
-        <div className="flex items-center">
-          <Button variant="ghost" size="icon" className="mr-4 text-white md:hidden">
-            <Menu className="h-5 w-5" />
+    <header className="header">
+      <div className="header-container">
+        <div className="header-left">
+          <Button variant="ghost" size="icon" className="menu-button">
+            <Menu className="menu-icon" />
           </Button>
           
-          <div className="hidden md:block">
+          <div className="nav-tabs">
             <Link 
               to="/casino" 
-              className={`mr-1 rounded-t-md px-6 py-3 font-semibold uppercase tracking-wide transition-all hover:scale-105 ${
-                activeTab === "casino" 
-                  ? "bg-[#0D7E3E] text-white" 
-                  : "bg-[#1A2C38] text-white/70 hover:text-white"
-              }`}
+              className={`nav-tab ${activeTab === "casino" ? "casino-active" : "casino-inactive"}`}
               onClick={() => setActiveTab("casino")}
             >
               Casino
             </Link>
             <Link 
               to="/sports" 
-              className={`rounded-t-md px-6 py-3 font-semibold uppercase tracking-wide transition-all hover:scale-105 ${
-                activeTab === "sports" 
-                  ? "bg-[#FF6B01] text-white" 
-                  : "bg-[#1A2C38] text-white/70 hover:text-white"
-              }`}
+              className={`nav-tab ${activeTab === "sports" ? "sports-active" : "sports-inactive"}`}
               onClick={() => setActiveTab("sports")}
             >
               Sports
             </Link>
           </div>
           
-          <Link to="/" className="mx-auto md:mx-0 md:ml-8">
+          <Link to="/" className="logo-link">
             <img 
               src="public/lovable-uploads/f5e5c414-4cd6-431f-a438-5ecffedb9217.png" 
               alt="Stake"
-              className="h-10 w-auto"
+              className="logo"
             />
           </Link>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="header-right">
           <Button 
             variant="ghost" 
-            className="hidden text-white transition-colors hover:bg-[#1A2C38] hover:text-white sm:inline-flex"
+            className="login-button"
           >
             Login
           </Button>
           <Button 
-            className="bg-[#1A9AEF] text-white transition-all hover:scale-105 hover:bg-[#0F8CDD]"
+            className="register-button"
           >
             Register
           </Button>
@@ -75,5 +67,151 @@ const Header = () => {
     </header>
   );
 };
+
+// CSS styles
+const styles = `
+.header {
+  border-bottom: 1px solid #1f2937;
+  background-color: #0F1923;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.menu-button {
+  margin-right: 1rem;
+  color: white;
+}
+
+@media (min-width: 768px) {
+  .menu-button {
+    display: none;
+  }
+}
+
+.menu-icon {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.nav-tabs {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .nav-tabs {
+    display: block;
+  }
+}
+
+.nav-tab {
+  margin-right: 0.25rem;
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+}
+
+.nav-tab:hover {
+  transform: scale(1.05);
+}
+
+.casino-active {
+  background-color: #0D7E3E;
+  color: white;
+}
+
+.casino-inactive {
+  background-color: #1A2C38;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.casino-inactive:hover {
+  color: white;
+}
+
+.sports-active {
+  background-color: #FF6B01;
+  color: white;
+}
+
+.sports-inactive {
+  background-color: #1A2C38;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.sports-inactive:hover {
+  color: white;
+}
+
+.logo-link {
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .logo-link {
+    margin: 0;
+    margin-left: 2rem;
+  }
+}
+
+.logo {
+  height: 2.5rem;
+  width: auto;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.login-button {
+  display: none;
+  color: white;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.login-button:hover {
+  background-color: #1A2C38;
+  color: white;
+}
+
+@media (min-width: 640px) {
+  .login-button {
+    display: inline-flex;
+  }
+}
+
+.register-button {
+  background-color: #1A9AEF;
+  color: white;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.register-button:hover {
+  transform: scale(1.05);
+  background-color: #0F8CDD;
+}
+`;
+
+// Add styles to document
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = styles;
+  document.head.appendChild(styleElement);
+}
 
 export default Header;

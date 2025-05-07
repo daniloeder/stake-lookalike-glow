@@ -33,33 +33,33 @@ const promos = [
 
 const SportsBanners = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div className="sports-banners">
       {promos.map((promo) => (
         <div
           key={promo.id}
-          className="relative overflow-hidden rounded-lg bg-[#17242D] h-36"
+          className="promo-card"
         >
-          <div className="absolute left-2 top-2 rounded bg-[#0F1923] px-2 py-1 text-xs font-semibold text-white">
+          <div className="promo-tag">
             Promo
           </div>
-          <div className="flex h-full">
-            <div className="flex flex-1 flex-col justify-center p-4">
-              <h3 className="mb-1 text-xl font-bold text-white">{promo.title}</h3>
-              <p className="mb-2 text-sm text-gray-300">{promo.description}</p>
-              <button className="mb-2 text-left text-xs text-[#1A9AEF] hover:underline">
+          <div className="promo-content">
+            <div className="promo-info">
+              <h3 className="promo-title">{promo.title}</h3>
+              <p className="promo-description">{promo.description}</p>
+              <button className="promo-cta">
                 {promo.ctaText}
               </button>
               <Link to={promo.link}>
-                <button className="mt-auto w-4/5 bg-[#1A9AEF] text-white hover:bg-[#0F8CDD] py-2 px-4 rounded font-medium transform transition-transform hover:scale-105">
+                <button className="promo-button">
                   {promo.buttonText}
                 </button>
               </Link>
             </div>
-            <div className="w-1/3">
+            <div className="promo-image-container">
               <img
                 src={promo.image}
                 alt={promo.title}
-                className="h-full w-full object-cover"
+                className="promo-image"
               />
             </div>
           </div>
@@ -68,5 +68,118 @@ const SportsBanners = () => {
     </div>
   );
 };
+
+// CSS styles
+const styles = `
+.sports-banners {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .sports-banners {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.promo-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background-color: #17242D;
+  height: 9rem;
+}
+
+.promo-tag {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #0F1923;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+}
+
+.promo-content {
+  display: flex;
+  height: 100%;
+}
+
+.promo-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.promo-title {
+  margin-bottom: 0.25rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+}
+
+.promo-description {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: #d1d5db;
+}
+
+.promo-cta {
+  margin-bottom: 0.5rem;
+  text-align: left;
+  font-size: 0.75rem;
+  color: #1A9AEF;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.promo-cta:hover {
+  text-decoration: underline;
+}
+
+.promo-button {
+  margin-top: auto;
+  width: 80%;
+  background-color: #1A9AEF;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  transform: translateZ(0);
+  transition: transform 0.2s;
+}
+
+.promo-button:hover {
+  background-color: #0F8CDD;
+  transform: scale(1.05);
+}
+
+.promo-image-container {
+  width: 33.333333%;
+}
+
+.promo-image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+`;
+
+// Add styles to document
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = styles;
+  document.head.appendChild(styleElement);
+}
 
 export default SportsBanners;
