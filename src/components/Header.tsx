@@ -73,6 +73,9 @@ const styles = `
 .header {
   border-bottom: 1px solid #1f2937;
   background-color: #0F1923;
+  height: 56px;
+  z-index: 950;
+  position: relative;
 }
 
 .header-container {
@@ -80,6 +83,7 @@ const styles = `
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 1rem;
+  height: 100%;
 }
 
 .header-left {
@@ -104,24 +108,19 @@ const styles = `
 }
 
 .nav-tabs {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .nav-tabs {
-    display: block;
-  }
+  display: flex;
+  gap: 4px;
 }
 
 .nav-tab {
-  margin-right: 0.25rem;
-  border-top-left-radius: 0.375rem;
-  border-top-right-radius: 0.375rem;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   padding: 0.75rem 1.5rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: all 0.2s;
+  text-decoration: none;
 }
 
 .nav-tab:hover {
@@ -157,14 +156,7 @@ const styles = `
 }
 
 .logo-link {
-  margin: 0 auto;
-}
-
-@media (min-width: 768px) {
-  .logo-link {
-    margin: 0;
-    margin-left: 2rem;
-  }
+  margin-left: 2rem;
 }
 
 .logo {
@@ -179,7 +171,6 @@ const styles = `
 }
 
 .login-button {
-  display: none;
   color: white;
   transition: background-color 0.2s, color 0.2s;
 }
@@ -187,12 +178,6 @@ const styles = `
 .login-button:hover {
   background-color: #1A2C38;
   color: white;
-}
-
-@media (min-width: 640px) {
-  .login-button {
-    display: inline-flex;
-  }
 }
 
 .register-button {

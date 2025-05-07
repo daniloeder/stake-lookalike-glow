@@ -148,7 +148,11 @@ const Sidebar = () => {
   return (
     <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
       <button className="collapse-button" onClick={() => setCollapsed(!collapsed)}>
-        {collapsed ? '>' : '<'}
+        <img 
+          src={collapsed ? chevronRightIcon : chevronDownIcon} 
+          alt={collapsed ? "Expand" : "Collapse"} 
+          className="collapse-icon"
+        />
       </button>
       
       <div className="sidebar-content">
@@ -164,11 +168,13 @@ const Sidebar = () => {
                     <img src={item.icon} alt={item.label} />
                   </span>
                   <span className="sidebar-label">{item.label}</span>
-                  <img 
-                    src={chevronDownIcon} 
-                    alt="expand" 
-                    className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`} 
-                  />
+                  {item.expandable && (
+                    <img 
+                      src={chevronDownIcon} 
+                      alt="expand" 
+                      className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`} 
+                    />
+                  )}
                 </button>
 
                 <div className={`dropdown-content ${openItems.includes(item.id) ? 'expanded' : ''}`}>
@@ -217,7 +223,7 @@ const styles = `
   border-right: 1px solid #1f2937;
   overflow-y: auto;
   transition: width 0.3s ease;
-  z-index: 1000;
+  z-index: 900;
 }
 
 .sidebar.collapsed {
@@ -227,10 +233,10 @@ const styles = `
 
 .collapse-button {
   position: absolute;
-  right: -15px;
-  top: 30px;
-  width: 30px;
-  height: 30px;
+  right: -12px;
+  top: 20px;
+  width: 24px;
+  height: 24px;
   background-color: #1A1F2C;
   border: 1px solid #333;
   border-radius: 50%;
@@ -239,19 +245,26 @@ const styles = `
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 1001;
+  z-index: 901;
+  padding: 0;
+}
+
+.collapse-icon {
+  width: 16px;
+  height: 16px;
+  color: #fff;
 }
 
 .sidebar-content {
-  padding: 1rem;
+  padding: 1rem 0.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  margin-top: 40px; /* Space for header */
 }
 
 .sidebar-item-container {
   width: 100%;
+  position: relative;
 }
 
 .sidebar-item-button,
@@ -260,7 +273,7 @@ const styles = `
   align-items: center;
   width: 100%;
   padding: 0.75rem 1rem;
-  border-radius: 0.375rem;
+  border-radius: 4px;
   background: none;
   border: none;
   color: #e5e7eb;
@@ -281,13 +294,14 @@ const styles = `
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 .sidebar-icon img {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 20px;
+  height: 20px;
   color: #e5e7eb;
 }
 
@@ -299,13 +313,13 @@ const styles = `
 }
 
 .dropdown-icon {
-  width: 1rem;
-  height: 1rem;
+  width: 16px;
+  height: 16px;
   transition: transform 0.3s ease;
 }
 
 .dropdown-icon.rotated {
-  transform: rotate(-180deg);
+  transform: rotate(180deg);
 }
 
 .dropdown-content {
@@ -330,6 +344,7 @@ const styles = `
 
 .dropdown-item:hover {
   color: #e5e7eb;
+  background-color: rgba(23, 36, 45, 0.5);
 }
 
 /* Language selector specific styles */
@@ -345,6 +360,7 @@ const styles = `
 
 .language-option:hover {
   color: #e5e7eb;
+  background-color: rgba(23, 36, 45, 0.5);
 }
 
 .language-option.selected {
@@ -389,9 +405,11 @@ const styles = `
   min-width: 200px;
   background-color: #0A1218;
   border: 1px solid #1f2937;
-  border-radius: 0.375rem;
+  border-radius: 4px;
   max-height: 0;
   visibility: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 910;
 }
 
 .sidebar.collapsed .sidebar-item-container:hover .dropdown-content {
