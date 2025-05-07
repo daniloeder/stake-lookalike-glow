@@ -50,26 +50,22 @@ const SportsBettingTable = () => {
   };
 
   return (
-    <div className="bg-[#0F1923] rounded-lg overflow-hidden mb-8">
-      <div className="flex border-b border-gray-800">
+    <div className="betting-table">
+      <div className="table-tabs">
         {betTabs.map((tab) => (
           <button
             key={tab.id}
-            className={`px-6 py-3 text-sm font-medium transition-transform hover:scale-105 ${
-              activeTab === tab.id
-                ? "border-b-2 border-[#1A9AEF] text-white"
-                : "text-gray-400 hover:text-white"
-            }`}
+            className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
             onClick={() => setActiveTab(tab.id)}
           >
             {tab.label}
             {tab.id === "race-leaderboard" && (
-              <span className="ml-2 inline-block h-2 w-2 rounded-full bg-green-500"></span>
+              <span className="live-dot"></span>
             )}
           </button>
         ))}
-        <div className="ml-auto flex items-center px-4">
-          <select className="bg-[#17242D] text-white border border-gray-700 rounded py-1 px-2 text-sm">
+        <div className="rows-select">
+          <select className="rows-dropdown">
             <option value="10">10</option>
             <option value="20">20</option>
             <option value="50">50</option>
@@ -77,41 +73,41 @@ const SportsBettingTable = () => {
         </div>
       </div>
       
-      <table className="w-full">
-        <thead className="bg-[#17242D]">
-          <tr className="text-left text-xs font-medium text-gray-400">
-            <th className="px-4 py-3">Event</th>
-            <th className="px-4 py-3">User</th>
-            <th className="px-4 py-3">Time</th>
-            <th className="px-4 py-3">Odds</th>
-            <th className="px-4 py-3">Bet Amount</th>
+      <table className="bets-table">
+        <thead className="table-header">
+          <tr className="header-row">
+            <th className="header-cell">Event</th>
+            <th className="header-cell">User</th>
+            <th className="header-cell">Time</th>
+            <th className="header-cell">Odds</th>
+            <th className="header-cell">Bet Amount</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="table-body">
           {bettingData.map((bet, index) => (
-            <tr key={index} className="border-b border-gray-800 text-sm hover:bg-[#17242D]/50">
-              <td className="px-4 py-3 text-white">
-                <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <tr key={index} className="table-row">
+              <td className="table-cell">
+                <div className="event-cell">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="event-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H5a2 2 0 00-2 2v8a2 2 0 002 2h3M12 5v14M19 5h-3v14h3a2 2 0 002-2V7a2 2 0 00-2-2z" />
                   </svg>
                   {bet.event}
                 </div>
               </td>
-              <td className="px-4 py-3 text-gray-300">
-                <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <td className="table-cell">
+                <div className="user-cell">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="user-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                   {bet.user}
                 </div>
               </td>
-              <td className="px-4 py-3 text-gray-300">{bet.time}</td>
-              <td className="px-4 py-3 text-white font-mono">{bet.odds}</td>
-              <td className="px-4 py-3 text-green-500">
+              <td className="table-cell">{bet.time}</td>
+              <td className="table-cell odds-cell">{bet.odds}</td>
+              <td className="table-cell amount-cell">
                 {bet.amount}
                 {bet.crypto && (
-                  <span className={`inline-block ml-1 w-4 h-4 rounded-full ${cryptoColors[bet.crypto] || 'bg-gray-500'} text-xs flex items-center justify-center`}>
+                  <span className={`crypto-badge crypto-${bet.crypto}`}>
                     {cryptoIcons[bet.crypto] || '?'}
                   </span>
                 )}
@@ -123,5 +119,175 @@ const SportsBettingTable = () => {
     </div>
   );
 };
+
+// CSS styles
+const styles = `
+.betting-table {
+  background-color: #0F1923;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.table-tabs {
+  display: flex;
+  border-bottom: 1px solid #1f2937;
+}
+
+.tab-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #9ca3af;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+  position: relative;
+}
+
+.tab-button:hover {
+  color: white;
+  transform: scale(1.05);
+}
+
+.tab-button.active {
+  color: white;
+  border-bottom: 2px solid #1A9AEF;
+}
+
+.live-dot {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  display: inline-block;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 9999px;
+  background-color: #10B981;
+}
+
+.rows-select {
+  margin-left: auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.rows-dropdown {
+  background-color: #17242D;
+  color: white;
+  border: 1px solid #374151;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+.bets-table {
+  width: 100%;
+}
+
+.table-header {
+  background-color: #17242D;
+}
+
+.header-row {
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #9ca3af;
+}
+
+.header-cell {
+  padding: 0.75rem 1rem;
+}
+
+.table-row {
+  border-bottom: 1px solid #1f2937;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+}
+
+.table-row:hover {
+  background-color: rgba(23, 36, 45, 0.5);
+}
+
+.table-cell {
+  padding: 0.75rem 1rem;
+}
+
+.event-cell {
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.event-icon {
+  height: 1rem;
+  width: 1rem;
+  margin-right: 0.5rem;
+  color: #9ca3af;
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  color: #d1d5db;
+}
+
+.user-icon {
+  height: 1rem;
+  width: 1rem;
+  margin-right: 0.5rem;
+  color: #9ca3af;
+}
+
+.odds-cell {
+  color: white;
+  font-family: monospace;
+}
+
+.amount-cell {
+  display: flex;
+  align-items: center;
+  color: #10B981;
+}
+
+.crypto-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+  color: white;
+}
+
+.crypto-btc {
+  background-color: #F7931A;
+}
+
+.crypto-eth {
+  background-color: #3c3c3d;
+}
+
+.crypto-cad {
+  background-color: #EF4444;
+}
+
+.crypto-trx {
+  background-color: #10B981;
+}
+`;
+
+// Add styles to document
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = styles;
+  document.head.appendChild(styleElement);
+}
 
 export default SportsBettingTable;

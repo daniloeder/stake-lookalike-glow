@@ -1,123 +1,206 @@
 
-import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ChevronDown, Home, Trophy, Gamepad2, Wallet } from "lucide-react";
 
-const sidebarItems = [
-  { 
-    name: "Promotions", 
-    icon: "🎁", 
-    hasArrow: true,
-    hasDropdown: true,
-    dropdownItems: [
-      { name: "Welcome Offer", path: "/promotions/welcome" },
-      { name: "Daily Bonuses", path: "/promotions/daily" },
-      { name: "Weekly Giveaways", path: "/promotions/weekly" },
-      { name: "VIP Rewards", path: "/promotions/vip" },
+interface SidebarItem {
+  id: string;
+  icon?: React.ReactNode;
+  label: string;
+  path?: string;
+  children?: SidebarItem[];
+}
+
+const sidebarItems: SidebarItem[] = [
+  {
+    id: "home",
+    icon: <Home />,
+    label: "Home",
+    path: "/",
+  },
+  {
+    id: "sports",
+    icon: <Trophy />,
+    label: "Sports",
+    children: [
+      { id: "live", label: "Live", path: "/sports/live" },
+      { id: "upcoming", label: "Upcoming", path: "/sports/upcoming" },
+      { id: "results", label: "Results", path: "/sports/results" },
+      { id: "promotions", label: "Promotions", path: "/sports/promotions" },
     ],
   },
-  { name: "Affiliate", icon: "🤝", path: "/affiliate" },
-  { name: "VIP Club", icon: "🌟", path: "/vip" },
-  { name: "Blog", icon: "📝", path: "/blog" },
-  { name: "Forum", icon: "💬", path: "/forum" },
-  { 
-    name: "Sponsorships", 
-    icon: "🏆", 
-    hasArrow: true,
-    hasDropdown: true,
-    dropdownItems: [
-      { name: "UFC", path: "/sponsorships/ufc" },
-      { name: "Everton FC", path: "/sponsorships/everton" },
-      { name: "Team Stake", path: "/sponsorships/team-stake" },
+  {
+    id: "casino",
+    icon: <Gamepad2 />,
+    label: "Casino",
+    children: [
+      { id: "slots", label: "Slots", path: "/casino/slots" },
+      { id: "live-casino", label: "Live Casino", path: "/casino/live" },
+      { id: "table-games", label: "Table Games", path: "/casino/table-games" },
+      { id: "game-shows", label: "Game Shows", path: "/casino/game-shows" },
     ],
   },
-  { name: "Responsible Gambling", icon: "🔒", path: "/responsible-gambling" },
-  { name: "Live Support", icon: "💬", path: "/support" },
-  { 
-    name: "Language: English", 
-    icon: "🌐", 
-    hasArrow: true,
-    hasDropdown: true,
-    dropdownItems: [
-      { name: "English", path: "/language/en" },
-      { name: "Español", path: "/language/es" },
-      { name: "Français", path: "/language/fr" },
-      { name: "Deutsch", path: "/language/de" },
-      { name: "Italiano", path: "/language/it" },
-      { name: "日本語", path: "/language/ja" },
-      { name: "한국어", path: "/language/ko" },
-    ],
+  {
+    id: "promotions",
+    icon: <Trophy />,
+    label: "Promotions",
+    path: "/promotions",
+  },
+  {
+    id: "wallet",
+    icon: <Wallet />,
+    label: "Wallet",
+    path: "/wallet",
   },
 ];
 
 const Sidebar = () => {
-  const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>({});
+  const [openItems, setOpenItems] = useState<string[]>([]);
 
-  const toggleDropdown = (name: string) => {
-    setOpenDropdowns((prev) => ({
-      ...prev,
-      [name]: !prev[name],
-    }));
+  const toggleItem = (id: string) => {
+    if (openItems.includes(id)) {
+      setOpenItems(openItems.filter((item) => item !== id));
+    } else {
+      setOpenItems([...openItems, id]);
+    }
   };
 
   return (
-    <aside className="h-full w-[190px] bg-[#0F1923]">
-      <div className="space-y-1 py-2">
-        <ul className="px-2">
-          {sidebarItems.map((item, index) => (
-            <li key={index} className="mb-1">
-              {item.hasDropdown ? (
-                <div>
-                  <button
-                    onClick={() => toggleDropdown(item.name)}
-                    className={`flex w-full items-center justify-between rounded px-3 py-2 text-sm text-white/80 transition-all hover:bg-[#1A2C38] hover:text-white ${
-                      openDropdowns[item.name] ? "bg-[#1A2C38]" : ""
-                    }`}
-                  >
-                    <span className="flex items-center">
-                      <span className="mr-2">{item.icon}</span>
-                      <span>{item.name}</span>
-                    </span>
-                    <ChevronRight 
-                      className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${
-                        openDropdowns[item.name] ? "rotate-90" : ""
-                      }`} 
-                    />
-                  </button>
-                  
-                  {openDropdowns[item.name] && (
-                    <ul className="ml-6 mt-1 space-y-1 border-l border-gray-800 pl-2">
-                      {item.dropdownItems?.map((dropdownItem, idx) => (
-                        <li key={idx}>
-                          <Link
-                            to={dropdownItem.path}
-                            className="block rounded px-3 py-1 text-sm text-gray-400 hover:bg-[#1A2C38] hover:text-white"
-                          >
-                            {dropdownItem.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ) : (
-                <Link
-                  to={item.path || "#"}
-                  className="flex items-center justify-between rounded px-3 py-2 text-sm text-white/80 hover:bg-[#1A2C38] hover:text-white"
+    <div className="sidebar">
+      <div className="sidebar-content">
+        {sidebarItems.map((item) => (
+          <div key={item.id} className="sidebar-item-container">
+            {item.children ? (
+              <div className="collapsible-item">
+                <button
+                  className="sidebar-item-button"
+                  onClick={() => toggleItem(item.id)}
                 >
-                  <span className="flex items-center">
-                    <span className="mr-2">{item.icon}</span>
-                    <span>{item.name}</span>
-                  </span>
-                  {item.hasArrow && <ChevronRight className="h-4 w-4 text-gray-400" />}
-                </Link>
-              )}
-            </li>
-          ))}
-        </ul>
+                  <span className="sidebar-icon">{item.icon}</span>
+                  <span className="sidebar-label">{item.label}</span>
+                  <ChevronDown className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`} />
+                </button>
+
+                <div className={`dropdown-content ${openItems.includes(item.id) ? 'expanded' : ''}`}>
+                  {item.children.map((child) => (
+                    <Link key={child.id} to={child.path || "#"} className="dropdown-item">
+                      {child.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <Link to={item.path || "#"} className="sidebar-item-link">
+                <span className="sidebar-icon">{item.icon}</span>
+                <span className="sidebar-label">{item.label}</span>
+              </Link>
+            )}
+          </div>
+        ))}
       </div>
-    </aside>
+    </div>
   );
 };
+
+// CSS styles
+const styles = `
+.sidebar {
+  width: 240px;
+  height: 100%;
+  background-color: #0A1218;
+  border-right: 1px solid #1f2937;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.sidebar-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sidebar-item-container {
+  width: 100%;
+}
+
+.sidebar-item-button,
+.sidebar-item-link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  background: none;
+  border: none;
+  color: #e5e7eb;
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.sidebar-item-button:hover,
+.sidebar-item-link:hover {
+  background-color: #17242D;
+}
+
+.sidebar-icon {
+  margin-right: 0.75rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+}
+
+.sidebar-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.sidebar-label {
+  flex: 1;
+  text-align: left;
+}
+
+.dropdown-icon {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-icon.rotated {
+  transform: rotate(-180deg);
+}
+
+.dropdown-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.dropdown-content.expanded {
+  max-height: 200px;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 0.5rem 1rem 0.5rem 2.75rem;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.dropdown-item:hover {
+  color: #e5e7eb;
+}
+`;
+
+// Add styles to document
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = styles;
+  document.head.appendChild(styleElement);
+}
 
 export default Sidebar;

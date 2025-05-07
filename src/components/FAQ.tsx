@@ -1,11 +1,5 @@
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import { ChevronUp } from "lucide-react";
 
 const faqs = [
@@ -40,38 +34,157 @@ const faqs = [
 ];
 
 const FAQ = () => {
+  const [openItem, setOpenItem] = useState<number | null>(null);
+  
+  const toggleItem = (index: number) => {
+    setOpenItem(openItem === index ? null : index);
+  };
+
   return (
-    <div className="mb-12">
-      <div className="mb-6 flex items-center">
-        <span className="mr-2 text-xl">❓</span>
-        <h2 className="text-xl font-bold text-white">Still Have Questions?</h2>
+    <div className="faq-section">
+      <div className="faq-header">
+        <span className="faq-icon">❓</span>
+        <h2 className="faq-title">Still Have Questions?</h2>
       </div>
 
-      <Accordion type="single" collapsible className="w-full">
+      <div className="faq-items">
         {faqs.map((faq, index) => (
-          <AccordionItem 
+          <div 
             key={index} 
-            value={`item-${index}`}
-            className="mb-2 rounded-lg bg-[#17242D] data-[state=open]:bg-[#192731]"
+            className={`faq-item ${openItem === index ? 'faq-open' : ''}`}
           >
-            <AccordionTrigger className="px-4 py-4 text-left hover:no-underline">
-              <span className="text-white">{faq.question}</span>
-              <ChevronUp className="h-4 w-4 shrink-0 text-gray-400 transition-transform duration-200" />
-            </AccordionTrigger>
-            <AccordionContent className="px-4 pb-4 pt-0 text-gray-300">
-              <p className="whitespace-pre-line">{faq.answer}</p>
-            </AccordionContent>
-          </AccordionItem>
+            <button className="faq-question" onClick={() => toggleItem(index)}>
+              <span className="question-text">{faq.question}</span>
+              <ChevronUp className="faq-icon-chevron" />
+            </button>
+            <div className="faq-answer">
+              <p>{faq.answer}</p>
+            </div>
+          </div>
         ))}
-      </Accordion>
+      </div>
 
-      <div className="mt-4">
-        <Button variant="outline" className="border-[#1A9AEF] bg-transparent text-[#1A9AEF] hover:bg-[#1A9AEF]/10">
+      <div className="faq-footer">
+        <button className="guides-button">
           Read our guides
-        </Button>
+        </button>
       </div>
     </div>
   );
 };
+
+// CSS styles
+const styles = `
+.faq-section {
+  margin-bottom: 3rem;
+}
+
+.faq-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.faq-icon {
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.faq-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+}
+
+.faq-items {
+  width: 100%;
+}
+
+.faq-item {
+  margin-bottom: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #17242D;
+  transition: background-color 0.2s;
+}
+
+.faq-item.faq-open {
+  background-color: #192731;
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  text-align: left;
+  border: none;
+  background: none;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.question-text {
+  margin-right: 1rem;
+}
+
+.faq-icon-chevron {
+  height: 1rem;
+  width: 1rem;
+  flex-shrink: 0;
+  color: #9ca3af;
+  transition: transform 0.2s;
+}
+
+.faq-open .faq-icon-chevron {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 1rem;
+  color: #d1d5db;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-open .faq-answer {
+  max-height: 500px;
+  padding: 0 1rem 1rem 1rem;
+}
+
+.faq-answer p {
+  white-space: pre-line;
+  line-height: 1.5;
+}
+
+.faq-footer {
+  margin-top: 1rem;
+}
+
+.guides-button {
+  background-color: transparent;
+  border: 1px solid #1A9AEF;
+  color: #1A9AEF;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.guides-button:hover {
+  background-color: rgba(26, 154, 239, 0.1);
+}
+`;
+
+// Add styles to document
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = styles;
+  document.head.appendChild(styleElement);
+}
 
 export default FAQ;

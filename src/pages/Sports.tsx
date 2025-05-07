@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { Search } from "lucide-react";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
@@ -8,8 +9,6 @@ import SportsCategoryCards from "@/components/SportsCategoryCards";
 import LiveEventsList from "@/components/LiveEventsList";
 import SportsBettingTable from "@/components/SportsBettingTable";
 import SportsBanners from "@/components/SportsBanners";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const navOptions = [
@@ -27,87 +26,83 @@ const Sports = () => {
   const [activeNav, setActiveNav] = useState("home");
   
   return (
-    <div className="flex min-h-screen flex-col bg-[#0F1923]">
+    <div className="sports-page">
       <Header />
       
-      <div className="flex flex-1">
-        <div className="hidden md:block">
+      <div className="page-content">
+        <div className="sidebar-container">
           <Sidebar />
         </div>
         
-        <main className="flex-1 p-0">
+        <main className="main-content">
           {/* Promotional banners */}
-          <div className="px-4 pt-4">
+          <div className="banners-section">
             <SportsBanners />
           </div>
           
           {/* Search bar */}
-          <div className="px-4">
+          <div className="search-section">
             <SearchBar placeholder="Search sports, leagues, teams..." />
           </div>
           
           {/* Navigation tabs */}
-          <div className="px-4 pb-4">
-            <div className="flex overflow-x-auto no-scrollbar space-x-2 py-2">
+          <div className="nav-section">
+            <div className="nav-tabs">
               {navOptions.map((option) => (
                 <Link
                   key={option.id}
                   to={option.path}
-                  className={`whitespace-nowrap flex items-center px-4 py-2 rounded-md ${
-                    activeNav === option.id 
-                    ? "bg-[#1A9AEF] text-white" 
-                    : "bg-[#17242D] text-white hover:bg-[#1A2C38]"
-                  } transition-transform hover:scale-105`}
+                  className={`nav-tab ${activeNav === option.id ? 'active' : ''}`}
                   onClick={() => setActiveNav(option.id)}
                 >
-                  <span className="text-sm font-medium">{option.label}</span>
+                  <span className="nav-label">{option.label}</span>
                 </Link>
               ))}
             </div>
           </div>
           
           {/* Sports Category Cards */}
-          <div className="px-4">
+          <div className="categories-section">
             <SportsCategoryCards />
           </div>
           
           {/* Live Events List */}
-          <div className="px-4 mb-8">
+          <div className="events-section">
             <LiveEventsList />
           </div>
           
           {/* Betting Table */}
-          <div className="px-4">
+          <div className="betting-section">
             <SportsBettingTable />
           </div>
           
           {/* Text content section */}
-          <div className="px-4 py-6 bg-[#0F1923]">
-            <h2 className="text-2xl font-bold text-white mb-4">Sports Betting at Stake Sportsbook - Bet on Sports with the Best Odds</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <div>
-                <p className="text-gray-400 text-sm mb-4">
+          <div className="text-section">
+            <h2 className="text-title">Sports Betting at Stake Sportsbook - Bet on Sports with the Best Odds</h2>
+            <div className="text-columns">
+              <div className="text-column">
+                <p className="text-paragraph">
                   With over 100,000 bets placed daily, Stake.com is the best place to place wagers on your favourite sports teams and players.
                 </p>
                 
-                <p className="text-gray-400 text-sm mb-4">
+                <p className="text-paragraph">
                   From the English Premier League to NBA basketball action, we cover all bases regarding sports and markets and offer unbeatable odds to online sports bettors.
                 </p>
               </div>
-              <div>
-                <p className="text-gray-400 text-sm mb-4">
+              <div className="text-column">
+                <p className="text-paragraph">
                   We are safer gambling advocates at Stake.com. We proud ourselves on offering the safest betting platform with a range of responsible gambling tools. You can use our budget calculator to stay on top of your spending habits and read up on our guide to knowing how much to gamble with.
                 </p>
               </div>
             </div>
 
-            <div className="mb-8">
-              <h3 className="text-xl font-bold text-white mb-4">Popular Types of Bets</h3>
-              <p className="text-gray-400 text-sm mb-4">
+            <div className="text-block">
+              <h3 className="text-subtitle">Popular Types of Bets</h3>
+              <p className="text-paragraph">
                 You can place lots of different sports bets at Stake.com, including the following:
               </p>
 
-              <ul className="list-disc pl-5 text-gray-400 text-sm space-y-2 mb-4">
+              <ul className="text-list">
                 <li>Moneyline: Bet on who will win the game.</li>
                 <li>Spread: Bet on a team to win or lose by a certain number of points.</li>
                 <li>Totals: Bet on the combined score being over or under a line set by the bookmaker.</li>
@@ -124,5 +119,155 @@ const Sports = () => {
     </div>
   );
 };
+
+// CSS styles
+const styles = `
+.sports-page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: #0F1923;
+}
+
+.page-content {
+  display: flex;
+  flex: 1;
+}
+
+.sidebar-container {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sidebar-container {
+    display: block;
+  }
+}
+
+.main-content {
+  flex: 1;
+  padding: 0;
+}
+
+.banners-section,
+.search-section,
+.nav-section,
+.categories-section,
+.events-section,
+.betting-section {
+  padding: 0 1rem;
+}
+
+.banners-section,
+.search-section {
+  padding-top: 1rem;
+}
+
+.nav-section {
+  padding-bottom: 1rem;
+}
+
+.nav-tabs {
+  display: flex;
+  overflow-x: auto;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.nav-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-tab {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  background-color: #17242D;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.nav-tab:hover {
+  background-color: #1A2C38;
+  transform: scale(1.05);
+}
+
+.nav-tab.active {
+  background-color: #1A9AEF;
+}
+
+.nav-label {
+  font-size: 0.875rem;
+}
+
+.text-section {
+  padding: 1.5rem 1rem;
+  background-color: #0F1923;
+}
+
+.text-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.text-columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .text-columns {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.text-paragraph {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+.text-block {
+  margin-bottom: 2rem;
+}
+
+.text-subtitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.text-list {
+  list-style-type: disc;
+  padding-left: 1.25rem;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.text-list li {
+  margin-bottom: 0.5rem;
+}
+`;
+
+// Add styles to document
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = styles;
+  document.head.appendChild(styleElement);
+}
 
 export default Sports;

@@ -2,7 +2,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Header from "@/components/Header";
-import { Button } from "@/components/ui/button";
 
 const NotFound = () => {
   const location = useLocation();
@@ -15,19 +14,83 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="flex min-h-screen flex-col bg-stake-dark">
+    <div className="not-found-page">
       <Header />
       
-      <div className="flex flex-1 flex-col items-center justify-center p-4">
-        <h1 className="mb-4 text-6xl font-bold text-stake-blue">404</h1>
-        <p className="mb-8 text-xl text-gray-300">Page not found</p>
-        <p className="mb-8 max-w-md text-center text-gray-400">The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
-        <Button className="bg-stake-blue hover:bg-stake-brightBlue">
-          <a href="/" className="text-white no-underline">Return to Home</a>
-        </Button>
+      <div className="not-found-content">
+        <h1 className="not-found-title">404</h1>
+        <p className="not-found-subtitle">Page not found</p>
+        <p className="not-found-message">The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+        <button className="home-button">
+          <a href="/" className="home-link">Return to Home</a>
+        </button>
       </div>
     </div>
   );
 };
+
+// CSS styles
+const styles = `
+.not-found-page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: #0F1923;
+}
+
+.not-found-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.not-found-title {
+  margin-bottom: 1rem;
+  font-size: 3.75rem;
+  font-weight: 700;
+  color: #1A9AEF;
+}
+
+.not-found-subtitle {
+  margin-bottom: 2rem;
+  font-size: 1.25rem;
+  color: #d1d5db;
+}
+
+.not-found-message {
+  margin-bottom: 2rem;
+  max-width: 28rem;
+  text-align: center;
+  color: #9ca3af;
+}
+
+.home-button {
+  background-color: #1A9AEF;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.home-button:hover {
+  background-color: #0F8CDD;
+}
+
+.home-link {
+  color: white;
+  text-decoration: none;
+}
+`;
+
+// Add styles to document
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = styles;
+  document.head.appendChild(styleElement);
+}
 
 export default NotFound;

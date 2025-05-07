@@ -7,174 +7,436 @@ import BettingTable from "@/components/BettingTable";
 import PromoBanners from "@/components/PromoBanners";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen flex-col bg-[#0F1923]">
+    <div className="index-page">
       <Header />
       
-      <div className="flex flex-1">
-        <div className="hidden md:block">
+      <div className="page-content">
+        <div className="sidebar-container">
           <Sidebar />
         </div>
         
-        <main className="flex-1 p-0">
-          <div className="flex h-[260px] items-center justify-between bg-[#0F1923] px-16">
-            <div className="max-w-lg">
-              <h1 className="mb-6 text-4xl font-bold text-white">World's Largest Online Casino and Sportsbook</h1>
-              <Button className="mb-4 bg-[#1A9AEF] px-8 py-2 font-semibold text-white transition-transform hover:scale-105 hover:bg-[#0F8CDD]">
+        <main className="main-content">
+          <div className="hero-section">
+            <div className="hero-content">
+              <h1 className="hero-title">World's Largest Online Casino and Sportsbook</h1>
+              <button className="register-button">
                 Register
-              </Button>
-              <div>
-                <p className="mb-2 text-sm text-gray-400">Or sign up with</p>
-                <div className="flex gap-2">
-                  <button className="flex h-8 w-8 items-center justify-center rounded-full bg-[#3B5998] text-white transition-transform hover:scale-110">f</button>
-                  <button className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#0F8CDD] transition-transform hover:scale-110">G</button>
-                  <button className="flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] text-white transition-transform hover:scale-110">W</button>
-                  <button className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5865F2] text-white transition-transform hover:scale-110">D</button>
+              </button>
+              <div className="social-signup">
+                <p className="social-text">Or sign up with</p>
+                <div className="social-buttons">
+                  <button className="social-button facebook">f</button>
+                  <button className="social-button google">G</button>
+                  <button className="social-button whatsapp">W</button>
+                  <button className="social-button discord">D</button>
                 </div>
               </div>
             </div>
             
-            <div className="hidden gap-4 lg:flex">
-              <div className="overflow-hidden rounded-md bg-[#17242D] transition-transform hover:scale-105">
-                <div className="flex items-center justify-between p-3">
-                  <div className="flex items-center">
-                    <span className="mr-2 text-lg">🎰</span>
-                    <span className="text-sm font-semibold text-white">Casino</span>
+            <div className="hero-cards">
+              <div className="hero-card">
+                <div className="card-header">
+                  <div className="card-badge">
+                    <span className="badge-icon">🎰</span>
+                    <span className="badge-text">Casino</span>
                   </div>
-                  <span className="text-xs text-green-500">50,602</span>
+                  <span className="card-count">50,602</span>
                 </div>
-                <img src="public/lovable-uploads/0b97a448-73a0-467a-9f19-7c2e8abc678c.png" alt="Casino" className="h-32 w-full object-cover" />
+                <img src="public/lovable-uploads/0b97a448-73a0-467a-9f19-7c2e8abc678c.png" alt="Casino" className="card-image" />
               </div>
               
-              <div className="overflow-hidden rounded-md bg-[#17242D] transition-transform hover:scale-105">
-                <div className="flex items-center justify-between p-3">
-                  <div className="flex items-center">
-                    <span className="mr-2 text-lg">⚽</span>
-                    <span className="text-sm font-semibold text-white">Sports</span>
+              <div className="hero-card">
+                <div className="card-header">
+                  <div className="card-badge">
+                    <span className="badge-icon">⚽</span>
+                    <span className="badge-text">Sports</span>
                   </div>
-                  <span className="text-xs text-green-500">94,838</span>
+                  <span className="card-count">94,838</span>
                 </div>
-                <img src="public/lovable-uploads/02a819fe-f4ed-4bea-a8a5-741ea85e13d3.png" alt="Sports" className="h-32 w-full object-cover" />
+                <img src="public/lovable-uploads/02a819fe-f4ed-4bea-a8a5-741ea85e13d3.png" alt="Sports" className="card-image" />
               </div>
             </div>
           </div>
           
           <SearchBar />
           
-          <div className="px-4">
-            <div className="mb-8">
-              <div className="mb-4 flex items-center justify-between">
-                <div className="flex items-center">
-                  <span className="mr-2 text-xl">🎮</span>
-                  <h2 className="text-xl font-bold text-white">Trending Games</h2>
-                </div>
-                <div className="flex space-x-2">
-                  <Button size="icon" variant="outline" className="h-8 w-8 rounded-full border-gray-700 bg-[#17242D] text-gray-400 hover:bg-[#0F1923] hover:text-white">
-                    <ChevronLeft className="h-4 w-4" />
-                  </Button>
-                  <Button size="icon" variant="outline" className="h-8 w-8 rounded-full border-gray-700 bg-[#17242D] text-gray-400 hover:bg-[#0F1923] hover:text-white">
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
-                </div>
+          <div className="games-section">
+            <div className="section-header">
+              <div className="section-title">
+                <span className="section-icon">🎮</span>
+                <h2>Trending Games</h2>
               </div>
-              
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-8">
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <div 
-                    key={index} 
-                    className="group relative aspect-[3/4] overflow-hidden rounded-md bg-gradient-to-b from-pink-500 to-purple-600 transition-transform hover:scale-105"
-                  >
-                    <div className="absolute left-2 top-2">
-                      <span className="rounded bg-[#0F1923]/80 px-2 py-1 text-sm font-bold text-white">{index + 1}</span>
-                    </div>
-                    
-                    {index % 2 === 1 && (
-                      <div className="absolute right-2 top-2">
-                        <span className="rounded bg-[#1A9AEF] px-2 py-0.5 text-xs font-bold text-white">EXCLUSIVE</span>
-                      </div>
-                    )}
-                    
-                    {index === 5 && (
-                      <div className="absolute right-2 top-2">
-                        <span className="rounded bg-green-500 px-2 py-0.5 text-xs font-bold text-white">EARLY ACCESS</span>
-                      </div>
-                    )}
-                    
-                    <div className="absolute bottom-0 w-full p-3 text-white">
-                      <h3 className="mb-1 text-sm font-bold">
-                        {["SWEET BONANZA", "FUNKIN' DONUTS", "HIGHWAY TO HELL", "BIKER BUCKS", "GATES OF OLYMPUS", "OOPS", "GATES OF OLYMPUS", "BIG BASS"][index]}
-                      </h3>
-                      <p className="text-xs opacity-80">
-                        {["PRAGMATIC PLAY", "HACKSAW STUDIO", "NOLIMIT CITY", "PLAY'N GO", "PRAGMATIC PLAY", "SMART SOFT", "PRAGMATIC PLAY", "REEL KINGDOM"][index]}
-                      </p>
-                      <div className="mt-2 flex items-center">
-                        <span className="flex h-2 w-2 animate-pulse rounded-full bg-green-500"></span>
-                        <span className="ml-1 text-xs">
-                          {[768, 192, 144, 54, 564, 38, 658, 267][index]} playing
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+              <div className="nav-arrows">
+                <button className="nav-arrow">
+                  <ChevronLeft className="arrow-icon" />
+                </button>
+                <button className="nav-arrow">
+                  <ChevronRight className="arrow-icon" />
+                </button>
               </div>
             </div>
             
-            <div className="mb-8">
-              <div className="mb-4 flex items-center justify-between">
-                <div className="flex items-center">
-                  <span className="mr-2 text-xl">🏆</span>
-                  <h2 className="text-xl font-bold text-white">Trending Sports</h2>
-                </div>
-                <div className="flex space-x-2">
-                  <Button size="icon" variant="outline" className="h-8 w-8 rounded-full border-gray-700 bg-[#17242D] text-gray-400 hover:bg-[#0F1923] hover:text-white">
-                    <ChevronLeft className="h-4 w-4" />
-                  </Button>
-                  <Button size="icon" variant="outline" className="h-8 w-8 rounded-full border-gray-700 bg-[#17242D] text-gray-400 hover:bg-[#0F1923] hover:text-white">
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-8">
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <div 
-                    key={index} 
-                    className="relative aspect-[3/4] overflow-hidden rounded-md bg-gradient-to-b from-blue-500 to-green-600 transition-transform hover:scale-105"
-                  >
-                    <div className="absolute left-2 top-2">
-                      <span className="rounded bg-[#0F1923]/80 px-2 py-1 text-sm font-bold text-white">{index + 1}</span>
-                    </div>
-                    
-                    <div className="absolute bottom-0 w-full p-3 text-white">
-                      <h3 className="mb-1 text-sm font-bold">
-                        {["CRICKET", "SOCCER", "TENNIS", "BASKETBALL", "BASEBALL", "ICE HOCKEY", "RACING", "ESPORTS"][index]}
-                      </h3>
+            <div className="games-grid">
+              {Array.from({ length: 8 }).map((_, index) => (
+                <div key={index} className="game-card">
+                  <div className="game-image-container">
+                    <img 
+                      src={`public/lovable-uploads/${['e8fc8e50-a196-4e5e-8e8b-ff5c92b4d1e1.png', 'fb85ff2a-543e-4c11-b199-05635ddcfe94.png', '0b97a448-73a0-467a-9f19-7c2e8abc678c.png', 'c81e0921-952f-42e9-9833-ff4c541b266f.png', 'dd8af98a-1fe6-4304-980a-c9946e7577ff.png', 'e528755e-4a3f-41a9-bb3b-aa5b1d9c1fa9.png', '02a819fe-f4ed-4bea-a8a5-741ea85e13d3.png'][index % 7]}`}
+                      alt={`Game ${index+1}`}
+                      className="game-image"
+                    />
+                    <div className="game-overlay">
+                      <button className="play-button">Play</button>
                     </div>
                   </div>
-                ))}
-              </div>
+                  <div className="game-info">
+                    <h3 className="game-title">Game Title {index+1}</h3>
+                    <p className="game-provider">Game Provider</p>
+                  </div>
+                </div>
+              ))}
             </div>
-
-            {/* Add the PromoBanners component */}
-            <PromoBanners />
-
-            {/* Add the BettingTable component */}
-            <BettingTable />
-
-            {/* Add the FAQ component */}
-            <FAQ />
           </div>
           
-          {/* Add Footer */}
+          <PromoBanners />
+          
+          <BettingTable />
+          
+          <FAQ />
+          
           <Footer />
         </main>
       </div>
     </div>
   );
 };
+
+// CSS styles
+const styles = `
+.index-page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: #0F1923;
+}
+
+.page-content {
+  display: flex;
+  flex: 1;
+}
+
+.sidebar-container {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sidebar-container {
+    display: block;
+  }
+}
+
+.main-content {
+  flex: 1;
+  padding: 0;
+}
+
+.hero-section {
+  display: flex;
+  height: 260px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #0F1923;
+  padding: 0 4rem;
+}
+
+.hero-content {
+  max-width: 32rem;
+}
+
+.hero-title {
+  margin-bottom: 1.5rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: white;
+}
+
+.register-button {
+  margin-bottom: 1rem;
+  padding: 0.5rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background-color: #1A9AEF;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.register-button:hover {
+  background-color: #0F8CDD;
+  transform: scale(1.05);
+}
+
+.social-signup {
+  color: white;
+}
+
+.social-text {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: #9ca3af;
+}
+
+.social-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.social-button {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 9999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.social-button:hover {
+  transform: scale(1.1);
+}
+
+.facebook {
+  background-color: #3B5998;
+  color: white;
+}
+
+.google {
+  background-color: white;
+  color: #0F8CDD;
+}
+
+.whatsapp {
+  background-color: #25D366;
+  color: white;
+}
+
+.discord {
+  background-color: #5865F2;
+  color: white;
+}
+
+.hero-cards {
+  display: none;
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .hero-cards {
+    display: flex;
+  }
+}
+
+.hero-card {
+  overflow: hidden;
+  border-radius: 0.375rem;
+  background-color: #17242D;
+  transition: transform 0.2s;
+}
+
+.hero-card:hover {
+  transform: scale(1.05);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+}
+
+.card-badge {
+  display: flex;
+  align-items: center;
+}
+
+.badge-icon {
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.badge-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+}
+
+.card-count {
+  font-size: 0.75rem;
+  color: #10B981;
+}
+
+.card-image {
+  height: 8rem;
+  width: 100%;
+  object-fit: cover;
+}
+
+.games-section {
+  padding: 0 1rem;
+  margin-bottom: 2rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+}
+
+.section-icon {
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.section-title h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+}
+
+.nav-arrows {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  width: 2rem;
+  border: 1px solid #374151;
+  border-radius: 9999px;
+  background-color: #17242D;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.nav-arrow:hover {
+  background-color: #0F1923;
+  color: white;
+}
+
+.arrow-icon {
+  height: 1rem;
+  width: 1rem;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .games-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .games-grid {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+
+.game-card {
+  border-radius: 0.375rem;
+  overflow: hidden;
+  background-color: #17242D;
+  transition: transform 0.2s;
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+}
+
+.game-image-container {
+  position: relative;
+}
+
+.game-image {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  object-fit: cover;
+}
+
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.game-image-container:hover .game-overlay {
+  opacity: 1;
+}
+
+.play-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  background-color: #1A9AEF;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.play-button:hover {
+  background-color: #0F8CDD;
+}
+
+.game-info {
+  padding: 0.5rem;
+}
+
+.game-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+}
+
+.game-provider {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+`;
+
+// Add styles to document
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = styles;
+  document.head.appendChild(styleElement);
+}
 
 export default Index;
