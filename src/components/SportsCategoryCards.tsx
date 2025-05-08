@@ -48,15 +48,15 @@ const sportCategories = [
   },
   {
     id: 7,
-    name: "CS2",
+    name: "RACING",
     image: "public/lovable-uploads/dd8af98a-1fe6-4304-980a-c9946e7577ff.png",
     color: "from-red-600 to-red-700",
     position: 7
   },
   {
     id: 8,
-    name: "DOTA 2",
-    image: "public/lovable-uploads/c81e0921-952f-42e9-9833-ff4c541b266f.png", // placeholder
+    name: "ESPORTS",
+    image: "public/lovable-uploads/c81e0921-952f-42e9-9833-ff4c541b266f.png",
     color: "from-blue-600 to-blue-700",
     position: 8
   },
@@ -81,53 +81,47 @@ const SportsCategoryCards = () => {
   };
 
   return (
-    <div className="mb-8">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="flex items-center text-lg font-bold text-white">
-          <span className="mr-2">🏆</span> Top Sports
-        </h2>
-        <div className="flex space-x-2">
+    <div className="sports-categories-section">
+      <div className="section-header">
+        <div className="section-title">
+          <span className="trophy-icon">🏆</span>
+          <h2>Trending Sports</h2>
+        </div>
+        <div className="nav-arrows">
           <button 
             onClick={() => handleScroll("left")}
-            className="h-8 w-8 flex items-center justify-center rounded-full border border-gray-700 bg-[#17242D] text-gray-400 hover:bg-[#0F1923] hover:text-white transition-colors"
+            className="nav-arrow"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="arrow-icon" />
           </button>
           <button 
             onClick={() => handleScroll("right")}
-            className="h-8 w-8 flex items-center justify-center rounded-full border border-gray-700 bg-[#17242D] text-gray-400 hover:bg-[#0F1923] hover:text-white transition-colors"
+            className="nav-arrow"
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="arrow-icon" />
           </button>
         </div>
       </div>
       
       <div 
         id="sports-categories-container"
-        className="flex overflow-x-auto no-scrollbar gap-4 pb-2"
+        className="sports-cards-container"
       >
         {sportCategories.map((sport) => (
           <Link 
             key={sport.id}
             to={`/sports/${sport.name.toLowerCase()}`}
-            className="relative min-w-[200px] max-w-[200px] aspect-[4/5] rounded-lg overflow-hidden group transition-transform hover:scale-105"
+            className="sport-category-card"
           >
-            <div className="absolute top-2 left-2 bg-black/50 rounded-full text-sm text-white px-3 py-1">
-              {sport.position}
-            </div>
-            <div className={`absolute inset-0 bg-gradient-to-b ${sport.color} opacity-80`}></div>
+            <div className="sport-position">{sport.position}</div>
+            <div className={`sport-bg ${sport.color}`}></div>
             <img 
               src={sport.image} 
               alt={sport.name}
-              className="absolute inset-0 h-full w-full object-cover mix-blend-overlay"
+              className="sport-image"
             />
-            <div className="absolute inset-0 flex flex-col justify-end p-4 text-white">
-              <h3 className="text-xl font-bold text-center">{sport.name}</h3>
-            </div>
-            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-              <button className="bg-[#FF6B01] text-white px-6 py-2 rounded-md font-medium transform transition-transform hover:scale-105">
-                View
-              </button>
+            <div className="sport-content">
+              <h3 className="sport-name">{sport.name}</h3>
             </div>
           </Link>
         ))}
@@ -135,5 +129,181 @@ const SportsCategoryCards = () => {
     </div>
   );
 };
+
+// CSS styles
+const styles = `
+.sports-categories-section {
+  margin-bottom: 2rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+}
+
+.trophy-icon {
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.section-title h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+}
+
+.nav-arrows {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  width: 2rem;
+  border: 1px solid #374151;
+  border-radius: 9999px;
+  background-color: #17242D;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.nav-arrow:hover {
+  background-color: #0F1923;
+  color: white;
+}
+
+.arrow-icon {
+  height: 1rem;
+  width: 1rem;
+}
+
+.sports-cards-container {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 0.5rem;
+}
+
+.sports-cards-container::-webkit-scrollbar {
+  display: none;
+}
+
+.sport-category-card {
+  position: relative;
+  min-width: 170px;
+  height: 220px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+.sport-category-card:hover {
+  transform: scale(1.05);
+}
+
+.sport-position {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  z-index: 10;
+}
+
+.sport-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.8;
+}
+
+.from-green-500.to-green-600 {
+  background: linear-gradient(to bottom, #10b981, #059669);
+}
+
+.from-blue-500.to-blue-600 {
+  background: linear-gradient(to bottom, #3b82f6, #2563eb);
+}
+
+.from-orange-500.to-red-500 {
+  background: linear-gradient(to bottom, #f97316, #ef4444);
+}
+
+.from-red-500.to-red-600 {
+  background: linear-gradient(to bottom, #ef4444, #dc2626);
+}
+
+.from-orange-400.to-orange-500 {
+  background: linear-gradient(to bottom, #fb923c, #f97316);
+}
+
+.from-pink-500.to-pink-600 {
+  background: linear-gradient(to bottom, #ec4899, #db2777);
+}
+
+.from-red-600.to-red-700 {
+  background: linear-gradient(to bottom, #dc2626, #b91c1c);
+}
+
+.from-blue-600.to-blue-700 {
+  background: linear-gradient(to bottom, #2563eb, #1d4ed8);
+}
+
+.sport-image {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  mix-blend-mode: overlay;
+}
+
+.sport-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1rem;
+  color: white;
+}
+
+.sport-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+`;
+
+// Add styles to document
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = styles;
+  document.head.appendChild(styleElement);
+}
 
 export default SportsCategoryCards;

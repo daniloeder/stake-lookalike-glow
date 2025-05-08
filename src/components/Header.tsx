@@ -38,7 +38,7 @@ const Header = () => {
 const styles = `
 .header {
   border-bottom: 1px solid #1f2937;
-  background-color: #1a2c38;
+  background-color: #0c1720;
   height: 56px;
   position: sticky;
   top: 0;
@@ -94,6 +94,12 @@ const styles = `
 .register-button:hover {
   transform: scale(1.05);
   background-color: #0F8CDD;
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    margin-left: 0;
+  }
 }
 `;
 

@@ -30,8 +30,7 @@ const SearchBar = ({ placeholder = "Search your game", fullWidth = true, classNa
 // CSS styles
 const styles = `
 .search-bar {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  flex: 1;
 }
 
 .search-bar.full-width {
@@ -48,15 +47,17 @@ const styles = `
   top: 50%;
   transform: translateY(-50%);
   color: #9ca3af;
+  width: 18px;
+  height: 18px;
 }
 
 .search-input {
   width: 100%;
+  height: 100%;
   padding: 0.75rem 1rem 0.75rem 2.5rem;
   font-size: 0.875rem;
-  border-radius: 0.375rem;
-  background-color: #17242D;
-  border: 1px solid #374151;
+  background-color: #132635;
+  border: none;
   color: white;
 }
 
@@ -66,8 +67,6 @@ const styles = `
 
 .search-input:focus {
   outline: none;
-  border-color: #1A9AEF;
-  box-shadow: 0 0 0 1px #1A9AEF;
 }
 `;
 

@@ -4,10 +4,11 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu } from "lucide-react";
 
 // Import SVG icons
+import chevronDownIcon from "../assets/icons/chevron-down.svg";
 import chevronRightIcon from "../assets/icons/chevron-right.svg";
 import star from "../assets/icons/star.svg";
 
-interface SidebarProps {
+export interface SidebarProps {
   collapsed: boolean;
   toggleSidebar: () => void;
 }
@@ -340,14 +341,8 @@ const styles = `
   margin: 1rem 1rem 0 1rem;
   border-radius: 6px;
   background-color: #1A2C38;
-  flex: 1;
   overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.sidebar-content::-webkit-scrollbar {
-  display: none;
+  flex: 1;
 }
 
 .sidebar-item-container {
@@ -449,7 +444,6 @@ const styles = `
 .language-option {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 0.5rem 1rem 0.5rem 1.5rem;
   color: #9ca3af;
   font-size: 0.875rem;
@@ -469,6 +463,7 @@ const styles = `
 .language-radio {
   width: 14px;
   height: 14px;
+  margin-right: 10px;
   border: 1px solid #9ca3af;
   border-radius: 50%;
   display: inline-block;
@@ -493,7 +488,6 @@ const styles = `
 /* Collapsed state styles */
 .sidebar.collapsed .sidebar-label,
 .sidebar.collapsed .dropdown-icon,
-.sidebar.collapsed .item-dropdown-icon,
 .sidebar.collapsed .nav-tab {
   display: none;
 }
@@ -505,10 +499,6 @@ const styles = `
 .sidebar.collapsed .sidebar-header {
   justify-content: center;
   padding: 0.75rem 0;
-}
-
-.sidebar.collapsed .sidebar-content {
-  margin: 1rem 0.5rem 0 0.5rem;
 }
 
 .sidebar.collapsed .dropdown-content {
