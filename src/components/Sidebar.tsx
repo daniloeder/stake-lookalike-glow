@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu } from "lucide-react";
 
@@ -138,13 +138,13 @@ const Sidebar = ({ collapsed, toggleSidebar }: SidebarProps) => {
   const [activeTab, setActiveTab] = useState<"casino" | "sports">("sports");
 
   // Set active tab based on current path
-  useState(() => {
+  useEffect(() => {
     if (location.pathname.includes("/casino")) {
       setActiveTab("casino");
     } else {
       setActiveTab("sports");
     }
-  });
+  }, [location.pathname]);
 
   const toggleItem = (id: string) => {
     if (openItems.includes(id)) {
@@ -193,9 +193,7 @@ const Sidebar = ({ collapsed, toggleSidebar }: SidebarProps) => {
                   onClick={() => toggleItem(item.id)}
                 >
                   <span className="sidebar-icon">
-                    <img src={
-                      item.icon
-                    } alt={item.label} />
+                    <img src={item.icon} alt={item.label} />
                   </span>
                   <span className="sidebar-label">{item.label}</span>
                   <span className="item-dropdown-icon">
@@ -282,6 +280,7 @@ const styles = `
   margin-right: 0.75rem;
   display: flex;
   align-items: center;
+  height: 24px; /* Fixed height for consistency */
 }
 
 .toggle-icon {
@@ -342,7 +341,15 @@ const styles = `
   border-radius: 6px;
   background-color: #1A2C38;
   overflow-y: auto;
-  flex: 1;
+  flex: 0 1 auto; /* Changed from flex: 1 to only take necessary height */
+  max-height: calc(100vh - 60px); /* Limit max height */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.sidebar-content::-webkit-scrollbar {
+  display: none;
 }
 
 .sidebar-item-container {
@@ -394,12 +401,16 @@ const styles = `
   padding: 0.15rem;
   border-radius: 9999px;
   background-color: #2F4553;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dropdown-icon {
   width: 16px;
   height: 16px;
   transition: transform 0.3s ease;
+  display: block;
 }
 
 .dropdown-icon.rotated {
@@ -414,14 +425,8 @@ const styles = `
 }
 
 .dropdown-content.expanded {
-  max-height: 500px;
-  overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.dropdown-content.expanded::-webkit-scrollbar {
-  display: none;
+  max-height: none; /* Allow content to expand fully */
+  overflow-y: visible;
 }
 
 .dropdown-item {
@@ -516,7 +521,7 @@ const styles = `
 }
 
 .sidebar.collapsed .sidebar-item-container:hover .dropdown-content {
-  max-height: 500px;
+  max-height: none; /* Allow full height */
   visibility: visible;
 }
 
@@ -528,6 +533,15 @@ const styles = `
 .sidebar.collapsed .sidebar-item-link {
   justify-content: center;
   padding: 0.75rem 0;
+}
+
+.sidebar.collapsed .item-dropdown-icon {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #1A2C38; /* Added the specified color */
+  z-index: 5;
 }
 
 @media (max-width: 768px) {
