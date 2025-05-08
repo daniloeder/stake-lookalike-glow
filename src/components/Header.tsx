@@ -37,9 +37,9 @@ const Header = () => {
 // CSS styles
 const styles = `
 .header {
-  border-bottom: 1px solid #1f2937;
-  background-color: #0c1720;
-  height: 56px;
+  border-bottom: 1px solid #1A2C38;
+  background-color: #0A1218;
+  height: 60px;
   position: sticky;
   top: 0;
   width: 100%;
@@ -50,8 +50,10 @@ const styles = `
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
   height: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
 .header-left {
@@ -65,40 +67,43 @@ const styles = `
 }
 
 .logo {
-  height: 2.5rem;
+  height: 2rem;
   width: auto;
 }
 
 .header-right {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .login-button {
   color: white;
+  font-weight: 500;
   transition: background-color 0.2s, color 0.2s;
 }
 
 .login-button:hover {
-  background-color: #1A2C38;
+  background-color: rgba(255, 255, 255, 0.1);
   color: white;
 }
 
 .register-button {
   background-color: #1A9AEF;
   color: white;
+  font-weight: 500;
+  padding: 0 1.25rem;
   transition: transform 0.2s, background-color 0.2s;
+  border-radius: 4px;
 }
 
 .register-button:hover {
-  transform: scale(1.05);
   background-color: #0F8CDD;
 }
 
 @media (max-width: 768px) {
   .header-container {
-    margin-left: 0;
+    padding: 0 1rem;
   }
 }
 `;
