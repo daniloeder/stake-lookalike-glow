@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu } from "lucide-react";
+import { Menu, ChevronRight } from "lucide-react";
 
 // Import SVG icons
 import chevronDownIcon from "../assets/icons/chevron-down.svg";
@@ -171,14 +171,14 @@ const Sidebar = ({ collapsed, toggleSidebar }: SidebarProps) => {
             className={`nav-tab ${activeTab === "casino" ? "casino-active" : "casino-inactive"}`}
             onClick={() => setActiveTab("casino")}
           >
-            Casino
+            <span className="nav-tab-text">Casino</span>
           </Link>
           <Link 
             to="/sports" 
             className={`nav-tab ${activeTab === "sports" ? "sports-active" : "sports-inactive"}`}
             onClick={() => setActiveTab("sports")}
           >
-            Sports
+            <span className="nav-tab-text">Sports</span>
           </Link>
         </div>
       </div>
@@ -193,16 +193,20 @@ const Sidebar = ({ collapsed, toggleSidebar }: SidebarProps) => {
                   onClick={() => toggleItem(item.id)}
                 >
                   <span className="sidebar-icon">
-                    <img src={item.icon} alt={item.label} />
+                    <img src={item.icon} alt={item.label} className="white-icon" />
                   </span>
                   <span className="sidebar-label">{item.label}</span>
-                  <span className="item-dropdown-icon">
-                    <img 
-                      src={chevronRightIcon} 
-                      alt="expand" 
-                      className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`} 
-                    />
-                  </span>
+                  {collapsed ? (
+                    <ChevronRight className="dropdown-icon-collapsed" />
+                  ) : (
+                    <span className="item-dropdown-icon">
+                      <img 
+                        src={chevronRightIcon} 
+                        alt="expand" 
+                        className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`} 
+                      />
+                    </span>
+                  )}
                 </button>
 
                 <div className={`dropdown-content ${openItems.includes(item.id) ? 'expanded' : ''}`}>
@@ -219,7 +223,7 @@ const Sidebar = ({ collapsed, toggleSidebar }: SidebarProps) => {
                     ) : (
                       <Link key={child.id} to={child.path || "#"} className="dropdown-item">
                         <span className="sidebar-icon">
-                          <img src={child.icon} alt={child.label} />
+                          <img src={child.icon} alt={child.label} className="white-icon" />
                         </span>
                         <span className="sidebar-label">{child.label}</span>
                       </Link>
@@ -230,7 +234,7 @@ const Sidebar = ({ collapsed, toggleSidebar }: SidebarProps) => {
             ) : (
               <Link to={item.path || "#"} className="sidebar-item-link">
                 <span className="sidebar-icon">
-                  <img src={item.icon} alt={item.label} />
+                  <img src={item.icon} alt={item.label} className="white-icon" />
                 </span>
                 <span className="sidebar-label">{item.label}</span>
               </Link>
@@ -302,6 +306,10 @@ const styles = `
   transition: all 0.2s;
   text-decoration: none;
   font-size: 0.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 40px;
 }
 
 .nav-tab:hover {
@@ -388,6 +396,12 @@ const styles = `
   flex-shrink: 0;
 }
 
+.white-icon {
+  filter: brightness(0) invert(1); /* Makes icons white */
+  width: 100%;
+  height: 100%;
+}
+
 .sidebar-label {
   flex: 1;
   white-space: nowrap;
@@ -411,6 +425,15 @@ const styles = `
   height: 16px;
   transition: transform 0.3s ease;
   display: block;
+  filter: brightness(0) invert(1); /* Makes icons white */
+}
+
+.dropdown-icon-collapsed {
+  width: 16px;
+  height: 16px;
+  color: white;
+  position: absolute;
+  right: 8px;
 }
 
 .dropdown-icon.rotated {
@@ -493,7 +516,7 @@ const styles = `
 /* Collapsed state styles */
 .sidebar.collapsed .sidebar-label,
 .sidebar.collapsed .dropdown-icon,
-.sidebar.collapsed .nav-tab {
+.sidebar.collapsed .item-dropdown-icon {
   display: none;
 }
 
@@ -504,6 +527,17 @@ const styles = `
 .sidebar.collapsed .sidebar-header {
   justify-content: center;
   padding: 0.75rem 0;
+}
+
+.sidebar.collapsed .nav-tab-text {
+  display: none;
+}
+
+.sidebar.collapsed .nav-tab {
+  padding: 0.5rem;
+  min-width: 28px;
+  width: 28px;
+  height: 28px;
 }
 
 .sidebar.collapsed .dropdown-content {
@@ -533,6 +567,7 @@ const styles = `
 .sidebar.collapsed .sidebar-item-link {
   justify-content: center;
   padding: 0.75rem 0;
+  position: relative;
 }
 
 .sidebar.collapsed .item-dropdown-icon {
