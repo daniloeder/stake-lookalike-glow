@@ -38,14 +38,12 @@ const Header = () => {
 const styles = `
 .header {
   border-bottom: 1px solid #1f2937;
-  background-color: #0F1923;
+  background-color: #1a2c38;
   height: 56px;
-  z-index: 950;
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   width: 100%;
+  z-index: 100;
 }
 
 .header-container {
@@ -54,12 +52,6 @@ const styles = `
   justify-content: space-between;
   padding: 0 1rem;
   height: 100%;
-  margin-left: 240px;
-  transition: margin-left 0.3s ease;
-}
-
-.sidebar-collapsed .header-container {
-  margin-left: 60px;
 }
 
 .header-left {
@@ -102,12 +94,6 @@ const styles = `
 .register-button:hover {
   transform: scale(1.05);
   background-color: #0F8CDD;
-}
-
-@media (max-width: 768px) {
-  .header-container {
-    margin-left: 0;
-  }
 }
 `;
 

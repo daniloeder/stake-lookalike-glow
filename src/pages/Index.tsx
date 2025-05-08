@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
 import SearchBar from "@/components/SearchBar";
 import BettingTable from "@/components/BettingTable";
 import PromoBanners from "@/components/PromoBanners";
@@ -14,103 +13,97 @@ const Index = () => {
     <div className="index-page">
       <Header />
       
-      <div className="page-content">
-        <div className="sidebar-container">
-          <Sidebar />
+      <main className="main-content">
+        <div className="hero-section">
+          <div className="hero-content">
+            <h1 className="hero-title">World's Largest Online Casino and Sportsbook</h1>
+            <button className="register-button">
+              Register
+            </button>
+            <div className="social-signup">
+              <p className="social-text">Or sign up with</p>
+              <div className="social-buttons">
+                <button className="social-button facebook">f</button>
+                <button className="social-button google">G</button>
+                <button className="social-button whatsapp">W</button>
+                <button className="social-button discord">D</button>
+              </div>
+            </div>
+          </div>
+          
+          <div className="hero-cards">
+            <div className="hero-card">
+              <div className="card-header">
+                <div className="card-badge">
+                  <span className="badge-icon">🎰</span>
+                  <span className="badge-text">Casino</span>
+                </div>
+                <span className="card-count">50,602</span>
+              </div>
+              <img src="public/lovable-uploads/0b97a448-73a0-467a-9f19-7c2e8abc678c.png" alt="Casino" className="card-image" />
+            </div>
+            
+            <div className="hero-card">
+              <div className="card-header">
+                <div className="card-badge">
+                  <span className="badge-icon">⚽</span>
+                  <span className="badge-text">Sports</span>
+                </div>
+                <span className="card-count">94,838</span>
+              </div>
+              <img src="public/lovable-uploads/02a819fe-f4ed-4bea-a8a5-741ea85e13d3.png" alt="Sports" className="card-image" />
+            </div>
+          </div>
         </div>
         
-        <main className="main-content">
-          <div className="hero-section">
-            <div className="hero-content">
-              <h1 className="hero-title">World's Largest Online Casino and Sportsbook</h1>
-              <button className="register-button">
-                Register
+        <SearchBar />
+        
+        <div className="games-section">
+          <div className="section-header">
+            <div className="section-title">
+              <span className="section-icon">🎮</span>
+              <h2>Trending Games</h2>
+            </div>
+            <div className="nav-arrows">
+              <button className="nav-arrow">
+                <ChevronLeft className="arrow-icon" />
               </button>
-              <div className="social-signup">
-                <p className="social-text">Or sign up with</p>
-                <div className="social-buttons">
-                  <button className="social-button facebook">f</button>
-                  <button className="social-button google">G</button>
-                  <button className="social-button whatsapp">W</button>
-                  <button className="social-button discord">D</button>
-                </div>
-              </div>
-            </div>
-            
-            <div className="hero-cards">
-              <div className="hero-card">
-                <div className="card-header">
-                  <div className="card-badge">
-                    <span className="badge-icon">🎰</span>
-                    <span className="badge-text">Casino</span>
-                  </div>
-                  <span className="card-count">50,602</span>
-                </div>
-                <img src="public/lovable-uploads/0b97a448-73a0-467a-9f19-7c2e8abc678c.png" alt="Casino" className="card-image" />
-              </div>
-              
-              <div className="hero-card">
-                <div className="card-header">
-                  <div className="card-badge">
-                    <span className="badge-icon">⚽</span>
-                    <span className="badge-text">Sports</span>
-                  </div>
-                  <span className="card-count">94,838</span>
-                </div>
-                <img src="public/lovable-uploads/02a819fe-f4ed-4bea-a8a5-741ea85e13d3.png" alt="Sports" className="card-image" />
-              </div>
+              <button className="nav-arrow">
+                <ChevronRight className="arrow-icon" />
+              </button>
             </div>
           </div>
           
-          <SearchBar />
-          
-          <div className="games-section">
-            <div className="section-header">
-              <div className="section-title">
-                <span className="section-icon">🎮</span>
-                <h2>Trending Games</h2>
-              </div>
-              <div className="nav-arrows">
-                <button className="nav-arrow">
-                  <ChevronLeft className="arrow-icon" />
-                </button>
-                <button className="nav-arrow">
-                  <ChevronRight className="arrow-icon" />
-                </button>
-              </div>
-            </div>
-            
-            <div className="games-grid">
-              {Array.from({ length: 8 }).map((_, index) => (
-                <div key={index} className="game-card">
-                  <div className="game-image-container">
-                    <img 
-                      src={`public/lovable-uploads/${['e8fc8e50-a196-4e5e-8e8b-ff5c92b4d1e1.png', 'fb85ff2a-543e-4c11-b199-05635ddcfe94.png', '0b97a448-73a0-467a-9f19-7c2e8abc678c.png', 'c81e0921-952f-42e9-9833-ff4c541b266f.png', 'dd8af98a-1fe6-4304-980a-c9946e7577ff.png', 'e528755e-4a3f-41a9-bb3b-aa5b1d9c1fa9.png', '02a819fe-f4ed-4bea-a8a5-741ea85e13d3.png'][index % 7]}`}
-                      alt={`Game ${index+1}`}
-                      className="game-image"
-                    />
-                    <div className="game-overlay">
-                      <button className="play-button">Play</button>
-                    </div>
-                  </div>
-                  <div className="game-info">
-                    <h3 className="game-title">Game Title {index+1}</h3>
-                    <p className="game-provider">Game Provider</p>
+          <div className="games-grid">
+            {Array.from({ length: 8 }).map((_, index) => (
+              <div key={index} className="game-card">
+                <div className="game-image-container">
+                  <img 
+                    src={`public/lovable-uploads/${['e8fc8e50-a196-4e5e-8e8b-ff5c92b4d1e1.png', 'fb85ff2a-543e-4c11-b199-05635ddcfe94.png', '0b97a448-73a0-467a-9f19-7c2e8abc678c.png', 'c81e0921-952f-42e9-9833-ff4c541b266f.png', 'dd8af98a-1fe6-4304-980a-c9946e7577ff.png', 'e528755e-4a3f-41a9-bb3b-aa5b1d9c1fa9.png', '02a819fe-f4ed-4bea-a8a5-741ea85e13d3.png'][index % 7]}`}
+                    alt={`Game ${index+1}`}
+                    className="game-image"
+                  />
+                  <div className="game-overlay">
+                    <button className="play-button">Play</button>
                   </div>
                 </div>
-              ))}
-            </div>
+                <div className="game-info">
+                  <h3 className="game-title">Game Title {index+1}</h3>
+                  <p className="game-provider">Game Provider</p>
+                </div>
+              </div>
+            ))}
           </div>
-          
-          <PromoBanners />
-          
-          <BettingTable />
-          
-          <FAQ />
-          
-          <Footer />
-        </main>
-      </div>
+        </div>
+        
+        <PromoBanners />
+        
+        <BettingTable />
+        
+        <FAQ />
+        
+        <Footer />
+      </main>
     </div>
   );
 };
@@ -121,22 +114,7 @@ const styles = `
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-color: #0F1923;
-}
-
-.page-content {
-  display: flex;
-  flex: 1;
-}
-
-.sidebar-container {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .sidebar-container {
-    display: block;
-  }
+  background-color: #0F212E;
 }
 
 .main-content {
@@ -149,7 +127,7 @@ const styles = `
   height: 260px;
   align-items: center;
   justify-content: space-between;
-  background-color: #0F1923;
+  background-color: #0f212e;
   padding: 0 4rem;
 }
 

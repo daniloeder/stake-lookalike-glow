@@ -4,8 +4,13 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu } from "lucide-react";
 
 // Import SVG icons
-import chevronDownIcon from "../assets/icons/chevron-down.svg";
 import chevronRightIcon from "../assets/icons/chevron-right.svg";
+import star from "../assets/icons/star.svg";
+
+interface SidebarProps {
+  collapsed: boolean;
+  toggleSidebar: () => void;
+}
 
 interface SidebarItem {
   id: string;
@@ -18,6 +23,7 @@ interface SidebarItem {
 
 interface SidebarSubItem {
   id: string;
+  icon?: string;
   label: string;
   path?: string;
   isLanguageOption?: boolean;
@@ -26,108 +32,107 @@ interface SidebarSubItem {
 const sidebarItems: SidebarItem[] = [
   {
     id: "promotions",
-    icon: "gift", // Will be replaced with SVG
+    icon: star,
     label: "Promotions",
     expandable: true,
     children: [
-      { id: "weekly-raffle", label: "$75k Weekly Raffle", path: "/promotions/weekly-raffle" },
-      { id: "race", label: "$100k Race", path: "/promotions/race" },
-      { id: "pragmatic", label: "Pragmatic Drops & Wins", path: "/promotions/pragmatic" },
-      { id: "view-all", label: "View All", path: "/promotions" },
+      { id: "weekly-raffle", label: "$75k Weekly Raffle", path: "/promotions/weekly-raffle", icon: star },
+      { id: "race", label: "$100k Race", path: "/promotions/race", icon: star },
+      { id: "pragmatic", label: "Pragmatic Drops & Wins", path: "/promotions/pragmatic", icon: star },
+      { id: "view-all", label: "View All", path: "/promotions", icon: star },
     ],
   },
   {
     id: "affiliate",
-    icon: "badge", // Will be replaced with SVG
+    icon: star,
     label: "Affiliate",
     path: "/affiliate",
   },
   {
     id: "vip-club",
-    icon: "crown", // Will be replaced with SVG
+    icon: star,
     label: "VIP Club",
     path: "/vip",
   },
   {
     id: "blog",
-    icon: "file-text", // Will be replaced with SVG
+    icon: star,
     label: "Blog",
     path: "/blog",
   },
   {
     id: "forum",
-    icon: "message-circle", // Will be replaced with SVG
+    icon: star,
     label: "Forum",
     path: "/forum",
   },
   {
     id: "sponsorships",
-    icon: "trophy", // Will be replaced with SVG
+    icon: star,
     label: "Sponsorships",
     expandable: true,
     children: [
-      { id: "drake", label: "Drake", path: "/sponsorships/drake" },
-      { id: "stake-f1-team", label: "Stake F1 Team", path: "/sponsorships/stake-f1-team" },
-      { id: "ufc", label: "UFC", path: "/sponsorships/ufc" },
-      { id: "everton", label: "Everton Football Club", path: "/sponsorships/everton" },
-      { id: "juventude", label: "Esporte Clube Juventude", path: "/sponsorships/juventude" },
-      { id: "melgar", label: "FBC Melgar", path: "/sponsorships/melgar" },
-      { id: "fortaleza", label: "Fortaleza CEIF", path: "/sponsorships/fortaleza" },
-      { id: "nublense", label: "Club Deportivo Ñublense", path: "/sponsorships/nublense" },
-      { id: "enyimba", label: "Enyimba Football Club", path: "/sponsorships/enyimba" },
-      { id: "davis-cup", label: "Davis Cup", path: "/sponsorships/davis-cup" },
-      { id: "aguero", label: "Kun Agüero", path: "/sponsorships/aguero" },
-      { id: "adesanya", label: "Israel Adesanya", path: "/sponsorships/adesanya" },
-      { id: "pereira", label: "Alex Pereira", path: "/sponsorships/pereira" },
-      { id: "shevchenko", label: "Valentina Shevchenko", path: "/sponsorships/shevchenko" },
-      { id: "dvalishvili", label: "Merab Dvalishvili", path: "/sponsorships/dvalishvili" },
-      { id: "pantoja", label: "Alexandre Pantoja", path: "/sponsorships/pantoja" },
-      { id: "borralho", label: "Caio Borralho", path: "/sponsorships/borralho" },
-      { id: "dettori", label: "Frankie Dettori", path: "/sponsorships/dettori" },
+      { id: "drake", label: "Drake", path: "/sponsorships/drake", icon: star },
+      { id: "stake-f1-team", label: "Stake F1 Team", path: "/sponsorships/stake-f1-team", icon: star },
+      { id: "ufc", label: "UFC", path: "/sponsorships/ufc", icon: star },
+      { id: "everton", label: "Everton Football Club", path: "/sponsorships/everton", icon: star },
+      { id: "juventude", label: "Esporte Clube Juventude", path: "/sponsorships/juventude", icon: star },
+      { id: "melgar", label: "FBC Melgar", path: "/sponsorships/melgar", icon: star },
+      { id: "fortaleza", label: "Fortaleza CEIF", path: "/sponsorships/fortaleza", icon: star },
+      { id: "nublense", label: "Club Deportivo Ñublense", path: "/sponsorships/nublense", icon: star },
+      { id: "enyimba", label: "Enyimba Football Club", path: "/sponsorships/enyimba", icon: star },
+      { id: "davis-cup", label: "Davis Cup", path: "/sponsorships/davis-cup", icon: star },
+      { id: "aguero", label: "Kun Agüero", path: "/sponsorships/aguero", icon: star },
+      { id: "adesanya", label: "Israel Adesanya", path: "/sponsorships/adesanya", icon: star },
+      { id: "pereira", label: "Alex Pereira", path: "/sponsorships/pereira", icon: star },
+      { id: "shevchenko", label: "Valentina Shevchenko", path: "/sponsorships/shevchenko", icon: star },
+      { id: "dvalishvili", label: "Merab Dvalishvili", path: "/sponsorships/dvalishvili", icon: star },
+      { id: "pantoja", label: "Alexandre Pantoja", path: "/sponsorships/pantoja", icon: star },
+      { id: "borralho", label: "Caio Borralho", path: "/sponsorships/borralho", icon: star },
+      { id: "dettori", label: "Frankie Dettori", path: "/sponsorships/dettori", icon: star },
     ],
   },
   {
     id: "responsible-gambling",
-    icon: "shield", // Will be replaced with SVG
+    icon: star,
     label: "Responsible Gambling",
     path: "/responsible-gambling",
   },
   {
     id: "live-support",
-    icon: "headset", // Will be replaced with SVG
+    icon: star,
     label: "Live Support",
     path: "/support",
   },
   {
     id: "language",
-    icon: "globe", // Will be replaced with SVG
+    icon: star,
     label: "Language: English",
     expandable: true,
     children: [
-      { id: "english", label: "English", path: "/language/english", isLanguageOption: true },
-      { id: "espanol", label: "Español", path: "/language/espanol", isLanguageOption: true },
-      { id: "japanese", label: "日本語", path: "/language/japanese", isLanguageOption: true },
-      { id: "chinese", label: "中文", path: "/language/chinese", isLanguageOption: true },
-      { id: "portuguese", label: "Português", path: "/language/portuguese", isLanguageOption: true },
-      { id: "russian", label: "Русский", path: "/language/russian", isLanguageOption: true },
-      { id: "french", label: "Français", path: "/language/french", isLanguageOption: true },
-      { id: "german", label: "Deutsch", path: "/language/german", isLanguageOption: true },
-      { id: "hindi", label: "हिन्दी", path: "/language/hindi", isLanguageOption: true },
-      { id: "indonesian", label: "Indonesian", path: "/language/indonesian", isLanguageOption: true },
-      { id: "korean", label: "한국어", path: "/language/korean", isLanguageOption: true },
-      { id: "polish", label: "Polski", path: "/language/polish", isLanguageOption: true },
-      { id: "turkish", label: "Türkçe", path: "/language/turkish", isLanguageOption: true },
-      { id: "vietnamese", label: "Tiếng Việt", path: "/language/vietnamese", isLanguageOption: true },
-      { id: "finnish", label: "Suomen", path: "/language/finnish", isLanguageOption: true },
-      { id: "arabic", label: "اَلْعَرَبِيَّةُ", path: "/language/arabic", isLanguageOption: true },
+      { id: "english", label: "English", path: "/language/english", isLanguageOption: true, icon: star },
+      { id: "espanol", label: "Español", path: "/language/espanol", isLanguageOption: true, icon: star },
+      { id: "japanese", label: "日本語", path: "/language/japanese", isLanguageOption: true, icon: star },
+      { id: "chinese", label: "中文", path: "/language/chinese", isLanguageOption: true, icon: star },
+      { id: "portuguese", label: "Português", path: "/language/portuguese", isLanguageOption: true, icon: star },
+      { id: "russian", label: "Русский", path: "/language/russian", isLanguageOption: true, icon: star },
+      { id: "french", label: "Français", path: "/language/french", isLanguageOption: true, icon: star },
+      { id: "german", label: "Deutsch", path: "/language/german", isLanguageOption: true, icon: star },
+      { id: "hindi", label: "हिन्दी", path: "/language/hindi", isLanguageOption: true, icon: star },
+      { id: "indonesian", label: "Indonesian", path: "/language/indonesian", isLanguageOption: true, icon: star },
+      { id: "korean", label: "한국어", path: "/language/korean", isLanguageOption: true, icon: star },
+      { id: "polish", label: "Polski", path: "/language/polish", isLanguageOption: true, icon: star },
+      { id: "turkish", label: "Türkçe", path: "/language/turkish", isLanguageOption: true, icon: star },
+      { id: "vietnamese", label: "Tiếng Việt", path: "/language/vietnamese", isLanguageOption: true, icon: star },
+      { id: "finnish", label: "Suomen", path: "/language/finnish", isLanguageOption: true, icon: star },
+      { id: "arabic", label: "اَلْعَرَبِيَّةُ", path: "/language/arabic", isLanguageOption: true, icon: star },
     ],
   },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ collapsed, toggleSidebar }: SidebarProps) => {
   const location = useLocation();
   const [openItems, setOpenItems] = useState<string[]>([]);
-  const [collapsed, setCollapsed] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("english");
   const [activeTab, setActiveTab] = useState<"casino" | "sports">("sports");
 
@@ -150,10 +155,6 @@ const Sidebar = () => {
 
   const handleLanguageSelect = (id: string) => {
     setSelectedLanguage(id);
-  };
-
-  const toggleSidebar = () => {
-    setCollapsed(!collapsed);
   };
 
   return (
@@ -191,14 +192,18 @@ const Sidebar = () => {
                   onClick={() => toggleItem(item.id)}
                 >
                   <span className="sidebar-icon">
-                    {/* Icon placeholder */}
+                    <img src={
+                      item.icon
+                    } alt={item.label} />
                   </span>
                   <span className="sidebar-label">{item.label}</span>
-                  <img 
-                    src={chevronRightIcon} 
-                    alt="expand" 
-                    className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`} 
-                  />
+                  <span className="item-dropdown-icon">
+                    <img 
+                      src={chevronRightIcon} 
+                      alt="expand" 
+                      className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`} 
+                    />
+                  </span>
                 </button>
 
                 <div className={`dropdown-content ${openItems.includes(item.id) ? 'expanded' : ''}`}>
@@ -209,12 +214,15 @@ const Sidebar = () => {
                         className={`language-option ${selectedLanguage === child.id ? 'selected' : ''}`}
                         onClick={() => handleLanguageSelect(child.id)}
                       >
-                        <span className="language-radio"></span>
                         <span className="language-label">{child.label}</span>
+                        <span className="language-radio"></span>
                       </div>
                     ) : (
                       <Link key={child.id} to={child.path || "#"} className="dropdown-item">
-                        {child.label}
+                        <span className="sidebar-icon">
+                          <img src={child.icon} alt={child.label} />
+                        </span>
+                        <span className="sidebar-label">{child.label}</span>
                       </Link>
                     )
                   ))}
@@ -223,7 +231,7 @@ const Sidebar = () => {
             ) : (
               <Link to={item.path || "#"} className="sidebar-item-link">
                 <span className="sidebar-icon">
-                  {/* Icon placeholder */}
+                  <img src={item.icon} alt={item.label} />
                 </span>
                 <span className="sidebar-label">{item.label}</span>
               </Link>
@@ -243,9 +251,9 @@ const styles = `
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #0A1218;
+  background-color: #0F212E;
   border-right: 1px solid #1f2937;
-  overflow-y: auto;
+  overflow-y: hidden;
   transition: width 0.3s ease;
   z-index: 900;
   display: flex;
@@ -329,10 +337,17 @@ const styles = `
 }
 
 .sidebar-content {
-  padding: 0.75rem 0;
-  display: flex;
-  flex-direction: column;
+  margin: 1rem 1rem 0 1rem;
+  border-radius: 6px;
+  background-color: #1A2C38;
   flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sidebar-content::-webkit-scrollbar {
+  display: none;
 }
 
 .sidebar-item-container {
@@ -358,7 +373,7 @@ const styles = `
 
 .sidebar-item-button:hover,
 .sidebar-item-link:hover {
-  background-color: #17242D;
+  background-color: #213743;
 }
 
 .sidebar-icon {
@@ -376,6 +391,14 @@ const styles = `
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.item-dropdown-icon {
+  padding: 0.15rem;
+  border-radius: 9999px;
+  background-color: #2F4553;
 }
 
 .dropdown-icon {
@@ -392,15 +415,24 @@ const styles = `
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease;
+  background-color: #213743;
 }
 
 .dropdown-content.expanded {
   max-height: 500px;
   overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.dropdown-content.expanded::-webkit-scrollbar {
+  display: none;
 }
 
 .dropdown-item {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   padding: 0.5rem 1rem 0.5rem 1.5rem;
   color: #9ca3af;
   font-size: 0.875rem;
@@ -417,6 +449,7 @@ const styles = `
 .language-option {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0.5rem 1rem 0.5rem 1.5rem;
   color: #9ca3af;
   font-size: 0.875rem;
@@ -436,7 +469,6 @@ const styles = `
 .language-radio {
   width: 14px;
   height: 14px;
-  margin-right: 10px;
   border: 1px solid #9ca3af;
   border-radius: 50%;
   display: inline-block;
@@ -461,6 +493,7 @@ const styles = `
 /* Collapsed state styles */
 .sidebar.collapsed .sidebar-label,
 .sidebar.collapsed .dropdown-icon,
+.sidebar.collapsed .item-dropdown-icon,
 .sidebar.collapsed .nav-tab {
   display: none;
 }
@@ -472,6 +505,10 @@ const styles = `
 .sidebar.collapsed .sidebar-header {
   justify-content: center;
   padding: 0.75rem 0;
+}
+
+.sidebar.collapsed .sidebar-content {
+  margin: 1rem 0.5rem 0 0.5rem;
 }
 
 .sidebar.collapsed .dropdown-content {
