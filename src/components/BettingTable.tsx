@@ -1,65 +1,92 @@
 
 import { useState } from "react";
 
-interface BettingData {
-  game: string;
-  user: string;
-  time: string;
-  amount: string;
-  multiplier: string;
-  payout: string;
-  cryptoType?: string;
-  isWin?: boolean;
-}
-
 const BettingTable = () => {
-  const [activeTab, setActiveTab] = useState("casino-bets");
+  const [activeTab, setActiveTab] = useState("high-rollers");
   
-  // Sample betting data
-  const bettingData: BettingData[] = [
-    { game: "The Dog Mansion Megaways", user: "Hidden", time: "11:55 AM", amount: "CA$10.00", multiplier: "223.20×", payout: "CA$2,232.00", cryptoType: "cad", isWin: true },
-    { game: "Keno", user: "Hidden", time: "11:55 AM", amount: "CA$2,007.04", multiplier: "0.00×", payout: "-CA$2,007.04", cryptoType: "cad", isWin: false },
-    { game: "Slide", user: "Hidden", time: "11:55 AM", amount: "150.00000000", multiplier: "10.00×", payout: "1500.00000", cryptoType: "trx", isWin: true },
-    { game: "Slide", user: "Hidden", time: "11:55 AM", amount: "150.00000000", multiplier: "15.00×", payout: "2250.00000", cryptoType: "trx", isWin: true },
-    { game: "Keno", user: "Hidden", time: "11:55 AM", amount: "CA$2,007.04", multiplier: "0.00×", payout: "-CA$2,007.04", cryptoType: "cad", isWin: false },
-    { game: "Keno", user: "Hidden", time: "11:55 AM", amount: "CA$2,007.04", multiplier: "0.00×", payout: "-CA$2,007.04", cryptoType: "cad", isWin: false },
-    { game: "The Dog House Dice Megaways", user: "Hidden", time: "11:55 AM", amount: "299.91002699", multiplier: "418.70×", payout: "125572.3283", cryptoType: "trx", isWin: true },
+  // Tabs for the betting table section
+  const betTabs = [
+    { id: "my-bets", label: "My Bets" },
+    { id: "all-bets", label: "All Bets" },
+    { id: "high-rollers", label: "High Rollers" },
+    { id: "race-leaderboard", label: "Race Leaderboard" },
   ];
+
+  // Sample betting data
+  const bettingData = [
+    { game: "Keno", user: "Hidden", time: "5:55 PM", amount: "1050.000000...", crypto: "trx", multiplier: "0.00×", payout: "-1050.000000...", isWin: false },
+    { game: "Grand Japanese Sp...", user: "Hidden", time: "5:55 PM", amount: "2250.265973...", crypto: "trx", multiplier: "1.41×", payout: "3172.875022...", isWin: true },
+    { game: "Keno", user: "Hidden", time: "5:55 PM", amount: "1050.000000...", crypto: "trx", multiplier: "0.00×", payout: "-1050.000000...", isWin: false },
+    { game: "Duck Hunters", user: "Hidden", time: "5:55 PM", amount: "46.99530047", crypto: "trx", multiplier: "103.38×", payout: "4858.554144...", isWin: true },
+    { game: "Keno", user: "Hidden", time: "5:55 PM", amount: "1050.000000...", crypto: "trx", multiplier: "0.00×", payout: "-1050.000000...", isWin: false },
+    { game: "Salon Privé Blackjack...", user: "Hidden", time: "5:55 PM", amount: "12252.80070...", crypto: "usd", multiplier: "1.00×", payout: "12252.80070...", isWin: true },
+    { game: "Keno", user: "Hidden", time: "5:55 PM", amount: "1050.000000...", crypto: "trx", multiplier: "0.00×", payout: "-1050.000000...", isWin: false },
+    { game: "Keno", user: "Hidden", time: "5:55 PM", amount: "1050.000000...", crypto: "trx", multiplier: "0.00×", payout: "-1050.000000...", isWin: false },
+    { game: "Keno", user: "Hidden", time: "5:55 PM", amount: "1050.000000...", crypto: "trx", multiplier: "0.00×", payout: "-1050.000000...", isWin: false },
+    { game: "Salon Privé Blackjack...", user: "Hidden", time: "5:55 PM", amount: "1199.880012...", crypto: "trx", multiplier: "0.60×", payout: "-479.95200480", isWin: false },
+  ];
+
+  const cryptoIcons = {
+    trx: "🔷",
+    usd: "💵"
+  };
 
   return (
     <div className="betting-table">
-      <table className="w-full">
-        <thead>
-          <tr className="table-header">
-            <th className="table-cell">Game</th>
-            <th className="table-cell">User</th>
-            <th className="table-cell">Time</th>
-            <th className="table-cell">Bet Amount</th>
-            <th className="table-cell">Multiplier</th>
-            <th className="table-cell">Payout</th>
+      <div className="table-tabs">
+        {betTabs.map((tab) => (
+          <button
+            key={tab.id}
+            className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
+            onClick={() => setActiveTab(tab.id)}
+          >
+            {tab.label}
+            {tab.id === "race-leaderboard" && (
+              <span className="live-dot"></span>
+            )}
+          </button>
+        ))}
+        <div className="rows-select">
+          <select className="rows-dropdown">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+          </select>
+        </div>
+      </div>
+      
+      <table className="bets-table">
+        <thead className="table-header">
+          <tr className="header-row">
+            <th className="header-cell">Game</th>
+            <th className="header-cell">User</th>
+            <th className="header-cell">Time</th>
+            <th className="header-cell">Bet Amount</th>
+            <th className="header-cell">Multiplier</th>
+            <th className="header-cell">Payout</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="table-body">
           {bettingData.map((bet, index) => (
             <tr key={index} className="table-row">
               <td className="table-cell">
                 <div className="game-cell">
-                  <div className="game-icon">🎲</div>
+                  <span className="game-icon">🎮</span>
                   {bet.game}
                 </div>
               </td>
-              <td className="table-cell user-cell">
-                <div className="user-icon">👤</div>
-                {bet.user}
+              <td className="table-cell">
+                <div className="user-cell">
+                  <span className="user-icon">👤</span>
+                  {bet.user}
+                </div>
               </td>
               <td className="table-cell">{bet.time}</td>
-              <td className="table-cell">
-                <span className={`bet-amount ${bet.cryptoType}`}>
-                  {bet.amount}
+              <td className="table-cell amount-cell">
+                {bet.amount}
+                <span className={`crypto-badge crypto-${bet.crypto}`}>
+                  {cryptoIcons[bet.crypto as keyof typeof cryptoIcons] || '💰'}
                 </span>
-                {bet.cryptoType && (
-                  <span className={`crypto-badge ${bet.cryptoType}`}></span>
-                )}
               </td>
               <td className={`table-cell multiplier ${bet.isWin ? 'win' : 'loss'}`}>
                 {bet.isWin && <span className="win-icon">🔥</span>}
@@ -67,9 +94,9 @@ const BettingTable = () => {
               </td>
               <td className={`table-cell payout ${bet.isWin ? 'win' : 'loss'}`}>
                 {bet.payout}
-                {bet.cryptoType && (
-                  <span className={`crypto-badge ${bet.cryptoType}`}></span>
-                )}
+                <span className={`crypto-badge crypto-${bet.crypto}`}>
+                  {cryptoIcons[bet.crypto as keyof typeof cryptoIcons] || '💰'}
+                </span>
               </td>
             </tr>
           ))}
@@ -82,52 +109,121 @@ const BettingTable = () => {
 // CSS styles
 const styles = `
 .betting-table {
-  background-color: #17242D;
-  border-radius: 0 0 0.5rem 0.5rem;
+  background-color: #0F1923;
+  border-radius: 0.5rem;
   overflow: hidden;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.table-tabs {
+  display: flex;
+  border-bottom: 1px solid #1f2937;
+  background-color: #0A1218;
+  padding: 0 0.5rem;
+}
+
+.tab-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #9ca3af;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+  position: relative;
+}
+
+.tab-button:hover {
+  color: white;
+}
+
+.tab-button.active {
+  color: white;
+  background-color: #17242D;
+  border-radius: 4px 4px 0 0;
+}
+
+.live-dot {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  display: inline-block;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 9999px;
+  background-color: #10B981;
+}
+
+.rows-select {
+  margin-left: auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.rows-dropdown {
+  background-color: #17242D;
+  color: white;
+  border: 1px solid #374151;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+.bets-table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .table-header {
-  background-color: #0c1720;
-  color: #9ca3af;
-  font-weight: 500;
-  font-size: 0.875rem;
-  text-align: left;
+  background-color: #17242D;
 }
 
-.table-cell {
+.header-row {
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #9ca3af;
+}
+
+.header-cell {
   padding: 0.75rem 1rem;
   border-bottom: 1px solid #1f2937;
 }
 
 .table-row {
-  background-color: #17242D;
-  transition: background-color 0.2s;
-  color: white;
+  border-bottom: 1px solid #1f2937;
   font-size: 0.875rem;
+  transition: background-color 0.2s;
 }
 
 .table-row:hover {
-  background-color: #1A2C38;
+  background-color: rgba(23, 36, 45, 0.5);
+}
+
+.table-cell {
+  padding: 0.75rem 1rem;
+  color: white;
 }
 
 .game-cell {
   display: flex;
   align-items: center;
+  color: white;
 }
 
 .game-icon {
-  margin-right: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-right: 0.5rem;
   font-size: 1rem;
 }
 
 .user-cell {
   display: flex;
   align-items: center;
-  color: #9ca3af;
+  color: #d1d5db;
 }
 
 .user-icon {
@@ -135,37 +231,14 @@ const styles = `
   font-size: 1rem;
 }
 
-.bet-amount {
+.amount-cell {
   font-family: monospace;
+  white-space: nowrap;
 }
 
-.bet-amount.cad {
-  color: #f97316;
-}
-
-.bet-amount.trx {
-  color: #10B981;
-}
-
-.crypto-badge {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin-left: 6px;
-}
-
-.crypto-badge.cad {
-  background-color: #f97316;
-}
-
-.crypto-badge.trx {
-  background-color: #10B981;
-}
-
-.multiplier,
-.payout {
+.multiplier, .payout {
   font-family: monospace;
+  white-space: nowrap;
 }
 
 .multiplier.win,
@@ -179,7 +252,41 @@ const styles = `
 }
 
 .win-icon {
-  margin-right: 4px;
+  margin-right: 0.25rem;
+}
+
+.crypto-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.crypto-trx {
+  background-color: #10B981;
+}
+
+.crypto-usd {
+  background-color: #ef4444;
+}
+
+@media (max-width: 768px) {
+  .table-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .tab-button {
+    padding: 0.5rem 1rem;
+  }
+  
+  .table-cell {
+    padding: 0.5rem;
+  }
 }
 `;
 

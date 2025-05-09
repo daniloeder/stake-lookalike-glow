@@ -1,13 +1,14 @@
-
 import { useState } from "react";
-import Header from "@/components/Header";
 import SearchBar from "@/components/SearchBar";
 import TabBar from "@/components/TabBar";
 import PromoBanners from "@/components/PromoBanners";
+import BettingTable from "@/components/BettingTable";
+import Footer from "@/components/Footer";
 import { ChevronLeft, ChevronRight, Gamepad, Star } from "lucide-react";
 
 const Casino = () => {
   const [activeTab, setActiveTab] = useState("all");
+  const [activeMainTab, setActiveMainTab] = useState("lobby");
 
   const casinoCategories = [
     { id: "all", name: "All", count: 5602 },
@@ -24,8 +25,22 @@ const Casino = () => {
     { id: "bonus-buy", name: "Bonus Buy", count: 367 },
   ];
 
+  const mainCasinoTabs = [
+    { id: "lobby", name: "Lobby" },
+    { id: "stake-originals", name: "Stake Originals" },
+    { id: "slots", name: "Slots" },
+    { id: "live-casino", name: "Live Casino" },
+    { id: "game-shows", name: "Game Shows" },
+    { id: "stake-exclusives", name: "Stake Exclusives" },
+    { id: "new-releases", name: "New Releases" },
+  ];
+
   const handleTabChange = (tabId: string) => {
     setActiveTab(tabId);
+  };
+
+  const handleMainTabChange = (tabId: string) => {
+    setActiveMainTab(tabId);
   };
   
   // Sample data for each section
@@ -132,74 +147,111 @@ const Casino = () => {
           <SearchBar placeholder="Search games..." />
         </div>
         
-        <div className="casino-categories">
-          <TabBar 
-            items={casinoCategories}
-            activeItem={activeTab}
-            onTabChange={handleTabChange}
-          />
-        </div>
-        
-        <div className="casino-section">
-          <SectionHeader title="Stake Originals" icon={<Gamepad className="section-icon" />} />
-          <div className="games-grid">
-            {stakeOriginals.map(game => (
-              <GameCard key={game.id} game={game} />
+        <div className="main-tabs-container">
+          <div className="main-tabs">
+            {mainCasinoTabs.map((tab) => (
+              <button
+                key={tab.id}
+                className={`main-tab-item ${activeMainTab === tab.id ? 'active' : ''}`}
+                onClick={() => handleMainTabChange(tab.id)}
+              >
+                {tab.name}
+              </button>
             ))}
           </div>
         </div>
         
-        <div className="casino-section">
-          <SectionHeader title="Slots" />
-          <div className="games-grid">
-            {slotGames.map(game => (
-              <GameCard key={game.id} game={game} />
-            ))}
-          </div>
-        </div>
-        
-        <div className="casino-section">
-          <SectionHeader title="Providers" />
-          <div className="providers-grid">
-            {providers.map(provider => (
-              <div key={provider.id} className="provider-card">
-                <img src={provider.image} alt={provider.name} className="provider-logo" />
-              </div>
-            ))}
-          </div>
-        </div>
-        
-        <div className="casino-section">
-          <SectionHeader title="Live Casino" />
-          <div className="games-grid">
-            {liveGames.map(game => (
-              <GameCard key={game.id} game={game} />
-            ))}
-          </div>
-        </div>
-        
-        <div className="casino-section">
-          <SectionHeader title="Game Shows" />
-          <div className="games-grid">
-            {gameShows.map(game => (
-              <GameCard key={game.id} game={game} />
-            ))}
-          </div>
-        </div>
-        
-        <div className="casino-section">
-          <SectionHeader title="Stake Exclusives" />
-          <div className="games-grid">
-            {stakeExclusives.map(game => (
-              <GameCard 
-                key={game.id} 
-                game={game} 
-                badge={game.enhanced ? "ENHANCED RTP" : "EXCLUSIVE"}
+        {activeMainTab === "lobby" && (
+          <>
+            <div className="casino-categories">
+              <TabBar 
+                items={casinoCategories}
+                activeItem={activeTab}
+                onTabChange={handleTabChange}
               />
-            ))}
-          </div>
-        </div>
+            </div>
+
+            <BettingTable />
+
+            <div className="casino-section">
+              <SectionHeader title="Stake Originals" icon={<Gamepad className="section-icon" />} />
+              <div className="games-grid">
+                {stakeOriginals.map(game => (
+                  <GameCard key={game.id} game={game} />
+                ))}
+              </div>
+            </div>
+            
+            <div className="casino-section">
+              <SectionHeader title="Slots" />
+              <div className="games-grid">
+                {slotGames.map(game => (
+                  <GameCard key={game.id} game={game} />
+                ))}
+              </div>
+            </div>
+            
+            <div className="casino-section">
+              <SectionHeader title="Providers" />
+              <div className="providers-grid">
+                {providers.map(provider => (
+                  <div key={provider.id} className="provider-card">
+                    <img src={provider.image} alt={provider.name} className="provider-logo" />
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="casino-section">
+              <SectionHeader title="Live Casino" />
+              <div className="games-grid">
+                {liveGames.map(game => (
+                  <GameCard key={game.id} game={game} />
+                ))}
+              </div>
+            </div>
+            
+            <div className="casino-section">
+              <SectionHeader title="Game Shows" />
+              <div className="games-grid">
+                {gameShows.map(game => (
+                  <GameCard key={game.id} game={game} />
+                ))}
+              </div>
+            </div>
+            
+            <div className="casino-section">
+              <SectionHeader title="Stake Exclusives" />
+              <div className="games-grid">
+                {stakeExclusives.map(game => (
+                  <GameCard 
+                    key={game.id} 
+                    game={game} 
+                    badge={game.enhanced ? "ENHANCED RTP" : "EXCLUSIVE"}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="info-section">
+              <h2 className="info-title">Online Casino Games at Stake Casino</h2>
+              
+              <div className="info-content">
+                <div className="info-column left">
+                  <p>Since 2017, <strong>Stake.com</strong> has offered the best online casino gaming experience, compatible with local currencies, bitcoin and other crypto on the web. Starting with <strong>Stake Originals</strong>, our first-party casino games developed here at Stake, the <strong>online casino gaming platform</strong> has grown to host over 3000 casino games from the best providers in the iGaming industry.</p>
+                  <p>Players come back to Stake.com time and time again for our high quality and varied collection of games, modern website platform, instant transactions, expert customer support and generous <a href="#" className="text-link">bonuses and promotions</a>.</p>
+                </div>
+                
+                <div className="info-column right">
+                  <p>Many popular table game classics include <strong>Blackjack games</strong>, <strong>Baccarat games</strong>, <strong>Roulette games</strong>, <strong>Card games</strong>, <strong>Stake Poker</strong> and more, which are popular due to their advantageous <strong>house edge</strong> and big win opportunities. Learn all there is to know about dealer options and how to play casino classic table games with our <strong>ultimate guide to table games</strong>.</p>
+                  <p>Electronic table games provide not only the convenience of playing for real money in the convenience of your device, but also provides additional features like special side bets and more options to deliver a unique gaming experience. Players can head to Stake's <a href="#" className="text-link">video poker online</a> to try out some of the best titles instantly.</p>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
+      <Footer />
     </div>
   );
 };
@@ -217,6 +269,44 @@ const styles = `
 
 .casino-section {
   margin-bottom: 2rem;
+}
+
+.main-tabs-container {
+  margin: 1.5rem 0;
+  border-bottom: 1px solid #1A2C38;
+}
+
+.main-tabs {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.main-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.main-tab-item {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #9ca3af;
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.2s;
+  position: relative;
+}
+
+.main-tab-item:hover {
+  color: white;
+}
+
+.main-tab-item.active {
+  color: white;
+  border-bottom: 2px solid #1A9AEF;
 }
 
 .providers-grid {
@@ -260,6 +350,50 @@ const styles = `
   z-index: 10;
 }
 
+.info-section {
+  padding: 2rem;
+  background-color: #0F1923;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.info-title {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.info-content {
+  display: flex;
+  gap: 2rem;
+}
+
+.info-column {
+  flex: 1;
+}
+
+.info-column p {
+  color: #9ca3af;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.info-column strong {
+  color: white;
+  font-weight: 600;
+}
+
+.text-link {
+  color: #1A9AEF;
+  text-decoration: none;
+}
+
+.text-link:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 1400px) {
   .providers-grid {
     grid-template-columns: repeat(5, 1fr);
@@ -269,6 +403,11 @@ const styles = `
 @media (max-width: 1024px) {
   .providers-grid {
     grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .info-content {
+    flex-direction: column;
+    gap: 1rem;
   }
 }
 
@@ -281,6 +420,10 @@ const styles = `
 @media (max-width: 640px) {
   .providers-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .info-section {
+    padding: 1.5rem;
   }
 }
 `;
