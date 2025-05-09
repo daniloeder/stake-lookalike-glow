@@ -9,7 +9,7 @@ const Header = () => {
         <div className="header-left">
           <Link to="/" className="logo-link">
             <img 
-              src="public/lovable-uploads/f5e5c414-4cd6-431f-a438-5ecffedb9217.png" 
+              src="src/assets/images/logo.png"
               alt="Stake"
               className="logo"
             />
@@ -38,7 +38,7 @@ const Header = () => {
 const styles = `
 .header {
   border-bottom: 1px solid #1A2C38;
-  background-color: #0A1218;
+  background-color: #1A2C38;
   height: 60px;
   position: sticky;
   top: 0;
@@ -50,7 +50,7 @@ const styles = `
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1.5rem;
+  width: 86%;
   height: 100%;
   max-width: 1600px;
   margin: 0 auto;
@@ -67,14 +67,14 @@ const styles = `
 }
 
 .logo {
-  height: 2rem;
+  height: 3rem;
   width: auto;
 }
 
 .header-right {
   display: flex;
-  align-items: center;
   gap: 0.75rem;
+  margin-top: 1.25rem;
 }
 
 .login-button {
@@ -89,7 +89,7 @@ const styles = `
 }
 
 .register-button {
-  background-color: #1A9AEF;
+  background-color: #1060B7;
   color: white;
   font-weight: 500;
   padding: 0 1.25rem;
@@ -98,7 +98,7 @@ const styles = `
 }
 
 .register-button:hover {
-  background-color: #0F8CDD;
+  background-color: #1060B7;
 }
 
 @media (max-width: 768px) {
@@ -106,6 +106,7 @@ const styles = `
     padding: 0 1rem;
   }
 }
+
 `;
 
 // Add styles to document

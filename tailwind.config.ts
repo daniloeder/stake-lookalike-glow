@@ -56,8 +56,8 @@ export default {
 				stake: {
 					dark: "#0F1923",
 					darker: "#0A1218",
-					blue: "#1A9AEF", 
-					brightBlue: "#0F8CDD",
+					blue: "#1060B7", 
+					brightBlue: "#1060B7",
 					orange: "#FF6B01",
 					green: "#10B981",
 					red: "#EF4444",

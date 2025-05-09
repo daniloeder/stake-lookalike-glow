@@ -1,6 +1,3 @@
-
-import { Button } from "@/components/ui/button";
-
 const promos = [
   {
     id: 1,
@@ -9,7 +6,7 @@ const promos = [
     ctaText: "Read More",
     buttonText: "Bet Now",
     label: "Promo",
-    image: "public/lovable-uploads/e8fc8e50-a196-4e5e-8e8b-ff5c92b4d1e1.png",
+    image: "public/images/promo1.avif",
   },
   {
     id: 2,
@@ -18,7 +15,7 @@ const promos = [
     ctaText: "Read More",
     buttonText: "Bet Now",
     label: "Promo",
-    image: "public/lovable-uploads/fb85ff2a-543e-4c11-b199-05635ddcfe94.png",
+    image: "public/images/promo2.avif",
   },
   {
     id: 3,
@@ -27,50 +24,136 @@ const promos = [
     ctaText: "Read More",
     buttonText: "Bet Now!",
     label: "Promo",
-    image: "public/lovable-uploads/c81e0921-952f-42e9-9833-ff4c541b266f.png",
+    image: "public/images/promo3.avif",
   },
 ];
 
 const PromoBanners = () => {
   return (
-    <div className="my-8">
-      <h2 className="mb-4 flex items-center text-xl font-bold text-white">
-        <span className="mr-2 text-xl">🎁</span>
-        Promotions
-      </h2>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {promos.map((promo) => (
-          <div 
-            key={promo.id} 
-            className="relative overflow-hidden rounded-lg bg-[#17242D] transition-transform hover:scale-105"
-          >
-            <div className="absolute left-2 top-2 rounded bg-[#0F1923] px-2 py-1 text-xs font-semibold text-white">
-              {promo.label}
-            </div>
-            <div className="flex h-full">
-              <div className="flex flex-1 flex-col justify-center p-4">
-                <h3 className="mb-1 text-lg font-bold text-white">{promo.title}</h3>
-                <p className="mb-2 text-sm text-gray-300">{promo.description}</p>
-                <button className="mb-2 text-left text-xs text-[#1A9AEF] hover:underline">
-                  {promo.ctaText}
-                </button>
-                <Button className="mt-auto w-full bg-[#1A9AEF] text-white hover:bg-[#0F8CDD]">
-                  {promo.buttonText}
-                </Button>
-              </div>
-              <div className="w-1/3">
-                <img
-                  src={promo.image}
-                  alt={promo.title}
-                  className="h-full w-full object-cover"
-                />
+    <>
+      <style>{styles}</style>
+      <div className="promo-banners">
+        <h2>
+          <span>🎁</span> Promotions
+        </h2>
+        <div className="promo-grid">
+          {promos.map((promo) => (
+            <div key={promo.id} className="promo-card">
+              <div className="promo-content">
+                <div className="promo-text">
+                  <div className="promo-label">{promo.label}</div>
+                  <h3>{promo.title}</h3>
+                  <p>{promo.description}</p>
+                </div>
+                <div className="promo-image-container">
+                  <img
+                    src={promo.image}
+                    alt={promo.title}
+                    className="promo-image"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
+
+const styles = `
+  .promo-banners {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .promo-banners h2 {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: white;
+  }
+
+  .promo-banners h2 span {
+    margin-right: 0.5rem;
+    font-size: 1.25rem;
+  }
+
+  .promo-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .promo-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .promo-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background-color: #213743;
+    transition: transform 0.3s;
+    padding: 0.8rem;
+  }
+
+  .promo-card:hover {
+    transform: scale(1.05);
+  }
+
+  .promo-label {
+    background-color: #E9EBED;
+    padding: 0.15rem 0.3rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #000000;
+    border-radius: 0.25rem;
+    display: inline-block;
+    max-width: 28%;
+  }
+
+  .promo-content {
+    display: flex;
+    height: 100%;
+  }
+
+  .promo-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .promo-text h3 {
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+  }
+
+  .promo-text p {
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: #D1D5DB;
+  }
+
+  .promo-image-container {
+    width: 43.33%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .promo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+`;
 
 export default PromoBanners;

@@ -134,7 +134,7 @@ const styles = `
   margin-bottom: 0.5rem;
   text-align: left;
   font-size: 0.75rem;
-  color: #1A9AEF;
+  color: #1060B7;
   background: none;
   border: none;
   cursor: pointer;
@@ -148,7 +148,7 @@ const styles = `
 .promo-button {
   margin-top: auto;
   width: 80%;
-  background-color: #1A9AEF;
+  background-color: #1060B7;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -160,7 +160,7 @@ const styles = `
 }
 
 .promo-button:hover {
-  background-color: #0F8CDD;
+  background-color: #1060B7;
   transform: scale(1.05);
 }
 

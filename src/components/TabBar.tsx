@@ -74,7 +74,7 @@ const styles = `
 }
 
 .tab-item.active {
-  background-color: #1A9AEF;
+  background-color: #1060B7;
   color: white;
 }
 

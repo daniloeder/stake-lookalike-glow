@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
@@ -55,7 +55,7 @@ const FAQ = () => {
           >
             <button className="faq-question" onClick={() => toggleItem(index)}>
               <span className="question-text">{faq.question}</span>
-              <ChevronUp className="faq-icon-chevron" />
+              <ChevronDown className="faq-icon-chevron" />
             </button>
             <div className="faq-answer">
               <p>{faq.answer}</p>
@@ -103,12 +103,8 @@ const styles = `
 .faq-item {
   margin-bottom: 0.5rem;
   border-radius: 0.5rem;
-  background-color: #17242D;
+  background-color: #213743;
   transition: background-color 0.2s;
-}
-
-.faq-item.faq-open {
-  background-color: #192731;
 }
 
 .faq-question {
@@ -131,8 +127,8 @@ const styles = `
 }
 
 .faq-icon-chevron {
-  height: 1rem;
-  width: 1rem;
+  height: 1.1rem;
+  width: 1.1rem;
   flex-shrink: 0;
   color: #9ca3af;
   transition: transform 0.2s;
@@ -165,12 +161,12 @@ const styles = `
 }
 
 .guides-button {
-  background-color: transparent;
-  border: 1px solid #1A9AEF;
-  color: #1A9AEF;
-  padding: 0.5rem 1rem;
+  background-color: #213743;
+  color: #FFFFFF;
+  padding: 0.8rem 1.3rem;
   border-radius: 0.375rem;
   font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
 }

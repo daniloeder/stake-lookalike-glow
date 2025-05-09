@@ -123,7 +123,6 @@ const SportsBettingTable = () => {
 // CSS styles
 const styles = `
 .betting-table {
-  background-color: #0F1923;
   border-radius: 0.5rem;
   overflow: hidden;
   margin-bottom: 2rem;
@@ -153,7 +152,7 @@ const styles = `
 
 .tab-button.active {
   color: white;
-  border-bottom: 2px solid #1A9AEF;
+  border-bottom: 2px solid #1060B7;
 }
 
 .live-dot {

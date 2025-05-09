@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import SearchBar from "@/components/SearchBar";
@@ -7,7 +6,6 @@ import PromoBanners from "@/components/PromoBanners";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import { ChevronLeft, ChevronRight, Gamepad } from "lucide-react";
-import SportsCategoryCards from "@/components/SportsCategoryCards";
 
 const Index = () => {
   return (
@@ -24,16 +22,25 @@ const Index = () => {
             <div className="social-signup">
               <p className="social-text">Or sign up with</p>
               <div className="social-buttons">
-                <button className="social-button facebook">f</button>
-                <button className="social-button google">G</button>
-                <button className="social-button whatsapp">W</button>
-                <button className="social-button discord">D</button>
+                <button className="social-button facebook">
+                  <img src="src/assets/icons/facebook.svg" alt="Facebook" />
+                </button>
+                <button className="social-button google">
+                  <img src="src/assets/icons/google.svg" alt="Google" />
+                </button>
+                <button className="social-button line">
+                  <img src="src/assets/icons/line.svg" alt="Line" />
+                </button>
+                <button className="social-button twitch">
+                  <img src="src/assets/icons/twitch.svg" alt="Twitch" />
+                </button>
               </div>
             </div>
           </div>
           
           <div className="hero-cards">
             <div className="hero-card">
+              <img src="public/images/explore-casino-en.avif" alt="Casino" className="card-image" />
               <div className="card-header">
                 <div className="card-badge">
                   <span className="badge-icon">🎮</span>
@@ -41,10 +48,10 @@ const Index = () => {
                 </div>
                 <span className="card-count">85,545</span>
               </div>
-              <img src="public/lovable-uploads/0b97a448-73a0-467a-9f19-7c2e8abc678c.png" alt="Casino" className="card-image" />
             </div>
             
             <div className="hero-card">
+              <img src="public/images/explore-sports-en.avif" alt="Sports" className="card-image" />
               <div className="card-header">
                 <div className="card-badge">
                   <span className="badge-icon">⚽</span>
@@ -52,7 +59,6 @@ const Index = () => {
                 </div>
                 <span className="card-count">50,698</span>
               </div>
-              <img src="public/lovable-uploads/02a819fe-f4ed-4bea-a8a5-741ea85e13d3.png" alt="Sports" className="card-image" />
             </div>
           </div>
         </div>
@@ -86,22 +92,12 @@ const Index = () => {
             {Array.from({ length: 8 }).map((_, index) => (
               <div key={index} className="game-card">
                 <div className="game-position">{index+1}</div>
-                {index < 3 && (
-                  <div className="game-badge">
-                    {index === 0 && "Exclusive"}
-                    {index === 1 && "Exclusive"}
-                    {index === 2 && "Early Access"}
-                  </div>
-                )}
                 <div className="game-image-container">
                   <img 
-                    src={`public/lovable-uploads/${['e8fc8e50-a196-4e5e-8e8b-ff5c92b4d1e1.png', 'fb85ff2a-543e-4c11-b199-05635ddcfe94.png', '0b97a448-73a0-467a-9f19-7c2e8abc678c.png', 'c81e0921-952f-42e9-9833-ff4c541b266f.png', 'dd8af98a-1fe6-4304-980a-c9946e7577ff.png', 'e528755e-4a3f-41a9-bb3b-aa5b1d9c1fa9.png', '02a819fe-f4ed-4bea-a8a5-741ea85e13d3.png'][index % 7]}`}
+                    src={`public/images/${['game1.avif', 'game1.avif', 'game1.avif', 'game1.avif', 'game1.avif', 'game1.avif', 'game1.avif'][index % 7]}`}
                     alt={`Game ${index+1}`}
                     className="game-image"
                   />
-                  <div className="game-overlay">
-                    <button className="play-button">Play</button>
-                  </div>
                 </div>
                 <div className="game-info">
                   <div className="game-players-count">
@@ -114,22 +110,47 @@ const Index = () => {
           </div>
         </div>
         
-        <SportsCategoryCards />
-        
-        <PromoBanners />
-        
-        <div className="betting-section">
-          <div className="betting-tabs">
-            <button className="betting-tab active">Casino Bets</button>
-            <button className="betting-tab">Sports Bets</button>
-            <button className="betting-tab">
-              Race Leaderboard
-              <span className="live-dot"></span>
-            </button>
+        <div className="sports-section">
+          <div className="section-header">
+            <div className="section-title">
+              <span className="section-icon">⚽</span>
+              <h2>Trending Sports</h2>
+            </div>
+            <div className="nav-arrows">
+              <button className="nav-arrow">
+                <ChevronLeft className="arrow-icon" />
+              </button>
+              <button className="nav-arrow">
+                <ChevronRight className="arrow-icon" />
+              </button>
+            </div>
           </div>
           
-          <BettingTable />
+          <div className="sports-grid">
+            {Array.from({ length: 8 }).map((_, index) => (
+              <div key={index} className="game-card">
+                <div className="game-position">{index+1}</div>
+                <div className="game-image-container">
+                  <img 
+                    src={`public/images/${['sport1.png', 'sport1.png', 'sport1.png', 'sport1.png', 'sport1.png', 'sport1.png', 'sport1.png'][index % 7]}`}
+                    alt={`Sport ${index+1}`}
+                    className="game-image"
+                  />
+                </div>
+                <div className="game-info">
+                  <div className="game-players-count">
+                    <span className="player-dot"></span>
+                    {[423, 176, 589, 229, 312, 87, 543, 126][index]} watching
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
+        
+        <PromoBanners />
+          
+        <BettingTable />
         
         <FAQ />
         
@@ -144,7 +165,8 @@ const styles = `
 .index-page {
   display: flex;
   flex-direction: column;
-  background-color: #0F212E;
+  width: 90%;
+  margin-left: 5%;
 }
 
 .main-content {
@@ -160,6 +182,15 @@ const styles = `
   align-items: center;
   justify-content: space-between;
   padding: 2rem 0;
+  margin-left: -8%;
+  padding-left: 8%;
+  padding-right: 8%;
+  width: 116%;
+
+  background-image: url('/images/index-header-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .hero-content {
@@ -179,7 +210,7 @@ const styles = `
   font-size: 1rem;
   font-weight: 600;
   color: white;
-  background-color: #1A9AEF;
+  background-color: #1060B7;
   border: none;
   border-radius: 0.375rem;
   cursor: pointer;
@@ -187,7 +218,7 @@ const styles = `
 }
 
 .register-button:hover {
-  background-color: #0F8CDD;
+  background-color: #1060B7;
   transform: scale(1.05);
 }
 
@@ -213,24 +244,16 @@ const styles = `
   align-items: center;
   justify-content: center;
   border: none;
-  border-radius: 9999px;
+  border-radius: 5px;
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s;
+  background-color: #2E4351;
+  padding: 0.5rem;
 }
 
 .social-button:hover {
   transform: scale(1.1);
-}
-
-.facebook {
-  background-color: #3B5998;
-  color: white;
-}
-
-.google {
-  background-color: white;
-  color: #0F8CDD;
 }
 
 .whatsapp {
@@ -296,10 +319,13 @@ const styles = `
 
 .search-section {
   display: flex;
-  margin-bottom: 2rem;
   background-color: #132635;
   border-radius: 4px;
   overflow: hidden;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #557086;
+  margin-top: 2rem;
 }
 
 .search-dropdown {
@@ -326,8 +352,8 @@ const styles = `
   transform: rotate(-90deg);
 }
 
-.games-section {
-  margin-bottom: 2rem;
+.games-section, .sports-section {
+  margin-top: 2rem;
 }
 
 .section-header {
@@ -383,20 +409,20 @@ const styles = `
   width: 1rem;
 }
 
-.games-grid {
+.games-grid, .sports-grid {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   gap: 0.75rem;
 }
 
 @media (max-width: 1400px) {
-  .games-grid {
+  .games-grid, .sports-grid {
     grid-template-columns: repeat(6, 1fr);
   }
 }
 
 @media (max-width: 1024px) {
-  .games-grid {
+  .games-grid, .sports-grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
@@ -416,13 +442,13 @@ const styles = `
     width: 100%;
   }
   
-  .games-grid {
+  .games-grid, .sports-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 640px) {
-  .games-grid {
+  .games-grid, .sports-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -431,20 +457,21 @@ const styles = `
   position: relative;
   border-radius: 0.375rem;
   overflow: hidden;
-  background-color: #17242D;
   transition: transform 0.2s;
+  width: 150px;
+  height: auto;
 }
 
 .game-position {
   position: absolute;
   top: 0.5rem;
-  left: 0.5rem;
-  background-color: rgba(0, 0, 0, 0.7);
+  left: -0.2rem;
   color: white;
+  background-color: #2F4553;
   font-size: 0.75rem;
   font-weight: 600;
-  padding: 0.25rem 0.5rem;
-  border-radius: 9999px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 5px;
   z-index: 10;
 }
 
@@ -462,43 +489,14 @@ const styles = `
 }
 
 .game-image-container {
+  width: 150px;
+  height: auto;
   position: relative;
 }
 
 .game-image {
-  aspect-ratio: 1 / 1;
-  width: 100%;
-  object-fit: cover;
-}
-
-.game-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.7);
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.game-image-container:hover .game-overlay {
-  opacity: 1;
-}
-
-.play-button {
-  padding: 0.5rem 1.5rem;
-  border: none;
-  border-radius: 0.25rem;
-  background-color: #1A9AEF;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.play-button:hover {
-  background-color: #0F8CDD;
+  width: 250px;
+  height: auto;
 }
 
 .game-info {
@@ -549,7 +547,7 @@ const styles = `
 
 .betting-tab.active {
   color: white;
-  border-bottom: 2px solid #1A9AEF;
+  border-bottom: 2px solid #1060B7;
 }
 
 .live-dot {

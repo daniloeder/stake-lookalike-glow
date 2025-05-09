@@ -44,7 +44,6 @@ const Sports = () => {
         
         <div className="sports-betting-table">
           <h2 className="section-title">Live Bets</h2>
-          <SportsBettingTable />
         </div>
       </div>
     </div>

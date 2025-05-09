@@ -165,7 +165,7 @@ const Sidebar = ({ collapsed, toggleSidebar }: SidebarProps) => {
           <Menu className="toggle-icon" />
         </button>
         
-        <div className="nav-tabs">
+        <div className={`nav-tabs ${collapsed ? 'nav-tabs-collapsed' : ''}`}>
           <Link 
             to="/casino" 
             className={`nav-tab ${activeTab === "casino" ? "casino-active" : "casino-inactive"}`}
@@ -297,6 +297,12 @@ const styles = `
   gap: 4px;
 }
 
+.nav-tabs.nav-tabs-collapsed {
+  margin-top: 0.75rem;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .nav-tab {
   border-radius: 4px;
   padding: 0.5rem 1rem;
@@ -331,7 +337,6 @@ const styles = `
 }
 
 .sports-active {
-  background-color: #FF6B01;
   color: white;
 }
 
@@ -345,12 +350,13 @@ const styles = `
 }
 
 .sidebar-content {
-  margin: 1rem 1rem 0 1rem;
-  border-radius: 6px;
+  margin: 0 0.5rem 0 0.5rem;
+  border-radius: 3px;
   background-color: #1A2C38;
+  // background-color: red;
   overflow-y: auto;
-  flex: 0 1 auto; /* Changed from flex: 1 to only take necessary height */
-  max-height: calc(100vh - 60px); /* Limit max height */
+  flex: 0 1 auto;
+  max-height: calc(100vh - 60px);
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
 }
@@ -429,11 +435,12 @@ const styles = `
 }
 
 .dropdown-icon-collapsed {
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   color: white;
   position: absolute;
-  right: 8px;
+  right: 0px;
+  z-index: 5;
 }
 
 .dropdown-icon.rotated {
@@ -522,10 +529,13 @@ const styles = `
 
 .sidebar.collapsed .toggle-button {
   margin-right: 0;
+  margin-bottom: 0.75rem;
+  margin-top: 0.75rem;
 }
 
 .sidebar.collapsed .sidebar-header {
   justify-content: center;
+  flex-direction: column;
   padding: 0.75rem 0;
 }
 
@@ -533,8 +543,13 @@ const styles = `
   display: none;
 }
 
+
 .sidebar.collapsed .nav-tab {
-  padding: 0.5rem;
+  flex-direction: column;
+}
+
+.sidebar.collapsed .nav-tab {
+  padding: 1.5rem;
   min-width: 28px;
   width: 28px;
   height: 28px;
@@ -566,13 +581,13 @@ const styles = `
 .sidebar.collapsed .sidebar-item-button,
 .sidebar.collapsed .sidebar-item-link {
   justify-content: center;
-  padding: 0.75rem 0;
+  padding: 0.5rem 0;
   position: relative;
 }
 
 .sidebar.collapsed .item-dropdown-icon {
   position: absolute;
-  right: 8px;
+  right: -3px;
   top: 50%;
   transform: translateY(-50%);
   background-color: #1A2C38; /* Added the specified color */
@@ -588,6 +603,32 @@ const styles = `
   .sidebar.active {
     transform: translateX(0);
   }
+}
+
+
+.nav-tab.casino-active, .nav-tab.casino-inactive {
+  background-image: url("/images/casino-big.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white; /* optional */
+  transition: background-image 0.3s ease;
+}
+
+.nav-tab.casino-active:hover,
+.nav-tab.casino-inactive:hover {
+  background-image: url("/images/casino-big-active.jpg");
+}
+.nav-tab.sports-active, .nav-tab.sports-inactive {
+  background-image: url("/images/sports-big.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  transition: background-image 0.3s ease;
+}
+
+.nav-tab.sports-active:hover,
+.nav-tab.sports-inactive:hover {
+  background-image: url("/images/sports-big-active.jpg");
 }
 `;
 

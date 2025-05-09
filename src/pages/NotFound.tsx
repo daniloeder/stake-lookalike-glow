@@ -51,7 +51,7 @@ const styles = `
   margin-bottom: 1rem;
   font-size: 3.75rem;
   font-weight: 700;
-  color: #1A9AEF;
+  color: #1060B7;
 }
 
 .not-found-subtitle {
@@ -68,7 +68,7 @@ const styles = `
 }
 
 .home-button {
-  background-color: #1A9AEF;
+  background-color: #1060B7;
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 0.375rem;
@@ -77,7 +77,7 @@ const styles = `
 }
 
 .home-button:hover {
-  background-color: #0F8CDD;
+  background-color: #1060B7;
 }
 
 .home-link {

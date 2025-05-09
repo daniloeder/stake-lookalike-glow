@@ -10,22 +10,23 @@ const Footer = () => {
       <div className="footer-container">
         {/* Logo and copyright */}
         <div className="footer-logo-section">
+          <div className="footer-logo-container">
           <img 
-            src="public/lovable-uploads/f5e5c414-4cd6-431f-a438-5ecffedb9217.png"
+            src="src/assets/images/logo2.png"
             alt="Stake"
             className="footer-logo"
           />
           <p className="copyright">© {currentYear} Stake.com | All Rights Reserved.</p>
-        </div>
-
-        {/* Social media icons */}
-        <div className="social-icons">
-          <Link to="#" className="social-icon"><Linkedin size={18} /></Link>
-          <Link to="#" className="social-icon"><Twitter size={18} /></Link>
-          <Link to="#" className="social-icon"><Facebook size={18} /></Link>
-          <Link to="#" className="social-icon"><Instagram size={18} /></Link>
-          <Link to="#" className="social-icon"><Youtube size={18} /></Link>
-          <Link to="#" className="social-icon"><Twitch size={18} /></Link>
+          </div>
+          {/* Social media icons */}
+          <div className="social-icons">
+            <Link to="#" className="social-icon"><Linkedin size={18} /></Link>
+            <Link to="#" className="social-icon"><Twitter size={18} /></Link>
+            <Link to="#" className="social-icon"><Facebook size={18} /></Link>
+            <Link to="#" className="social-icon"><Instagram size={18} /></Link>
+            <Link to="#" className="social-icon"><Youtube size={18} /></Link>
+            <Link to="#" className="social-icon"><Twitch size={18} /></Link>
+          </div>
         </div>
 
         {/* Footer links */}
@@ -171,27 +172,31 @@ const Footer = () => {
 // CSS styles
 const styles = `
 .footer {
-  background-color: #0A1218;
+  width: 120%;
+  background-color: #071D2A;
   color: #9ca3af;
   padding: 2.5rem 0;
   border-top: 1px solid #1A2C38;
+  margin-left: -10%;
 }
 
 .footer-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
+  margin-left: 5%;
 }
 
 .footer-logo-section {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  align-items: space-between;
+  justify-content: space-between;
   margin-bottom: 2rem;
 }
 
 .footer-logo {
-  height: 2rem;
+  height: 3rem;
   margin-bottom: 0.75rem;
 }
 
@@ -202,7 +207,7 @@ const styles = `
 .social-icons {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.1rem;
   margin-bottom: 2.5rem;
 }
 
@@ -213,8 +218,7 @@ const styles = `
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-  background-color: #17242D;
-  color: #9ca3af;
+  color:rgb(255, 255, 255);
   transition: all 0.2s;
 }
 
@@ -233,7 +237,7 @@ const styles = `
 
 .footer-column-title {
   color: white;
-  font-size: 1.125rem;
+  font-size: 0.8rem;
   font-weight: 500;
   margin-bottom: 1rem;
 }
@@ -245,18 +249,17 @@ const styles = `
 }
 
 .footer-links li {
-  margin-bottom: 0.5rem;
 }
 
 .footer-links a {
   color: #9ca3af;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   text-decoration: none;
   transition: color 0.2s;
 }
 
 .footer-links a:hover {
-  color: #1A9AEF;
+  color: rgb(230, 230, 230);
 }
 
 .external-link {
@@ -275,7 +278,8 @@ const styles = `
   flex-wrap: wrap;
   justify-content: center;
   gap: 1.5rem;
-  margin-bottom: 2rem;
+  border-top: 2px solid #557086;
+  padding: 2rem 0;
 }
 
 .crypto-icon {
@@ -291,12 +295,16 @@ const styles = `
 .crypto-logo {
   height: 1.5rem;
   width: 6rem;
-  background-color: #2F4553;
+  background-color: #557086;
   border-radius: 0.25rem;
 }
 
 .partners-container {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  border-top: 2px solid #557086;
+  border-bottom: 2px solid #557086;
+  padding: 2rem 0;
+  padding-bottom: 0;
 }
 
 .partners-row {
@@ -320,14 +328,14 @@ const styles = `
 .partner-logo-container.small .partner-logo {
   height: 1.5rem;
   width: 6rem;
-  background-color: #2F4553;
+  background-color: #557086;
   border-radius: 0.25rem;
 }
 
 .partner-logo-container.large .partner-logo {
   height: 3rem;
   width: 8rem;
-  background-color: #2F4553;
+  background-color: #557086;
   border-radius: 0.25rem;
 }
 
@@ -338,7 +346,7 @@ const styles = `
 }
 
 .support-link {
-  color: #1A9AEF;
+  color: rgb(230, 230, 230);
   text-decoration: none;
 }
 
@@ -369,7 +377,7 @@ const styles = `
 }
 
 .support-item a {
-  color: #1A9AEF;
+  color:rgb(230, 230, 230);
   text-decoration: none;
 }
 
@@ -380,7 +388,6 @@ const styles = `
 @media (max-width: 768px) {
   .footer-links-container {
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 1.5rem;
   }
 
   .partners-row {

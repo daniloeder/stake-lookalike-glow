@@ -39,6 +39,7 @@ const styles = `
 
 .search-container {
   position: relative;
+  border-left: 2px solid #557086;
 }
 
 .search-icon {
@@ -62,7 +63,8 @@ const styles = `
 }
 
 .search-input::placeholder {
-  color: #9ca3af;
+  color:#9ca3af;
+  font-weight: 600;
 }
 
 .search-input:focus {

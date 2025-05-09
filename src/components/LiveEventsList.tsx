@@ -395,7 +395,7 @@ const styles = `
 
 .more-games-text {
   font-size: 0.75rem;
-  color: #1A9AEF;
+  color: #1060B7;
 }
 
 .view-all {
@@ -407,7 +407,7 @@ const styles = `
   background: none;
   border: none;
   font-size: 0.875rem;
-  color: #1A9AEF;
+  color: #1060B7;
   cursor: pointer;
 }
 
