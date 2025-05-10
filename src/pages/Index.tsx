@@ -8,6 +8,23 @@ import Footer from "@/components/Footer";
 import { ChevronLeft, ChevronRight, Gamepad } from "lucide-react";
 
 const Index = () => {
+  // Sample betting data for Index page
+  const indexBettingData = [
+    { id: 1, game: "Gold Vault Roulette", user: "Hidden", time: "3:53 PM", betAmount: 1013.5192500, multiplier: "0.00x", payout: -1013.5192500, currency: "₿" },
+    { id: 2, game: "Keno", user: "Hidden", time: "3:53 PM", betAmount: 0.96187495, multiplier: "0.00x", payout: -0.96187495, currency: "₿" },
+    { id: 3, game: "Gates of Olympus Su...", user: "Hidden", time: "3:53 PM", betAmount: 5000.0000000, multiplier: "3.03x", payout: 15152.5000000, currency: "₿", isWin: true },
+    { id: 4, game: "Brute Force", user: "Hidden", time: "3:53 PM", betAmount: 1.20808802, multiplier: "0.00x", payout: -1.20808802, currency: "₿" },
+    { id: 5, game: "Plinko", user: "shijian134", time: "3:53 PM", betAmount: 2.00000000, multiplier: "1,000.00x", payout: 2000.0000000, currency: "₿", isWin: true, isHot: true },
+    { id: 6, game: "Keno", user: "Hidden", time: "3:53 PM", betAmount: 0.96187495, multiplier: "0.00x", payout: -0.96187495, currency: "₿" },
+    { id: 7, game: "Brute Force", user: "Hidden", time: "3:53 PM", betAmount: 1.20808802, multiplier: "0.00x", payout: -1.20808802, currency: "₿" },
+  ];
+  // Define the tabs for the Index page
+  const indexBettingTabs = [
+    { id: "casino-bets", label: "Casino Bets" },
+    { id: "sport-bets", label: "Sport Bets" },
+    { id: "race-leaderboard", label: "Race Leaderboard", hasIndicator: true },
+  ];
+  
   return (
     <div className="index-page">
       <main className="main-content">
@@ -150,7 +167,11 @@ const Index = () => {
         
         <PromoBanners />
           
-        <BettingTable />
+        <BettingTable 
+          data={indexBettingData} 
+          defaultActiveTab="casino-bets" 
+          tabs={indexBettingTabs}
+        />
         
         <FAQ />
         
