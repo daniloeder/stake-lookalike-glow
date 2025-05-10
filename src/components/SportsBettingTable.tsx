@@ -11,8 +11,13 @@ interface BettingData {
   icon?: React.ReactNode;
 }
 
-const SportsBettingTable = () => {
-  const [activeTab, setActiveTab] = useState("all-bets");
+interface SportsBettingTableProps {
+  data?: BettingData[];
+  defaultActiveTab?: string;
+}
+
+const SportsBettingTable = ({ data, defaultActiveTab = "all-bets" }: SportsBettingTableProps) => {
+  const [activeTab, setActiveTab] = useState(defaultActiveTab);
   
   // Tabs for the betting table section
   const betTabs = [
@@ -22,7 +27,7 @@ const SportsBettingTable = () => {
   ];
 
   // Sample betting data
-  const bettingData: BettingData[] = [
+  const defaultBettingData: BettingData[] = [
     { event: "Inter Milano - FC Barcelona", user: "Hidden", time: "5:00 PM", odds: "1.95", amount: "1137.721200...", crypto: "btc" },
     { event: "Inter Milano - FC Barcelona", user: "Hidden", time: "5:00 PM", odds: "1.85", amount: "1499.000000...", crypto: "trx" },
     { event: "Inter Milano - FC Barcelona", user: "Hidden", time: "5:00 PM", odds: "1.55", amount: "7553.667367...", crypto: "trx" },
@@ -34,6 +39,8 @@ const SportsBettingTable = () => {
     { event: "Inter Milano - FC Barcelona", user: "Hidden", time: "4:58 PM", odds: "15.25", amount: "13.81800063...", crypto: "eth" },
     { event: "Partick Thistle FC - Ayr Unit...", user: "Hidden", time: "4:58 PM", odds: "2.05", amount: "3606.000000...", crypto: "trx" },
   ];
+
+  const bettingData = data || defaultBettingData;
 
   const cryptoIcons: Record<string, string> = {
     btc: "₿",

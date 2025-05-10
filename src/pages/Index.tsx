@@ -9,6 +9,17 @@ import Footer from "@/components/Footer";
 import { ChevronLeft, ChevronRight, Gamepad } from "lucide-react";
 
 const Index = () => {
+  // Sample betting data for Index page
+  const indexBettingData = [
+    { id: 1, game: "Gold Vault Roulette", user: "Hidden", time: "3:53 PM", betAmount: 1013.5192500, multiplier: "0.00x", payout: -1013.5192500, currency: "₿" },
+    { id: 2, game: "Keno", user: "Hidden", time: "3:53 PM", betAmount: 0.96187495, multiplier: "0.00x", payout: -0.96187495, currency: "₿" },
+    { id: 3, game: "Gates of Olympus Su...", user: "Hidden", time: "3:53 PM", betAmount: 5000.0000000, multiplier: "3.03x", payout: 15152.5000000, currency: "₿", isWin: true },
+    { id: 4, game: "Brute Force", user: "Hidden", time: "3:53 PM", betAmount: 1.20808802, multiplier: "0.00x", payout: -1.20808802, currency: "₿" },
+    { id: 5, game: "Plinko", user: "shijian134", time: "3:53 PM", betAmount: 2.00000000, multiplier: "1,000.00x", payout: 2000.0000000, currency: "₿", isWin: true, isHot: true },
+    { id: 6, game: "Keno", user: "Hidden", time: "3:53 PM", betAmount: 0.96187495, multiplier: "0.00x", payout: -0.96187495, currency: "₿" },
+    { id: 7, game: "Brute Force", user: "Hidden", time: "3:53 PM", betAmount: 1.20808802, multiplier: "0.00x", payout: -1.20808802, currency: "₿" },
+  ];
+
   return (
     <div className="index-page">
       <main className="main-content">
@@ -150,19 +161,8 @@ const Index = () => {
         </div>
         
         <PromoBanners />
-        
-        <div className="betting-section">
-          <div className="betting-tabs">
-            <button className="betting-tab active">Casino Bets</button>
-            <button className="betting-tab">Sports Bets</button>
-            <button className="betting-tab">
-              Race Leaderboard
-              <span className="live-dot"></span>
-            </button>
-          </div>
           
-          <BettingTable />
-        </div>
+        <BettingTable data={indexBettingData} defaultActiveTab="casino" />
         
         <FAQ />
         
