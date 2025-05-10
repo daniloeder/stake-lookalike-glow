@@ -19,7 +19,14 @@ const Index = () => {
     { id: 6, game: "Keno", user: "Hidden", time: "3:53 PM", betAmount: 0.96187495, multiplier: "0.00x", payout: -0.96187495, currency: "₿" },
     { id: 7, game: "Brute Force", user: "Hidden", time: "3:53 PM", betAmount: 1.20808802, multiplier: "0.00x", payout: -1.20808802, currency: "₿" },
   ];
-
+  
+  // Define the tabs for the Index page
+  const indexBettingTabs = [
+    { id: "casino-bets", label: "Casino Bets" },
+    { id: "sport-bets", label: "Sport Bets" },
+    { id: "race-leaderboard", label: "Race Leaderboard", hasIndicator: true },
+  ];
+  
   return (
     <div className="index-page">
       <main className="main-content">
@@ -162,7 +169,11 @@ const Index = () => {
         
         <PromoBanners />
           
-        <BettingTable data={indexBettingData} defaultActiveTab="casino" />
+        <BettingTable 
+          data={indexBettingData} 
+          defaultActiveTab="casino-bets" 
+          tabs={indexBettingTabs}
+        />
         
         <FAQ />
         

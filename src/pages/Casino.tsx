@@ -24,6 +24,17 @@ const Casino = () => {
     { id: 10, game: "Salon Privé Blackjack...", user: "Hidden", time: "5:55 PM", betAmount: 1199.880012, multiplier: "0.60×", payout: -479.95200480, currency: "trx", isWin: false },
   ];
 
+  // Define the tabs for the Casino BettingTable
+  const casinoBettingTabs = [
+    { id: "lobby", label: "Lobby" },
+    { id: "stake-originals", label: "Stake Originals" },
+    { id: "slots", label: "Slots" },
+    { id: "live-casino", label: "Live Casino" },
+    { id: "game-shows", label: "Game Shows" },
+    { id: "stake-exclusives", label: "Stake Exclusives" },
+    { id: "new-releases", label: "New Releases" }
+  ];
+
   const casinoCategories = [
     { id: "all", name: "All", count: 5602 },
     { id: "slots", name: "Slots", count: 4259 },
@@ -185,7 +196,11 @@ const Casino = () => {
               />
             </div>
 
-            <BettingTable data={casinoBettingData} defaultActiveTab="high-rollers" />
+            <BettingTable 
+              data={casinoBettingData} 
+              defaultActiveTab="lobby" 
+              tabs={casinoBettingTabs}
+            />
 
             <div className="casino-section">
               <SectionHeader title="Stake Originals" icon={<Gamepad className="section-icon" />} />

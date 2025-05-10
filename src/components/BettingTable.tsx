@@ -1,6 +1,12 @@
 
 import { useState } from "react";
 
+interface TabItem {
+  id: string;
+  label: string;
+  hasIndicator?: boolean;
+}
+
 interface BetData {
   id: number;
   game: string;
@@ -17,10 +23,21 @@ interface BetData {
 interface BettingTableProps {
   data?: BetData[];
   defaultActiveTab?: string;
+  tabs?: TabItem[];
 }
 
-const BettingTable = ({ data, defaultActiveTab = "casino" }: BettingTableProps) => {
+const BettingTable = ({ data, defaultActiveTab = "casino", tabs }: BettingTableProps) => {
   const [activeTab, setActiveTab] = useState(defaultActiveTab);
+  
+  // Default tabs configuration if none is provided
+  const defaultTabs: TabItem[] = [
+    { id: "my-bets", label: "My Bets" },
+    { id: "all-bets", label: "All Bets" },
+    { id: "high-rollers", label: "High Rollers" },
+    { id: "race-leaderboard", label: "Race Leaderboard", hasIndicator: true },
+  ];
+
+  const tabItems = tabs || defaultTabs;
   
   // Default sample betting data if none is provided
   const defaultBettingData: BetData[] = [
@@ -53,196 +70,125 @@ const BettingTable = ({ data, defaultActiveTab = "casino" }: BettingTableProps) 
       font-family: 'Inter', sans-serif;
       color: #B1BAD3;
       width: 100%;
-      background-color: #0F1923;
-      border-radius: 0.5rem;
-      overflow: hidden;
-      margin-bottom: 2rem;
-      width: 100%;
     }
     
     .tabs {
       display: flex;
-      border-bottom: 1px solid #1f2937;
-      background-color: #0A1218;
-      padding: 0 0.5rem;
+      margin-bottom: 16px;
+      background-color: rgba(15, 25, 35, 0.5);
+      padding: 6px;
+      border-radius: 50px;
+      width: fit-content;
+      gap: 6px;
     }
     
     .tab {
-      padding: 0.75rem 1.5rem;
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: #9ca3af;
-      border: none;
-      background: none;
+      padding: 8px 16px;
+      border-radius: 50px;
       cursor: pointer;
-      transition: transform 0.2s;
-      position: relative;
-    }
-    
-    .tab:hover {
-      color: white;
+      transition: background-color 0.2s;
+      font-size: 14px;
+      font-weight: 600;
     }
     
     .tab.active {
-      color: white;
-      background-color: #17242D;
-      border-radius: 4px 4px 0 0;
+      background-color: #2F4553;
+    }
+    
+    .tab:hover:not(.active) {
+      background-color: #2F4553;
     }
     
     .tab-indicator {
-      position: absolute;
-      top: 50%;
-      right: 0.5rem;
-      transform: translateY(-50%);
       display: inline-block;
-      height: 0.5rem;
-      width: 0.5rem;
-      border-radius: 9999px;
-      background-color: #10B981;
-    }
-    
-    .rows-select {
-      margin-left: auto;
-      padding: 0 1rem;
-      display: flex;
-      align-items: center;
-    }
-    
-    .rows-dropdown {
-      background-color: #17242D;
-      color: white;
-      border: 1px solid #374151;
-      border-radius: 0.25rem;
-      padding: 0.25rem 0.5rem;
-      font-size: 0.875rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color:rgb(17, 248, 25);
+      margin-left: 4px;
     }
     
     .betting-table {
       width: 100%;
-      border-collapse: collapse;
+      border-collapse: separate;
+      border-spacing: 0;
     }
     
-    .table-header {
-      background-color: #17242D;
-    }
-    
-    .header-row {
+    .betting-table th {
       text-align: left;
-      font-size: 0.75rem;
+      padding: 12px 16px;
+      color: #99a1b3;
       font-weight: 500;
-      color: #9ca3af;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
     
-    .header-cell {
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid #1f2937;
+    .betting-table td {
+      padding: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      background-color: rgba(23, 36, 45, 0.3);
+      font-size: 14px;
     }
     
-    .table-row {
-      border-bottom: 1px solid #1f2937;
-      font-size: 0.875rem;
-      transition: background-color 0.2s;
+    .betting-table tr:hover td {
+      background-color: rgba(30, 40, 50, 0.4);
     }
-    
-    .table-row:hover {
-      background-color: rgba(23, 36, 45, 0.5);
+
+    even-row {
     }
-    
-    .table-cell {
-      padding: 0.75rem 1rem;
-      color: white;
+
+    .odd-row {
+      background-color: #213743;
     }
     
     .game-cell {
       display: flex;
       align-items: center;
-      color: white;
+      gap: 8px;
     }
     
     .game-icon {
-      margin-right: 0.5rem;
-      font-size: 1rem;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      background-color: rgba(0, 0, 0, 0.2);
     }
     
     .user-cell {
       display: flex;
       align-items: center;
-      color: #d1d5db;
+      gap: 8px;
     }
     
     .user-icon {
-      margin-right: 0.5rem;
-      font-size: 1rem;
+      opacity: 0.7;
     }
     
-    .amount-cell {
-      font-family: monospace;
-      white-space: nowrap;
+    .win-value {
     }
     
-    .multiplier, .payout {
-      font-family: monospace;
-      white-space: nowrap;
+    .loss-value {
     }
     
-    .multiplier.win,
-    .payout.win {
-      color: #10B981;
+    .hot-multiplier {
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
     
-    .multiplier.loss,
-    .payout.loss {
-      color: #ef4444;
-    }
-    
-    .win-icon {
-      margin-right: 0.25rem;
-    }
-    
-    .crypto-badge {
+    .currency-indicator {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 1rem;
-      height: 1rem;
-      border-radius: 9999px;
-      margin-left: 0.25rem;
-      font-size: 0.75rem;
-    }
-    
-    .crypto-trx {
-      background-color: #10B981;
-    }
-    
-    .crypto-usd {
-      background-color: #ef4444;
-    }
-    
-    .crypto-btc, .crypto-₿ {
-      background-color: #F7931A;
-    }
-    
-    .crypto-eth {
-      background-color: #3c3c3d;
-    }
-    
-    .crypto-cad {
-      background-color: #EF4444;
-    }
-    
-    @media (max-width: 768px) {
-      .tabs {
-        overflow-x: auto;
-        white-space: nowrap;
-      }
-      
-      .tab {
-        padding: 0.5rem 1rem;
-      }
-      
-      .table-cell {
-        padding: 0.5rem;
-      }
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      font-size: 10px;
+      margin-left: 4px;
     }
   `;
 
@@ -262,38 +208,16 @@ const BettingTable = ({ data, defaultActiveTab = "casino" }: BettingTableProps) 
     <div className="betting-container">
       <style>{styles}</style>
       <div className="tabs">
-        <button
-          className={`tab ${activeTab === "my-bets" ? "active" : ""}`}
-          onClick={() => setActiveTab("my-bets")}
-        >
-          My Bets
-        </button>
-        <button
-          className={`tab ${activeTab === "all-bets" ? "active" : ""}`}
-          onClick={() => setActiveTab("all-bets")}
-        >
-          All Bets
-        </button>
-        <button
-          className={`tab ${activeTab === "high-rollers" ? "active" : ""}`}
-          onClick={() => setActiveTab("high-rollers")}
-        >
-          High Rollers
-        </button>
-        <button
-          className={`tab ${activeTab === "race-leaderboard" ? "active" : ""}`}
-          onClick={() => setActiveTab("race-leaderboard")}
-        >
-          Race Leaderboard
-          <span className="tab-indicator"></span>
-        </button>
-        <div className="rows-select">
-          <select className="rows-dropdown">
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-          </select>
-        </div>
+        {tabItems.map((tab) => (
+          <button
+            key={tab.id}
+            className={`tab ${activeTab === tab.id ? "active" : ""}`}
+            onClick={() => setActiveTab(tab.id)}
+          >
+            {tab.label}
+            {tab.hasIndicator && <span className="tab-indicator"></span>}
+          </button>
+        ))}
       </div>
       
       <table className="betting-table">
@@ -309,7 +233,9 @@ const BettingTable = ({ data, defaultActiveTab = "casino" }: BettingTableProps) 
         </thead>
         <tbody className="table-body">
           {bettingData.map((bet, index) => (
-            <tr key={index} className="table-row">
+            <tr key={index}
+              className={"table-row " + (index % 2 === 0 ? "even-row" : "odd-row")}
+            >
               <td className="table-cell">
                 <div className="game-cell">
                   <span className="game-icon">{renderGameIcon(bet.game)}</span>
