@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, ChevronRight } from "lucide-react";
@@ -11,9 +10,10 @@ import star from "../assets/icons/star.svg";
 export interface SidebarProps {
   collapsed: boolean;
   toggleSidebar: () => void;
+  sidebarItems?: SidebarItem[];
 }
 
-interface SidebarItem {
+export interface SidebarItem {
   id: string;
   icon: string;
   label: string;
@@ -28,9 +28,11 @@ interface SidebarSubItem {
   label: string;
   path?: string;
   isLanguageOption?: boolean;
+  isSelected?: boolean;
 }
 
-const sidebarItems: SidebarItem[] = [
+// Default sidebar items if none are provided
+const defaultSidebarItems: SidebarItem[] = [
   {
     id: "promotions",
     icon: star,
@@ -75,7 +77,7 @@ const sidebarItems: SidebarItem[] = [
     children: [
       { id: "drake", label: "Drake", path: "/sponsorships/drake", icon: star },
       { id: "stake-f1-team", label: "Stake F1 Team", path: "/sponsorships/stake-f1-team", icon: star },
-      { id: "ufc", label: "UFC", path: "/sponsorships/ufc", icon: star },
+      { id: "ufc", label: "UFC", path: "/sponsorships/ufc", icon: star, isSelected: true },
       { id: "everton", label: "Everton Football Club", path: "/sponsorships/everton", icon: star },
       { id: "juventude", label: "Esporte Clube Juventude", path: "/sponsorships/juventude", icon: star },
       { id: "melgar", label: "FBC Melgar", path: "/sponsorships/melgar", icon: star },
@@ -111,7 +113,7 @@ const sidebarItems: SidebarItem[] = [
     label: "Language: English",
     expandable: true,
     children: [
-      { id: "english", label: "English", path: "/language/english", isLanguageOption: true, icon: star },
+      { id: "english", label: "English", path: "/language/english", isLanguageOption: true, icon: star, isSelected: true },
       { id: "espanol", label: "Español", path: "/language/espanol", isLanguageOption: true, icon: star },
       { id: "japanese", label: "日本語", path: "/language/japanese", isLanguageOption: true, icon: star },
       { id: "chinese", label: "中文", path: "/language/chinese", isLanguageOption: true, icon: star },
@@ -131,7 +133,7 @@ const sidebarItems: SidebarItem[] = [
   },
 ];
 
-const Sidebar = ({ collapsed, toggleSidebar }: SidebarProps) => {
+const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems }: SidebarProps) => {
   const location = useLocation();
   const [openItems, setOpenItems] = useState<string[]>([]);
   const [selectedLanguage, setSelectedLanguage] = useState("english");
@@ -159,13 +161,14 @@ const Sidebar = ({ collapsed, toggleSidebar }: SidebarProps) => {
   };
 
   return (
+    // ... keep existing code (sidebar container and styling)
     <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
       <div className="sidebar-header">
         <button className="toggle-button" onClick={toggleSidebar}>
           <Menu className="toggle-icon" />
         </button>
         
-        <div className={`nav-tabs ${collapsed ? 'nav-tabs-collapsed' : ''}`}>
+        <div className="nav-tabs">
           <Link 
             to="/casino" 
             className={`nav-tab ${activeTab === "casino" ? "casino-active" : "casino-inactive"}`}
@@ -214,17 +217,23 @@ const Sidebar = ({ collapsed, toggleSidebar }: SidebarProps) => {
                     child.isLanguageOption ? (
                       <div 
                         key={child.id} 
-                        className={`language-option ${selectedLanguage === child.id ? 'selected' : ''}`}
+                        className={`language-option ${(selectedLanguage === child.id || child.isSelected) ? 'selected' : ''}`}
                         onClick={() => handleLanguageSelect(child.id)}
                       >
                         <span className="language-label">{child.label}</span>
                         <span className="language-radio"></span>
                       </div>
                     ) : (
-                      <Link key={child.id} to={child.path || "#"} className="dropdown-item">
-                        <span className="sidebar-icon">
-                          <img src={child.icon} alt={child.label} className="white-icon" />
-                        </span>
+                      <Link 
+                        key={child.id} 
+                        to={child.path || "#"} 
+                        className={`dropdown-item ${child.isSelected ? 'selected' : ''}`}
+                      >
+                        {child.icon && (
+                          <span className="sidebar-icon">
+                            <img src={child.icon} alt={child.label} className="white-icon" />
+                          </span>
+                        )}
                         <span className="sidebar-label">{child.label}</span>
                       </Link>
                     )
