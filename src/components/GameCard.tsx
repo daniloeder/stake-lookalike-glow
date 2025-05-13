@@ -28,14 +28,8 @@ const GameCard = ({ id, name, playing, image, position, badge, enhanced }: GameC
       )}
       <div className="game-image-container">
         <img src={image} alt={name} className="game-image" />
-        {isHovering && (
-          <div className="game-overlay">
-            <button className="play-button">Play</button>
-          </div>
-        )}
       </div>
       <div className="game-info">
-        <div className="game-name">{name}</div>
         <div className="game-players-count">
           <span className="player-dot"></span>
           {playing.toLocaleString()} playing
@@ -52,7 +46,6 @@ const styles = `
   border-radius: 0.375rem;
   overflow: hidden;
   transition: transform 0.2s;
-  background-color: #17242D;
   cursor: pointer;
   height: 100%;
 }
@@ -95,23 +88,6 @@ const styles = `
 .game-image {
   width: 100%;
   height: auto;
-  aspect-ratio: 1/1;
-  object-fit: cover;
-}
-
-.game-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  animation: fadeIn 0.3s forwards;
 }
 
 @keyframes fadeIn {
@@ -119,30 +95,8 @@ const styles = `
   to { opacity: 1; }
 }
 
-.play-button {
-  padding: 0.5rem 2rem;
-  background-color: #0D7E3E;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.play-button:hover {
-  background-color: #0B6A33;
-}
-
 .game-info {
   padding: 0.75rem;
-}
-
-.game-name {
-  color: white;
-  font-weight: 600;
-  font-size: 0.875rem;
-  margin-bottom: 0.25rem;
 }
 
 .game-players-count {

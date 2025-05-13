@@ -78,6 +78,7 @@ const StakeOriginals = () => {
       {/* Page title */}
       <div className="page-header">
         <h1 className="page-title">Stake Originals</h1>
+        <div className="image-block"></div>
       </div>
 
       {/* Search bar */}
@@ -87,7 +88,17 @@ const StakeOriginals = () => {
 
       {/* View all providers link and sort controls */}
       <div className="filter-bar">
-        <a href="/providers" className="view-all-link">View All Providers</a>
+        <div className="sort-control">
+          <span className="sort-label">Filter by</span>
+          <div className="sort-dropdown">
+            <select className="sort-select">
+              <option value="popular">Providers</option>
+              <option value="new">New</option>
+              <option value="a-z">A-Z</option>
+            </select>
+            <ArrowDown className="sort-arrow" size={14} />
+          </div>
+        </div>
         <div className="sort-control">
           <span className="sort-label">Sort by</span>
           <div className="sort-dropdown">
@@ -152,14 +163,32 @@ const styles = `
 }
 
 .page-header {
+  width: 112%;
+  margin-left: -6%;
   margin-bottom: 1.5rem;
-  padding-top: 1rem;
+  padding-left: 6%;
+  padding-right: 6%;
+  background-color: #213743;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .page-title {
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 500;
   color: white;
+}
+
+.image-block {
+  width: 25%;
+  height: 7rem;
+  margin-top: -1.5rem;
+  margin-left: auto;
+  background-image: url('/public/images/games-bg1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .search-section {
@@ -199,13 +228,13 @@ const styles = `
 }
 
 .sort-label {
-  color: #9ca3af;
+  color: #ffffff;
   font-size: 0.9rem;
 }
 
 .sort-dropdown {
   position: relative;
-  background-color: #213743;
+  background-color: #0F212E;
   border-radius: 4px;
   padding: 0 0.5rem;
   display: flex;
