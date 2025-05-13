@@ -1,10 +1,6 @@
-import { useState } from "react";
 
-interface TabItem {
-  id: string;
-  label: string;
-  hasIndicator?: boolean;
-}
+import { useState } from "react";
+import BettingTabBar, { TabItem } from "./BettingTabBar";
 
 interface BetData {
   id: number;
@@ -63,134 +59,9 @@ const BettingTable = ({ data, defaultActiveTab = "casino", tabs }: BettingTableP
     cad: "$"
   };
 
-  // CSS styles
-  const styles = `
-    .betting-container {
-      font-family: 'Inter', sans-serif;
-      color: #B1BAD3;
-      width: 100%;
-      margin-top: 2rem;
-    }
-    
-    .tabs {
-      display: flex;
-      margin-bottom: 16px;
-      background-color: rgba(15, 25, 35, 0.5);
-      padding: 6px;
-      border-radius: 50px;
-      width: fit-content;
-      gap: 6px;
-    }
-    
-    .tab {
-      padding: 8px 16px;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-      font-size: 14px;
-      font-weight: 600;
-    }
-    
-    .tab.active {
-      background-color: #2F4553;
-    }
-    
-    .tab:hover:not(.active) {
-      background-color: #2F4553;
-    }
-    
-    .tab-indicator {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background-color:rgb(17, 248, 25);
-      margin-left: 4px;
-    }
-    
-    .betting-table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-    }
-    
-    .betting-table th {
-      text-align: left;
-      padding: 12px 16px;
-      color: #99a1b3;
-      font-weight: 500;
-      font-size: 14px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    .betting-table td {
-      padding: 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      background-color: rgba(23, 36, 45, 0.3);
-      font-size: 14px;
-    }
-    
-    .betting-table tr:hover td {
-      background-color: rgba(30, 40, 50, 0.4);
-    }
-
-    even-row {
-    }
-
-    .odd-row {
-      background-color: #213743;
-    }
-    
-    .game-cell {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .game-icon {
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      background-color: rgba(0, 0, 0, 0.2);
-    }
-    
-    .user-cell {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .user-icon {
-      opacity: 0.7;
-    }
-    
-    .win-value {
-    }
-    
-    .loss-value {
-    }
-    
-    .hot-multiplier {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    
-    .currency-indicator {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.1);
-      font-size: 10px;
-      margin-left: 4px;
-    }
-  `;
+  const handleTabChange = (tabId: string) => {
+    setActiveTab(tabId);
+  };
 
   const renderGameIcon = (game: string) => {
     if (game.includes("Keno")) return "📋";
@@ -206,19 +77,11 @@ const BettingTable = ({ data, defaultActiveTab = "casino", tabs }: BettingTableP
 
   return (
     <div className="betting-container">
-      <style>{styles}</style>
-      <div className="tabs">
-        {tabItems.map((tab) => (
-          <button
-            key={tab.id}
-            className={`tab ${activeTab === tab.id ? "active" : ""}`}
-            onClick={() => setActiveTab(tab.id)}
-          >
-            {tab.label}
-            {tab.hasIndicator && <span className="tab-indicator"></span>}
-          </button>
-        ))}
-      </div>
+      <BettingTabBar 
+        tabs={tabItems} 
+        defaultActiveTab={defaultActiveTab} 
+        onTabChange={handleTabChange}
+      />
       
       <table className="betting-table">
         <thead className="table-header">
@@ -272,5 +135,105 @@ const BettingTable = ({ data, defaultActiveTab = "casino", tabs }: BettingTableP
     </div>
   );
 };
+
+// CSS styles
+const styles = `
+.betting-container {
+  font-family: 'Inter', sans-serif;
+  color: #B1BAD3;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.betting-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.betting-table th {
+  text-align: left;
+  padding: 12px 16px;
+  color: #99a1b3;
+  font-weight: 500;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.betting-table td {
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: rgba(23, 36, 45, 0.3);
+  font-size: 14px;
+}
+
+.betting-table tr:hover td {
+  background-color: rgba(30, 40, 50, 0.4);
+}
+
+.even-row {
+}
+
+.odd-row {
+  background-color: #213743;
+}
+
+.game-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.game-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-icon {
+  opacity: 0.7;
+}
+
+.win {
+  color: #10B981;
+}
+
+.loss {
+  color: #EF4444;
+}
+
+.win-icon {
+  margin-right: 5px;
+}
+
+.crypto-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-size: 10px;
+  margin-left: 4px;
+}
+`;
+
+// Add styles to document
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = styles;
+  document.head.appendChild(styleElement);
+}
 
 export default BettingTable;

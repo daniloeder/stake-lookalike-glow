@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -9,6 +10,7 @@ import Header from "./components/Header";
 import Index from "./pages/Index";
 import Casino from "./pages/Casino";
 import Sports from "./pages/Sports";
+import StakeOriginals from "./pages/StakeOriginals";
 import NotFound from "./pages/NotFound";
 import "./App.css";
 
@@ -195,7 +197,10 @@ const AppContent = () => {
 
   // Determine which sidebar items to use based on the current route
   const getSidebarItems = () => {
-    if (location.pathname.includes('/casino')) {
+    // Use same sidebar items for Casino, Stake Originals and Sports pages
+    if (location.pathname.includes('/casino') || 
+        location.pathname.includes('/sports') || 
+        location.pathname.includes('/stake-originals')) {
       return casinoSidebarItems;
     }
     return indexSidebarItems;
@@ -203,7 +208,11 @@ const AppContent = () => {
 
   return (
     <div className={`app-container ${collapsed ? 'sidebar-collapsed' : ''}`}>
-      <Sidebar collapsed={collapsed} toggleSidebar={toggleSidebar} sidebarItems={getSidebarItems()} />
+      <Sidebar 
+        collapsed={collapsed} 
+        toggleSidebar={toggleSidebar} 
+        sidebarItems={getSidebarItems()} 
+      />
       <div className="content-container">
         <Header />
         <div className="page-content">
@@ -211,6 +220,7 @@ const AppContent = () => {
             <Route path="/" element={<Index />} />
             <Route path="/casino" element={<Casino />} />
             <Route path="/sports" element={<Sports />} />
+            <Route path="/stake-originals" element={<StakeOriginals />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
