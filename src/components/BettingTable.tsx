@@ -1,6 +1,11 @@
 
 import { useState } from "react";
-import BettingTabBar, { TabItem } from "./BettingTabBar";
+
+export interface TabItem {
+  id: string;
+  label: string;
+  hasIndicator?: boolean;
+}
 
 interface BetData {
   id: number;
@@ -59,10 +64,6 @@ const BettingTable = ({ data, defaultActiveTab = "casino", tabs }: BettingTableP
     cad: "$"
   };
 
-  const handleTabChange = (tabId: string) => {
-    setActiveTab(tabId);
-  };
-
   const renderGameIcon = (game: string) => {
     if (game.includes("Keno")) return "📋";
     if (game.includes("Grand Japanese")) return "🎮";
@@ -77,11 +78,18 @@ const BettingTable = ({ data, defaultActiveTab = "casino", tabs }: BettingTableP
 
   return (
     <div className="betting-container">
-      <BettingTabBar 
-        tabs={tabItems} 
-        defaultActiveTab={defaultActiveTab} 
-        onTabChange={handleTabChange}
-      />
+      <div className="tabs">
+        {tabItems.map((tab) => (
+          <button
+            key={tab.id}
+            className={`tab ${activeTab === tab.id ? "active" : ""}`}
+            onClick={() => setActiveTab(tab.id)}
+          >
+            {tab.label}
+            {tab.hasIndicator && <span className="tab-indicator"></span>}
+          </button>
+        ))}
+      </div>
       
       <table className="betting-table">
         <thead className="table-header">
@@ -145,6 +153,42 @@ const styles = `
   margin-top: 2rem;
 }
 
+.tabs {
+  display: flex;
+  margin-bottom: 16px;
+  background-color: rgba(15, 25, 35, 0.5);
+  padding: 6px;
+  border-radius: 50px;
+  width: fit-content;
+  gap: 6px;
+}
+
+.tab {
+  padding: 8px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.tab.active {
+  background-color: #2F4553;
+}
+
+.tab:hover:not(.active) {
+  background-color: #2F4553;
+}
+
+.tab-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color:rgb(17, 248, 25);
+  margin-left: 4px;
+}
+
 .betting-table {
   width: 100%;
   border-collapse: separate;
@@ -171,7 +215,7 @@ const styles = `
   background-color: rgba(30, 40, 50, 0.4);
 }
 
-.even-row {
+even-row {
 }
 
 .odd-row {

@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Gamepad } from "lucide-react";
+import { Gamepad, ArrowDown } from "lucide-react";
 import Footer from "@/components/Footer";
 import SearchBar from "@/components/SearchBar";
 import BettingTable from "@/components/BettingTable";
@@ -85,16 +85,19 @@ const StakeOriginals = () => {
         <SearchBar placeholder="Search your game" />
       </div>
 
-      {/* View all providers link */}
-      <div className="view-all-providers">
+      {/* View all providers link and sort controls */}
+      <div className="filter-bar">
         <a href="/providers" className="view-all-link">View All Providers</a>
-        <div className="sort-dropdown">
+        <div className="sort-control">
           <span className="sort-label">Sort by</span>
-          <select className="sort-select">
-            <option value="popular">Popular</option>
-            <option value="new">New</option>
-            <option value="a-z">A-Z</option>
-          </select>
+          <div className="sort-dropdown">
+            <select className="sort-select">
+              <option value="popular">Popular</option>
+              <option value="new">New</option>
+              <option value="a-z">A-Z</option>
+            </select>
+            <ArrowDown className="sort-arrow" size={14} />
+          </div>
         </div>
       </div>
 
@@ -169,7 +172,7 @@ const styles = `
   margin-bottom: 1.5rem;
 }
 
-.view-all-providers {
+.filter-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -180,14 +183,16 @@ const styles = `
   color: #1A9AEF;
   text-decoration: none;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
+  transition: color 0.2s;
 }
 
 .view-all-link:hover {
+  color: #2FB4FF;
   text-decoration: underline;
 }
 
-.sort-dropdown {
+.sort-control {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -198,13 +203,35 @@ const styles = `
   font-size: 0.9rem;
 }
 
-.sort-select {
+.sort-dropdown {
+  position: relative;
   background-color: #213743;
+  border-radius: 4px;
+  padding: 0 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.sort-select {
+  background-color: transparent;
   color: white;
   border: none;
-  border-radius: 4px;
   padding: 0.5rem;
   font-size: 0.9rem;
+  appearance: none;
+  cursor: pointer;
+  padding-right: 1.5rem;
+}
+
+.sort-select:focus {
+  outline: none;
+}
+
+.sort-arrow {
+  position: absolute;
+  right: 0.5rem;
+  color: #9ca3af;
+  pointer-events: none;
 }
 
 .games-grid-container {
@@ -256,7 +283,7 @@ const styles = `
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   }
   
-  .view-all-providers {
+  .filter-bar {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.75rem;
