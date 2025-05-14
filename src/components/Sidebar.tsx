@@ -1,11 +1,13 @@
+
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, ChevronRight } from "lucide-react";
+import SvgIcon from "./SvgIcon";
+import { svgIcons, starIcon } from "../utils/svgIcons";
 
 // Import SVG icons
 import chevronDownIcon from "../assets/icons/chevron-down.svg";
 import chevronRightIcon from "../assets/icons/chevron-right.svg";
-import star from "../assets/icons/star.svg";
 
 export interface SidebarProps {
   collapsed: boolean;
@@ -15,7 +17,7 @@ export interface SidebarProps {
 
 export interface SidebarItem {
   id: string;
-  icon: string;
+  iconSvg: string;
   label: string;
   path?: string;
   children?: SidebarSubItem[];
@@ -24,7 +26,7 @@ export interface SidebarItem {
 
 interface SidebarSubItem {
   id: string;
-  icon?: string;
+  iconSvg?: string;
   label: string;
   path?: string;
   isLanguageOption?: boolean;
@@ -35,100 +37,100 @@ interface SidebarSubItem {
 const defaultSidebarItems: SidebarItem[] = [
   {
     id: "promotions",
-    icon: star,
+    iconSvg: starIcon,
     label: "Promotions",
     expandable: true,
     children: [
-      { id: "weekly-raffle", label: "$75k Weekly Raffle", path: "/promotions/weekly-raffle", icon: star },
-      { id: "race", label: "$100k Race", path: "/promotions/race", icon: star },
-      { id: "pragmatic", label: "Pragmatic Drops & Wins", path: "/promotions/pragmatic", icon: star },
-      { id: "view-all", label: "View All", path: "/promotions", icon: star },
+      { id: "weekly-raffle", label: "$75k Weekly Raffle", path: "/promotions/weekly-raffle", iconSvg: starIcon },
+      { id: "race", label: "$100k Race", path: "/promotions/race", iconSvg: starIcon },
+      { id: "pragmatic", label: "Pragmatic Drops & Wins", path: "/promotions/pragmatic", iconSvg: svgIcons.pragmaticDrops },
+      { id: "view-all", label: "View All", path: "/promotions", iconSvg: svgIcons.viewAll },
     ],
   },
   {
     id: "affiliate",
-    icon: star,
+    iconSvg: svgIcons.affiliate,
     label: "Affiliate",
     path: "/affiliate",
   },
   {
     id: "vip-club",
-    icon: star,
+    iconSvg: svgIcons.vipClub,
     label: "VIP Club",
     path: "/vip",
   },
   {
     id: "blog",
-    icon: star,
+    iconSvg: svgIcons.blog,
     label: "Blog",
     path: "/blog",
   },
   {
     id: "forum",
-    icon: star,
+    iconSvg: svgIcons.forum,
     label: "Forum",
     path: "/forum",
   },
   {
     id: "sponsorships",
-    icon: star,
+    iconSvg: starIcon,
     label: "Sponsorships",
     expandable: true,
     children: [
-      { id: "drake", label: "Drake", path: "/sponsorships/drake", icon: star },
-      { id: "stake-f1-team", label: "Stake F1 Team", path: "/sponsorships/stake-f1-team", icon: star },
-      { id: "ufc", label: "UFC", path: "/sponsorships/ufc", icon: star, isSelected: true },
-      { id: "everton", label: "Everton Football Club", path: "/sponsorships/everton", icon: star },
-      { id: "juventude", label: "Esporte Clube Juventude", path: "/sponsorships/juventude", icon: star },
-      { id: "melgar", label: "FBC Melgar", path: "/sponsorships/melgar", icon: star },
-      { id: "fortaleza", label: "Fortaleza CEIF", path: "/sponsorships/fortaleza", icon: star },
-      { id: "nublense", label: "Club Deportivo Ñublense", path: "/sponsorships/nublense", icon: star },
-      { id: "enyimba", label: "Enyimba Football Club", path: "/sponsorships/enyimba", icon: star },
-      { id: "davis-cup", label: "Davis Cup", path: "/sponsorships/davis-cup", icon: star },
-      { id: "aguero", label: "Kun Agüero", path: "/sponsorships/aguero", icon: star },
-      { id: "adesanya", label: "Israel Adesanya", path: "/sponsorships/adesanya", icon: star },
-      { id: "pereira", label: "Alex Pereira", path: "/sponsorships/pereira", icon: star },
-      { id: "shevchenko", label: "Valentina Shevchenko", path: "/sponsorships/shevchenko", icon: star },
-      { id: "dvalishvili", label: "Merab Dvalishvili", path: "/sponsorships/dvalishvili", icon: star },
-      { id: "pantoja", label: "Alexandre Pantoja", path: "/sponsorships/pantoja", icon: star },
-      { id: "borralho", label: "Caio Borralho", path: "/sponsorships/borralho", icon: star },
-      { id: "dettori", label: "Frankie Dettori", path: "/sponsorships/dettori", icon: star },
+      { id: "drake", label: "Drake", path: "/sponsorships/drake", iconSvg: svgIcons.drake },
+      { id: "stake-f1-team", label: "Stake F1 Team", path: "/sponsorships/stake-f1-team", iconSvg: svgIcons.stakeF1Team },
+      { id: "ufc", label: "UFC", path: "/sponsorships/ufc", iconSvg: svgIcons.ufc, isSelected: true },
+      { id: "everton", label: "Everton Football Club", path: "/sponsorships/everton", iconSvg: svgIcons.everton },
+      { id: "juventude", label: "Esporte Clube Juventude", path: "/sponsorships/juventude", iconSvg: svgIcons.juventud },
+      { id: "melgar", label: "FBC Melgar", path: "/sponsorships/melgar", iconSvg: svgIcons.melgar },
+      { id: "fortaleza", label: "Fortaleza CEIF", path: "/sponsorships/fortaleza", iconSvg: svgIcons.fortaleza },
+      { id: "nublense", label: "Club Deportivo Ñublense", path: "/sponsorships/nublense", iconSvg: svgIcons.nublense },
+      { id: "enyimba", label: "Enyimba Football Club", path: "/sponsorships/enyimba", iconSvg: svgIcons.enyimba },
+      { id: "davis-cup", label: "Davis Cup", path: "/sponsorships/davis-cup", iconSvg: svgIcons.davisCup },
+      { id: "aguero", label: "Kun Agüero", path: "/sponsorships/aguero", iconSvg: svgIcons.aguero },
+      { id: "adesanya", label: "Israel Adesanya", path: "/sponsorships/adesanya", iconSvg: svgIcons.adesanya },
+      { id: "pereira", label: "Alex Pereira", path: "/sponsorships/pereira", iconSvg: svgIcons.pereira },
+      { id: "shevchenko", label: "Valentina Shevchenko", path: "/sponsorships/shevchenko", iconSvg: svgIcons.shevchenko },
+      { id: "dvalishvili", label: "Merab Dvalishvili", path: "/sponsorships/dvalishvili", iconSvg: svgIcons.dvalishvili },
+      { id: "pantoja", label: "Alexandre Pantoja", path: "/sponsorships/pantoja", iconSvg: svgIcons.pantoja },
+      { id: "borralho", label: "Caio Borralho", path: "/sponsorships/borralho", iconSvg: svgIcons.borralho },
+      { id: "dettori", label: "Frankie Dettori", path: "/sponsorships/dettori", iconSvg: svgIcons.dettori },
     ],
   },
   {
     id: "responsible-gambling",
-    icon: star,
+    iconSvg: svgIcons.responsibleGambling,
     label: "Responsible Gambling",
     path: "/responsible-gambling",
   },
   {
     id: "live-support",
-    icon: star,
+    iconSvg: starIcon,
     label: "Live Support",
     path: "/support",
   },
   {
     id: "language",
-    icon: star,
+    iconSvg: starIcon,
     label: "Language: English",
     expandable: true,
     children: [
-      { id: "english", label: "English", path: "/language/english", isLanguageOption: true, icon: star, isSelected: true },
-      { id: "espanol", label: "Español", path: "/language/espanol", isLanguageOption: true, icon: star },
-      { id: "japanese", label: "日本語", path: "/language/japanese", isLanguageOption: true, icon: star },
-      { id: "chinese", label: "中文", path: "/language/chinese", isLanguageOption: true, icon: star },
-      { id: "portuguese", label: "Português", path: "/language/portuguese", isLanguageOption: true, icon: star },
-      { id: "russian", label: "Русский", path: "/language/russian", isLanguageOption: true, icon: star },
-      { id: "french", label: "Français", path: "/language/french", isLanguageOption: true, icon: star },
-      { id: "german", label: "Deutsch", path: "/language/german", isLanguageOption: true, icon: star },
-      { id: "hindi", label: "हिन्दी", path: "/language/hindi", isLanguageOption: true, icon: star },
-      { id: "indonesian", label: "Indonesian", path: "/language/indonesian", isLanguageOption: true, icon: star },
-      { id: "korean", label: "한국어", path: "/language/korean", isLanguageOption: true, icon: star },
-      { id: "polish", label: "Polski", path: "/language/polish", isLanguageOption: true, icon: star },
-      { id: "turkish", label: "Türkçe", path: "/language/turkish", isLanguageOption: true, icon: star },
-      { id: "vietnamese", label: "Tiếng Việt", path: "/language/vietnamese", isLanguageOption: true, icon: star },
-      { id: "finnish", label: "Suomen", path: "/language/finnish", isLanguageOption: true, icon: star },
-      { id: "arabic", label: "اَلْعَرَبِيَّةُ", path: "/language/arabic", isLanguageOption: true, icon: star },
+      { id: "english", label: "English", path: "/language/english", isLanguageOption: true, iconSvg: starIcon, isSelected: true },
+      { id: "espanol", label: "Español", path: "/language/espanol", isLanguageOption: true, iconSvg: starIcon },
+      { id: "japanese", label: "日本語", path: "/language/japanese", isLanguageOption: true, iconSvg: starIcon },
+      { id: "chinese", label: "中文", path: "/language/chinese", isLanguageOption: true, iconSvg: starIcon },
+      { id: "portuguese", label: "Português", path: "/language/portuguese", isLanguageOption: true, iconSvg: starIcon },
+      { id: "russian", label: "Русский", path: "/language/russian", isLanguageOption: true, iconSvg: starIcon },
+      { id: "french", label: "Français", path: "/language/french", isLanguageOption: true, iconSvg: starIcon },
+      { id: "german", label: "Deutsch", path: "/language/german", isLanguageOption: true, iconSvg: starIcon },
+      { id: "hindi", label: "हिन्दी", path: "/language/hindi", isLanguageOption: true, iconSvg: starIcon },
+      { id: "indonesian", label: "Indonesian", path: "/language/indonesian", isLanguageOption: true, iconSvg: starIcon },
+      { id: "korean", label: "한국어", path: "/language/korean", isLanguageOption: true, iconSvg: starIcon },
+      { id: "polish", label: "Polski", path: "/language/polish", isLanguageOption: true, iconSvg: starIcon },
+      { id: "turkish", label: "Türkçe", path: "/language/turkish", isLanguageOption: true, iconSvg: starIcon },
+      { id: "vietnamese", label: "Tiếng Việt", path: "/language/vietnamese", isLanguageOption: true, iconSvg: starIcon },
+      { id: "finnish", label: "Suomen", path: "/language/finnish", isLanguageOption: true, iconSvg: starIcon },
+      { id: "arabic", label: "اَلْعَرَبِيَّةُ", path: "/language/arabic", isLanguageOption: true, iconSvg: starIcon },
     ],
   },
 ];
@@ -167,18 +169,17 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
         <button className="toggle-button" onClick={toggleSidebar}>
           <Menu className="toggle-icon" />
         </button>
-
-
-        <div className={`nav-tabs ${collapsed ? 'nav-tabs-collapsed' : ''}`}>
-          <Link
-            to="/casino"
+        
+        <div className="nav-tabs">
+          <Link 
+            to="/casino" 
             className={`nav-tab ${activeTab === "casino" ? "casino-active" : "casino-inactive"}`}
             onClick={() => setActiveTab("casino")}
           >
             <span className="nav-tab-text">Casino</span>
           </Link>
-          <Link
-            to="/sports"
+          <Link 
+            to="/sports" 
             className={`nav-tab ${activeTab === "sports" ? "sports-active" : "sports-inactive"}`}
             onClick={() => setActiveTab("sports")}
           >
@@ -186,7 +187,7 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
           </Link>
         </div>
       </div>
-
+      
       <div className="sidebar-content">
         {sidebarItems.map((item) => (
           <div key={item.id} className="sidebar-item-container">
@@ -197,17 +198,17 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
                   onClick={() => toggleItem(item.id)}
                 >
                   <span className="sidebar-icon">
-                    <img src={item.icon} alt={item.label} className="white-icon" />
+                    <SvgIcon svgContent={item.iconSvg} size={20} />
                   </span>
                   <span className="sidebar-label">{item.label}</span>
                   {collapsed ? (
                     <ChevronRight className="dropdown-icon-collapsed" />
                   ) : (
                     <span className="item-dropdown-icon">
-                      <img
-                        src={chevronRightIcon}
-                        alt="expand"
-                        className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`}
+                      <img 
+                        src={chevronRightIcon} 
+                        alt="expand" 
+                        className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`} 
                       />
                     </span>
                   )}
@@ -216,8 +217,8 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
                 <div className={`dropdown-content ${openItems.includes(item.id) ? 'expanded' : ''}`}>
                   {item.children.map((child) => (
                     child.isLanguageOption ? (
-                      <div
-                        key={child.id}
+                      <div 
+                        key={child.id} 
                         className={`language-option ${(selectedLanguage === child.id || child.isSelected) ? 'selected' : ''}`}
                         onClick={() => handleLanguageSelect(child.id)}
                       >
@@ -225,14 +226,14 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
                         <span className="language-radio"></span>
                       </div>
                     ) : (
-                      <Link
-                        key={child.id}
-                        to={child.path || "#"}
+                      <Link 
+                        key={child.id} 
+                        to={child.path || "#"} 
                         className={`dropdown-item ${child.isSelected ? 'selected' : ''}`}
                       >
-                        {child.icon && (
+                        {child.iconSvg && (
                           <span className="sidebar-icon">
-                            <img src={child.icon} alt={child.label} className="white-icon" />
+                            <SvgIcon svgContent={child.iconSvg} size={18} />
                           </span>
                         )}
                         <span className="sidebar-label">{child.label}</span>
@@ -244,7 +245,7 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
             ) : (
               <Link to={item.path || "#"} className="sidebar-item-link">
                 <span className="sidebar-icon">
-                  <img src={item.icon} alt={item.label} className="white-icon" />
+                  <SvgIcon svgContent={item.iconSvg} size={20} />
                 </span>
                 <span className="sidebar-label">{item.label}</span>
               </Link>
