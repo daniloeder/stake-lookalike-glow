@@ -169,17 +169,17 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
         <button className="toggle-button" onClick={toggleSidebar}>
           <Menu className="toggle-icon" />
         </button>
-        
-        <div className="nav-tabs">
-          <Link 
-            to="/casino" 
+
+        <div className={`nav-tabs ${collapsed ? 'nav-tabs-collapsed' : ''}`}>
+          <Link
+            to="/casino"
             className={`nav-tab ${activeTab === "casino" ? "casino-active" : "casino-inactive"}`}
             onClick={() => setActiveTab("casino")}
           >
             <span className="nav-tab-text">Casino</span>
           </Link>
-          <Link 
-            to="/sports" 
+          <Link
+            to="/sports"
             className={`nav-tab ${activeTab === "sports" ? "sports-active" : "sports-inactive"}`}
             onClick={() => setActiveTab("sports")}
           >
@@ -187,7 +187,7 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
           </Link>
         </div>
       </div>
-      
+
       <div className="sidebar-content">
         {sidebarItems.map((item) => (
           <div key={item.id} className="sidebar-item-container">
@@ -205,10 +205,10 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
                     <ChevronRight className="dropdown-icon-collapsed" />
                   ) : (
                     <span className="item-dropdown-icon">
-                      <img 
-                        src={chevronRightIcon} 
-                        alt="expand" 
-                        className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`} 
+                      <img
+                        src={chevronRightIcon}
+                        alt="expand"
+                        className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`}
                       />
                     </span>
                   )}
@@ -217,8 +217,8 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
                 <div className={`dropdown-content ${openItems.includes(item.id) ? 'expanded' : ''}`}>
                   {item.children.map((child) => (
                     child.isLanguageOption ? (
-                      <div 
-                        key={child.id} 
+                      <div
+                        key={child.id}
                         className={`language-option ${(selectedLanguage === child.id || child.isSelected) ? 'selected' : ''}`}
                         onClick={() => handleLanguageSelect(child.id)}
                       >
@@ -226,9 +226,9 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
                         <span className="language-radio"></span>
                       </div>
                     ) : (
-                      <Link 
-                        key={child.id} 
-                        to={child.path || "#"} 
+                      <Link
+                        key={child.id}
+                        to={child.path || "#"}
                         className={`dropdown-item ${child.isSelected ? 'selected' : ''}`}
                       >
                         {child.iconSvg && (
