@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, ChevronRight } from "lucide-react";
@@ -35,104 +34,7 @@ interface SidebarSubItem {
 
 // Default sidebar items if none are provided
 const defaultSidebarItems: SidebarItem[] = [
-  {
-    id: "promotions",
-    iconSvg: starIcon,
-    label: "Promotions",
-    expandable: true,
-    children: [
-      { id: "weekly-raffle", label: "$75k Weekly Raffle", path: "/promotions/weekly-raffle", iconSvg: starIcon },
-      { id: "race", label: "$100k Race", path: "/promotions/race", iconSvg: starIcon },
-      { id: "pragmatic", label: "Pragmatic Drops & Wins", path: "/promotions/pragmatic", iconSvg: svgIcons.pragmaticDrops },
-      { id: "view-all", label: "View All", path: "/promotions", iconSvg: svgIcons.viewAll },
-    ],
-  },
-  {
-    id: "affiliate",
-    iconSvg: svgIcons.affiliate,
-    label: "Affiliate",
-    path: "/affiliate",
-  },
-  {
-    id: "vip-club",
-    iconSvg: svgIcons.vipClub,
-    label: "VIP Club",
-    path: "/vip",
-  },
-  {
-    id: "blog",
-    iconSvg: svgIcons.blog,
-    label: "Blog",
-    path: "/blog",
-  },
-  {
-    id: "forum",
-    iconSvg: svgIcons.forum,
-    label: "Forum",
-    path: "/forum",
-  },
-  {
-    id: "sponsorships",
-    iconSvg: starIcon,
-    label: "Sponsorships",
-    expandable: true,
-    children: [
-      { id: "drake", label: "Drake", path: "/sponsorships/drake", iconSvg: svgIcons.drake },
-      { id: "stake-f1-team", label: "Stake F1 Team", path: "/sponsorships/stake-f1-team", iconSvg: svgIcons.stakeF1Team },
-      { id: "ufc", label: "UFC", path: "/sponsorships/ufc", iconSvg: svgIcons.ufc, isSelected: true },
-      { id: "everton", label: "Everton Football Club", path: "/sponsorships/everton", iconSvg: svgIcons.everton },
-      { id: "juventude", label: "Esporte Clube Juventude", path: "/sponsorships/juventude", iconSvg: svgIcons.juventud },
-      { id: "melgar", label: "FBC Melgar", path: "/sponsorships/melgar", iconSvg: svgIcons.melgar },
-      { id: "fortaleza", label: "Fortaleza CEIF", path: "/sponsorships/fortaleza", iconSvg: svgIcons.fortaleza },
-      { id: "nublense", label: "Club Deportivo Ñublense", path: "/sponsorships/nublense", iconSvg: svgIcons.nublense },
-      { id: "enyimba", label: "Enyimba Football Club", path: "/sponsorships/enyimba", iconSvg: svgIcons.enyimba },
-      { id: "davis-cup", label: "Davis Cup", path: "/sponsorships/davis-cup", iconSvg: svgIcons.davisCup },
-      { id: "aguero", label: "Kun Agüero", path: "/sponsorships/aguero", iconSvg: svgIcons.aguero },
-      { id: "adesanya", label: "Israel Adesanya", path: "/sponsorships/adesanya", iconSvg: svgIcons.adesanya },
-      { id: "pereira", label: "Alex Pereira", path: "/sponsorships/pereira", iconSvg: svgIcons.pereira },
-      { id: "shevchenko", label: "Valentina Shevchenko", path: "/sponsorships/shevchenko", iconSvg: svgIcons.shevchenko },
-      { id: "dvalishvili", label: "Merab Dvalishvili", path: "/sponsorships/dvalishvili", iconSvg: svgIcons.dvalishvili },
-      { id: "pantoja", label: "Alexandre Pantoja", path: "/sponsorships/pantoja", iconSvg: svgIcons.pantoja },
-      { id: "borralho", label: "Caio Borralho", path: "/sponsorships/borralho", iconSvg: svgIcons.borralho },
-      { id: "dettori", label: "Frankie Dettori", path: "/sponsorships/dettori", iconSvg: svgIcons.dettori },
-    ],
-  },
-  {
-    id: "responsible-gambling",
-    iconSvg: svgIcons.responsibleGambling,
-    label: "Responsible Gambling",
-    path: "/responsible-gambling",
-  },
-  {
-    id: "live-support",
-    iconSvg: starIcon,
-    label: "Live Support",
-    path: "/support",
-  },
-  {
-    id: "language",
-    iconSvg: starIcon,
-    label: "Language: English",
-    expandable: true,
-    children: [
-      { id: "english", label: "English", path: "/language/english", isLanguageOption: true, iconSvg: starIcon, isSelected: true },
-      { id: "espanol", label: "Español", path: "/language/espanol", isLanguageOption: true, iconSvg: starIcon },
-      { id: "japanese", label: "日本語", path: "/language/japanese", isLanguageOption: true, iconSvg: starIcon },
-      { id: "chinese", label: "中文", path: "/language/chinese", isLanguageOption: true, iconSvg: starIcon },
-      { id: "portuguese", label: "Português", path: "/language/portuguese", isLanguageOption: true, iconSvg: starIcon },
-      { id: "russian", label: "Русский", path: "/language/russian", isLanguageOption: true, iconSvg: starIcon },
-      { id: "french", label: "Français", path: "/language/french", isLanguageOption: true, iconSvg: starIcon },
-      { id: "german", label: "Deutsch", path: "/language/german", isLanguageOption: true, iconSvg: starIcon },
-      { id: "hindi", label: "हिन्दी", path: "/language/hindi", isLanguageOption: true, iconSvg: starIcon },
-      { id: "indonesian", label: "Indonesian", path: "/language/indonesian", isLanguageOption: true, iconSvg: starIcon },
-      { id: "korean", label: "한국어", path: "/language/korean", isLanguageOption: true, iconSvg: starIcon },
-      { id: "polish", label: "Polski", path: "/language/polish", isLanguageOption: true, iconSvg: starIcon },
-      { id: "turkish", label: "Türkçe", path: "/language/turkish", isLanguageOption: true, iconSvg: starIcon },
-      { id: "vietnamese", label: "Tiếng Việt", path: "/language/vietnamese", isLanguageOption: true, iconSvg: starIcon },
-      { id: "finnish", label: "Suomen", path: "/language/finnish", isLanguageOption: true, iconSvg: starIcon },
-      { id: "arabic", label: "اَلْعَرَبِيَّةُ", path: "/language/arabic", isLanguageOption: true, iconSvg: starIcon },
-    ],
-  },
+  // ... keep existing code (defaultSidebarItems array)
 ];
 
 const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems }: SidebarProps) => {
@@ -162,8 +64,36 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
     setSelectedLanguage(id);
   };
 
+  // Check if we're on the index page
+  const isIndexPage = location.pathname === "/";
+
+  // Function to determine if an item should be styled as faded
+  const isFadedItem = (id: string) => {
+    return !isIndexPage && (id === "favourites" || id === "recent" || id === "my-bets");
+  };
+
+  // Function to render horizontal rule after specific items
+  const shouldRenderHrAfterItem = (id: string, index: number) => {
+    // For Index page, add hr after "forum"
+    if (isIndexPage && id === "forum") {
+      return true;
+    }
+    
+    // For other pages, add hr after "my-bets", "providers", and "forum"
+    if (!isIndexPage && (id === "my-bets" || id === "providers" || id === "forum")) {
+      return true;
+    }
+    
+    return false;
+  };
+
+  // Function to determine if an item should not display an icon
+  const shouldHideIcon = (id: string) => {
+    // We're not hiding any icons now to keep consistency
+    return false;
+  };
+
   return (
-    // ... keep existing code (sidebar container and styling)
     <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
       <div className="sidebar-header">
         <button className="toggle-button" onClick={toggleSidebar}>
@@ -187,28 +117,30 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
           </Link>
         </div>
       </div>
-
+      
       <div className="sidebar-content">
-        {sidebarItems.map((item) => (
+        {sidebarItems.map((item, index) => (
           <div key={item.id} className="sidebar-item-container">
             {item.children && item.expandable ? (
               <div className="collapsible-item expandable">
                 <button
-                  className="sidebar-item-button"
+                  className={`sidebar-item-button ${isFadedItem(item.id) ? 'faded-item' : ''}`}
                   onClick={() => toggleItem(item.id)}
                 >
-                  <span className="sidebar-icon">
-                    <SvgIcon svgContent={item.iconSvg} size={20} />
-                  </span>
+                  {!shouldHideIcon(item.id) && (
+                    <span className="sidebar-icon">
+                      <SvgIcon svgContent={item.iconSvg} size={20} />
+                    </span>
+                  )}
                   <span className="sidebar-label">{item.label}</span>
                   {collapsed ? (
                     <ChevronRight className="dropdown-icon-collapsed" />
                   ) : (
                     <span className="item-dropdown-icon">
-                      <img
-                        src={chevronRightIcon}
-                        alt="expand"
-                        className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`}
+                      <img 
+                        src={chevronRightIcon} 
+                        alt="expand" 
+                        className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`} 
                       />
                     </span>
                   )}
@@ -217,8 +149,8 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
                 <div className={`dropdown-content ${openItems.includes(item.id) ? 'expanded' : ''}`}>
                   {item.children.map((child) => (
                     child.isLanguageOption ? (
-                      <div
-                        key={child.id}
+                      <div 
+                        key={child.id} 
                         className={`language-option ${(selectedLanguage === child.id || child.isSelected) ? 'selected' : ''}`}
                         onClick={() => handleLanguageSelect(child.id)}
                       >
@@ -226,9 +158,9 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
                         <span className="language-radio"></span>
                       </div>
                     ) : (
-                      <Link
-                        key={child.id}
-                        to={child.path || "#"}
+                      <Link 
+                        key={child.id} 
+                        to={child.path || "#"} 
                         className={`dropdown-item ${child.isSelected ? 'selected' : ''}`}
                       >
                         {child.iconSvg && (
@@ -243,12 +175,21 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
                 </div>
               </div>
             ) : (
-              <Link to={item.path || "#"} className="sidebar-item-link">
-                <span className="sidebar-icon">
-                  <SvgIcon svgContent={item.iconSvg} size={20} />
-                </span>
+              <Link 
+                to={item.path || "#"} 
+                className={`sidebar-item-link ${isFadedItem(item.id) ? 'faded-item' : ''}`}
+              >
+                {!shouldHideIcon(item.id) && (
+                  <span className="sidebar-icon">
+                    <SvgIcon svgContent={item.iconSvg} size={20} />
+                  </span>
+                )}
                 <span className="sidebar-label">{item.label}</span>
               </Link>
+            )}
+            
+            {shouldRenderHrAfterItem(item.id, index) && (
+              <hr className="sidebar-divider" />
             )}
           </div>
         ))}
@@ -272,6 +213,19 @@ const styles = `
   z-index: 900;
   display: flex;
   flex-direction: column;
+}
+
+.sidebar-divider {
+  background: #2F4553;
+  height: 2px;
+  width: 100%;
+  margin: 8px 0;
+  border: none;
+}
+
+.faded-item {
+  color: #8E9196 !important;
+  opacity: 0.8;
 }
 
 .sidebar.collapsed {
@@ -553,7 +507,6 @@ const styles = `
 .sidebar.collapsed .nav-tab-text {
   display: none;
 }
-
 
 .sidebar.collapsed .nav-tab {
   flex-direction: column;

@@ -9,8 +9,8 @@ import Header from "./components/Header";
 import Index from "./pages/Index";
 import Casino from "./pages/Casino";
 import Sports from "./pages/Sports";
-import StakeOriginals from "./pages/StakeOriginals";
 import GamesPage from "./pages/GamesPage";
+import VIPClub from "./pages/VIPClub";
 import NotFound from "./pages/NotFound";
 import { svgIcons, starIcon } from "./utils/svgIcons";
 import "./App.css";
@@ -23,7 +23,7 @@ const casinoSidebarItems: SidebarItem[] = [
   { id: "recent", iconSvg: svgIcons.recent, label: "Recent", path: "/recent" },
   { id: "challenges", iconSvg: svgIcons.challenges, label: "Challenges", path: "/challenges" },
   { id: "my-bets", iconSvg: svgIcons.myBets, label: "My Bets", path: "/my-bets" },
-  { id: "games", iconSvg: starIcon, label: "Games", path: "/games" },
+  { id: "games", iconSvg: svgIcons.games, label: "Games", path: "/games" },
   { id: "stake-originals", iconSvg: svgIcons.stakeOriginals, label: "Stake Originals", path: "/stake-originals" },
   { id: "stake-exclusives", iconSvg: svgIcons.stakeExclusives, label: "Stake Exclusives", path: "/stake-exclusives" },
   { id: "slots", iconSvg: svgIcons.slots, label: "Slots", path: "/slots" },
@@ -195,17 +195,12 @@ const AppContent = () => {
 
   // Determine which sidebar items to use based on the current route
   const getSidebarItems = () => {
-    // Use same sidebar items for Casino, Stake Originals and Sports pages
-    if (location.pathname.includes('/casino') || 
-        location.pathname.includes('/sports') || 
-        location.pathname.includes('/stake-originals') ||
-        location.pathname.includes('/slots') ||
-        location.pathname.includes('/live-casino') ||
-        location.pathname.includes('/game-shows') ||
-        location.pathname.includes('/stake-exclusives')) {
-      return casinoSidebarItems;
+    // Check if we're on the index page
+    if (location.pathname === "/") {
+      return indexSidebarItems;
     }
-    return indexSidebarItems;
+    // For all other pages, use the casinoSidebarItems
+    return casinoSidebarItems;
   };
 
   return (
@@ -222,12 +217,22 @@ const AppContent = () => {
             <Route path="/" element={<Index />} />
             <Route path="/casino" element={<Casino />} />
             <Route path="/sports" element={<Sports />} />
-            <Route path="/stake-originals" element={<StakeOriginals />} />
+            <Route path="/stake-originals" element={<GamesPage title="Stake Originals" />} />
+            <Route path="/stake-exclusives" element={<GamesPage title="Stake Exclusives" />} />
             <Route path="/slots" element={<GamesPage title="Slots" />} />
             <Route path="/live-casino" element={<GamesPage title="Live Casino" />} />
             <Route path="/game-shows" element={<GamesPage title="Game Shows" />} />
-            <Route path="/stake-exclusives" element={<GamesPage title="Stake Exclusives" />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/new-releases" element={<GamesPage title="New Releases" />} />
+            <Route path="/stake-poker" element={<GamesPage title="Stake Poker" />} />
+            <Route path="/bonus-buy" element={<GamesPage title="Bonus Buy" />} />
+            <Route path="/enhanced-rtp" element={<GamesPage title="Enhanced RTP" />} />
+            <Route path="/table-games" element={<GamesPage title="Table Games" />} />
+            <Route path="/blackjack" element={<GamesPage title="Blackjack" />} />
+            <Route path="/baccarat" element={<GamesPage title="Baccarat" />} />
+            <Route path="/roulette" element={<GamesPage title="Roulette" />} />
+            <Route path="/providers" element={<GamesPage title="Providers" />} />
+            <Route path="/vip" element={<VIPClub />} />
+            <Route path="*" element={<GamesPage title="Game Page" />} />
           </Routes>
         </div>
       </div>
