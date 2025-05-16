@@ -88,7 +88,7 @@ const GamesPage = ({ title }: GamesPageProps) => {
           <div className="image-block"></div>
         </div>
       ) : (
-        <StakePoker/>
+        <StakePoker />
       )}
 
       {/* Section header */}
@@ -98,65 +98,78 @@ const GamesPage = ({ title }: GamesPageProps) => {
         <SearchBar placeholder="Search your game" />
       </div>
 
-      {/* View all providers link and sort controls */}
-      <div className="filter-bar">
-        <div className="sort-control">
-          <span className="sort-label">Filter by</span>
-          <div className="sort-dropdown">
-            <select className="sort-select">
-              <option value="popular">Providers</option>
-              <option value="new">New</option>
-              <option value="a-z">A-Z</option>
-            </select>
-            <ArrowDown className="sort-arrow" size={14} />
-          </div>
-        </div>
-        <div className="sort-control">
-          <span className="sort-label">Sort by</span>
-          <div className="sort-dropdown">
-            <select className="sort-select">
-              <option value="popular">Popular</option>
-              <option value="new">New</option>
-              <option value="a-z">A-Z</option>
-            </select>
-            <ArrowDown className="sort-arrow" size={14} />
-          </div>
-        </div>
-      </div>
-
-      {/* Games grid */}
-      <div className="games-grid-container">
-        {stakeOriginalGames.map((game) => (
-          <div key={game.id} className="game-card-wrapper">
-            <GameCard {...game} />
-          </div>
-        ))}
-      </div>
-      
-      {/* Pagination info */}
-      <div className="pagination-info">
-        Displaying 23 of 23 games
-      </div>
-
-      {/* Providers section */}
-      <div className="providers-section">
-        <SectionHeader title="Providers" showNavigation={true} />
+      {title === "Providers" ? (
+        // Only repeat providers.map 5 times, no SectionHeader or filter/sort
         <div className="providers-grid">
-          {providers.map(provider => (
-            <ProviderLogo key={provider.id} {...provider} />
+          {[...Array(4)].map((_, i) => (
+            providers.map((provider) => (
+              <ProviderLogo key={`${provider.id}-${i}`} {...provider} />
+            ))
           ))}
         </div>
-      </div>
+      ) : (
+        <>
+          {/* View all providers link and sort controls */}
+          <div className="filter-bar">
+            <div className="sort-control">
+              <span className="sort-label">Filter by</span>
+              <div className="sort-dropdown">
+                <select className="sort-select">
+                  <option value="popular">Providers</option>
+                  <option value="new">New</option>
+                  <option value="a-z">A-Z</option>
+                </select>
+                <ArrowDown className="sort-arrow" size={14} />
+              </div>
+            </div>
+            <div className="sort-control">
+              <span className="sort-label">Sort by</span>
+              <div className="sort-dropdown">
+                <select className="sort-select">
+                  <option value="popular">Popular</option>
+                  <option value="new">New</option>
+                  <option value="a-z">A-Z</option>
+                </select>
+                <ArrowDown className="sort-arrow" size={14} />
+              </div>
+            </div>
+          </div>
+
+          {/* Games grid */}
+          <div className="games-grid-container">
+            {stakeOriginalGames.map((game) => (
+              <div key={game.id} className="game-card-wrapper">
+                <GameCard {...game} />
+              </div>
+            ))}
+          </div>
+
+          {/* Pagination info */}
+          <div className="pagination-info">
+            Displaying 23 of 23 games
+          </div>
+
+          {/* Providers section */}
+          <div className="providers-section">
+            <SectionHeader title="Providers" showNavigation={true} />
+            <div className="providers-grid">
+              {providers.map((provider) => (
+                <ProviderLogo key={provider.id} {...provider} />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Betting table */}
-      <BettingTable 
-        data={bettingData} 
-        defaultActiveTab="all-bets" 
+      <BettingTable
+        data={bettingData}
+        defaultActiveTab="all-bets"
         tabs={bettingTabs}
       />
 
       {/* Info section */}
-      <InfoSection 
+      <InfoSection
         title={`Play ${title} Slots & Casino Games Online`}
         content={pageInfo}
       />
