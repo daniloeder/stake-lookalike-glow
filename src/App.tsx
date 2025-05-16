@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -11,19 +12,21 @@ import Casino from "./pages/Casino";
 import Sports from "./pages/Sports";
 import GamesPage from "./pages/GamesPage";
 import VIPClub from "./pages/VIPClub";
+import BlogPage from "./pages/BlogPage";
+import AffiliatePage from "./pages/AffiliatePage";
 import NotFound from "./pages/NotFound";
 import { svgIcons, starIcon } from "./utils/svgIcons";
 import "./App.css";
 
 const queryClient = new QueryClient();
 
-// Define sidebar items for Casino page
-const casinoSidebarItems: SidebarItem[] = [
-  { id: "favourites", iconSvg: svgIcons.favourites, label: "Favourites", path: "/favourites" },
-  { id: "recent", iconSvg: svgIcons.recent, label: "Recent", path: "/recent" },
+// Define sidebar items for all pages except Index
+const mainSidebarItems: SidebarItem[] = [
+  { id: "favourites", iconSvg: svgIcons.favourites, label: "Favourites", path: "#" },
+  { id: "recent", iconSvg: svgIcons.recent, label: "Recent", path: "#" },
   { id: "challenges", iconSvg: svgIcons.challenges, label: "Challenges", path: "/challenges" },
-  { id: "my-bets", iconSvg: svgIcons.myBets, label: "My Bets", path: "/my-bets" },
-  { id: "games", iconSvg: svgIcons.games, label: "Games", path: "/games" },
+  { id: "my-bets", iconSvg: svgIcons.myBets, label: "My Bets", path: "#" },
+  { id: "games", iconSvg: svgIcons.gameShows, label: "Games", path: "/games" }, // Changed from svgIcons.games to svgIcons.gameShows
   { id: "stake-originals", iconSvg: svgIcons.stakeOriginals, label: "Stake Originals", path: "/stake-originals" },
   { id: "stake-exclusives", iconSvg: svgIcons.stakeExclusives, label: "Stake Exclusives", path: "/stake-exclusives" },
   { id: "slots", iconSvg: svgIcons.slots, label: "Slots", path: "/slots" },
@@ -111,7 +114,7 @@ const casinoSidebarItems: SidebarItem[] = [
 
 // Define sidebar items for Index page
 const indexSidebarItems: SidebarItem[] = [
-  { id: "favourites", iconSvg: svgIcons.favourites, label: "Favourites", path: "/favourites" },
+  { id: "favourites", iconSvg: svgIcons.favourites, label: "Favourites", path: "#" },
   { id: "providers", iconSvg: svgIcons.providers, label: "Providers", path: "/providers" },
   {
     id: "promotions",
@@ -195,12 +198,13 @@ const AppContent = () => {
 
   // Determine which sidebar items to use based on the current route
   const getSidebarItems = () => {
-    // Check if we're on the index page
-    if (location.pathname === "/") {
+    // Special pages that use the index sidebar
+    const specialPages = ['/', '/vip', '/blog', '/affiliate'];
+    if (specialPages.includes(location.pathname)) {
       return indexSidebarItems;
     }
-    // For all other pages, use the casinoSidebarItems
-    return casinoSidebarItems;
+    // For all other pages, use the main sidebar items
+    return mainSidebarItems;
   };
 
   return (
@@ -232,7 +236,14 @@ const AppContent = () => {
             <Route path="/roulette" element={<GamesPage title="Roulette" />} />
             <Route path="/providers" element={<GamesPage title="Providers" />} />
             <Route path="/vip" element={<VIPClub />} />
-            <Route path="*" element={<GamesPage title="Game Page" />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/affiliate" element={<AffiliatePage />} />
+            <Route path="/forum" element={<GamesPage title="Forum" />} />
+            <Route path="/responsible-gambling" element={<GamesPage title="Responsible Gambling" />} />
+            <Route path="/support" element={<GamesPage title="Live Support" />} />
+            <Route path="/promotions/*" element={<GamesPage title="Promotions" />} />
+            <Route path="/sponsorships/*" element={<GamesPage title="Sponsorships" />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </div>

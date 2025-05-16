@@ -8,6 +8,7 @@ import GameCard from "@/components/GameCard";
 import ProviderLogo from "@/components/ProviderLogo";
 import SectionHeader from "@/components/SectionHeader";
 import InfoSection from "@/components/InfoSection";
+import StakePoker from "@/components/StakePoker";
 
 interface GamesPageProps {
   title: string;
@@ -79,11 +80,18 @@ const GamesPage = ({ title }: GamesPageProps) => {
 
   return (
     <div className="stake-originals-page">
-      {/* Page title */}
-      <div className="page-header">
-        <h1 className="page-title">{title}</h1>
-        <div className="image-block"></div>
-      </div>
+
+      {/* Check if page is stake power */}
+      {title !== "Stake Poker" ? (
+        <div className="page-header">
+          <h1 className="page-title">{title}</h1>
+          <div className="image-block"></div>
+        </div>
+      ) : (
+        <StakePoker/>
+      )}
+
+      {/* Section header */}
 
       {/* Search bar */}
       <div className="search-section">

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, ChevronRight } from "lucide-react";
@@ -69,19 +70,23 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
 
   // Function to determine if an item should be styled as faded
   const isFadedItem = (id: string) => {
-    return !isIndexPage && (id === "favourites" || id === "recent" || id === "my-bets");
+    return id === "favourites" || id === "recent" || id === "my-bets";
   };
 
   // Function to render horizontal rule after specific items
   const shouldRenderHrAfterItem = (id: string, index: number) => {
-    // For Index page, add hr after "forum"
-    if (isIndexPage && id === "forum") {
+    // For Index page and special pages, add hr after "forum"
+    const specialPages = ['/', '/vip', '/blog', '/affiliate'];
+    
+    if (specialPages.includes(location.pathname) && id === "forum") {
       return true;
     }
     
     // For other pages, add hr after "my-bets", "providers", and "forum"
-    if (!isIndexPage && (id === "my-bets" || id === "providers" || id === "forum")) {
-      return true;
+    if (!specialPages.includes(location.pathname)) {
+      if (id === "my-bets" || id === "providers" || id === "forum") {
+        return true;
+      }
     }
     
     return false;
