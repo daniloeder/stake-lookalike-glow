@@ -225,6 +225,7 @@ const AppContent = () => {
             <Route path="/stake-exclusives" element={<GamesPage title="Stake Exclusives" />} />
             <Route path="/slots" element={<GamesPage title="Slots" />} />
             <Route path="/live-casino" element={<GamesPage title="Live Casino" />} />
+            <Route path="/challenges" element={<GamesPage title="Challenges" />} />
             <Route path="/game-shows" element={<GamesPage title="Game Shows" />} />
             <Route path="/new-releases" element={<GamesPage title="New Releases" />} />
             <Route path="/stake-poker" element={<GamesPage title="Stake Poker" />} />

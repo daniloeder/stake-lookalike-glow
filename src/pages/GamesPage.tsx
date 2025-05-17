@@ -9,6 +9,7 @@ import ProviderLogo from "@/components/ProviderLogo";
 import SectionHeader from "@/components/SectionHeader";
 import InfoSection from "@/components/InfoSection";
 import StakePoker from "@/components/StakePoker";
+import ChallengeGames from "@/components/ChallengeGames";
 
 interface GamesPageProps {
   title: string;
@@ -80,7 +81,6 @@ const GamesPage = ({ title }: GamesPageProps) => {
 
   return (
     <div className="stake-originals-page">
-
       {/* Check if page is stake power */}
       {title !== "Stake Poker" ? (
         <div className="page-header">
@@ -91,25 +91,53 @@ const GamesPage = ({ title }: GamesPageProps) => {
         <StakePoker />
       )}
 
-      {/* Section header */}
-
       {/* Search bar */}
       <div className="search-section">
         <SearchBar placeholder="Search your game" />
       </div>
 
-      {title === "Providers" ? (
-        // Only repeat providers.map 5 times, no SectionHeader or filter/sort
+      {title === "Challenges" ? (
+        <>
+          {/* Only show Sort by (not Filter by) */}
+          <div className="filter-bar">
+            <div className="sort-control">
+              <span className="sort-label">Sort by</span>
+              <div className="sort-dropdown">
+                <select className="sort-select">
+                  <option value="popular">Popular</option>
+                  <option value="new">New</option>
+                  <option value="a-z">A-Z</option>
+                </select>
+                <ArrowDown className="sort-arrow" size={14} />
+              </div>
+            </div>
+          </div>
+
+          {/* Only show ChallengeGames and BettingTable */}
+          <ChallengeGames />
+          <BettingTable
+            data={bettingData}
+            defaultActiveTab="all-bets"
+            tabs={bettingTabs}
+          />
+        </>
+      ) : title === "Providers" ? (<>
         <div className="providers-grid">
-          {[...Array(4)].map((_, i) => (
+          {[...Array(4)].map((_, i) =>
             providers.map((provider) => (
               <ProviderLogo key={`${provider.id}-${i}`} {...provider} />
             ))
-          ))}
+          )}
         </div>
-      ) : (
+
+        {/* Info section and footer (shown on all pages) */}
+        <InfoSection
+          title={`Play ${title} Slots & Casino Games Online`}
+          content={pageInfo}
+        />
+      </>) : (
         <>
-          {/* View all providers link and sort controls */}
+          {/* Filter and sort controls */}
           <div className="filter-bar">
             <div className="sort-control">
               <span className="sort-label">Filter by</span>
@@ -144,7 +172,7 @@ const GamesPage = ({ title }: GamesPageProps) => {
             ))}
           </div>
 
-          {/* Pagination info */}
+          {/* Pagination */}
           <div className="pagination-info">
             Displaying 23 of 23 games
           </div>
@@ -158,21 +186,21 @@ const GamesPage = ({ title }: GamesPageProps) => {
               ))}
             </div>
           </div>
+
+          {/* Betting Table */}
+          <BettingTable
+            data={bettingData}
+            defaultActiveTab="all-bets"
+            tabs={bettingTabs}
+          />
+
+          {/* Info section and footer (shown on all pages) */}
+          <InfoSection
+            title={`Play ${title} Slots & Casino Games Online`}
+            content={pageInfo}
+          />
         </>
       )}
-
-      {/* Betting table */}
-      <BettingTable
-        data={bettingData}
-        defaultActiveTab="all-bets"
-        tabs={bettingTabs}
-      />
-
-      {/* Info section */}
-      <InfoSection
-        title={`Play ${title} Slots & Casino Games Online`}
-        content={pageInfo}
-      />
 
       <Footer />
     </div>
