@@ -77,18 +77,18 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
   const shouldRenderHrAfterItem = (id: string, index: number) => {
     // For Index page and special pages, add hr after "forum"
     const specialPages = ['/', '/vip', '/blog', '/affiliate'];
-    
+
     if (specialPages.includes(location.pathname) && id === "forum") {
       return true;
     }
-    
+
     // For other pages, add hr after "my-bets", "providers", and "forum"
     if (!specialPages.includes(location.pathname)) {
       if (id === "my-bets" || id === "providers" || id === "forum") {
         return true;
       }
     }
-    
+
     return false;
   };
 
@@ -122,7 +122,7 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
           </Link>
         </div>
       </div>
-      
+
       <div className="sidebar-content">
         {sidebarItems.map((item, index) => (
           <div key={item.id} className="sidebar-item-container">
@@ -142,10 +142,10 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
                     <ChevronRight className="dropdown-icon-collapsed" />
                   ) : (
                     <span className="item-dropdown-icon">
-                      <img 
-                        src={chevronRightIcon} 
-                        alt="expand" 
-                        className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`} 
+                      <img
+                        src={chevronRightIcon}
+                        alt="expand"
+                        className={`dropdown-icon ${openItems.includes(item.id) ? 'rotated' : ''}`}
                       />
                     </span>
                   )}
@@ -154,8 +154,8 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
                 <div className={`dropdown-content ${openItems.includes(item.id) ? 'expanded' : ''}`}>
                   {item.children.map((child) => (
                     child.isLanguageOption ? (
-                      <div 
-                        key={child.id} 
+                      <div
+                        key={child.id}
                         className={`language-option ${(selectedLanguage === child.id || child.isSelected) ? 'selected' : ''}`}
                         onClick={() => handleLanguageSelect(child.id)}
                       >
@@ -163,9 +163,9 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
                         <span className="language-radio"></span>
                       </div>
                     ) : (
-                      <Link 
-                        key={child.id} 
-                        to={child.path || "#"} 
+                      <Link
+                        key={child.id}
+                        to={child.path || "#"}
                         className={`dropdown-item ${child.isSelected ? 'selected' : ''}`}
                       >
                         {child.iconSvg && (
@@ -180,19 +180,43 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
                 </div>
               </div>
             ) : (
-              <Link 
-                to={item.path || "#"} 
-                className={`sidebar-item-link ${isFadedItem(item.id) ? 'faded-item' : ''}`}
-              >
-                {!shouldHideIcon(item.id) && (
-                  <span className="sidebar-icon">
-                    <SvgIcon svgContent={item.iconSvg} size={20} />
+              item.id === "games" ? (
+                <div className="sidebar-item-link not-clickable">
+                  <span className="sidebar-label sidebar-label-games">
+                    {item.label}
                   </span>
+                </div>
+              ) : (<>
+                {item.id === "games" ? (
+                  <div className="sidebar-item-link not-clickable">
+                    {!shouldHideIcon(item.id) && (
+                      <span className="sidebar-icon">
+                        <SvgIcon svgContent={item.iconSvg} size={20} />
+                      </span>
+                    )}
+                    <span className="sidebar-label sidebar-label-games">
+                      {item.label}
+                    </span>
+                  </div>
+                ) : (
+                  <Link
+                    to={item.path || "#"}
+                    className={`sidebar-item-link ${isFadedItem(item.id) ? 'faded-item' : ''}`}
+                  >
+                    {!shouldHideIcon(item.id) && (
+                      <span className="sidebar-icon">
+                        <SvgIcon svgContent={item.iconSvg} size={20} />
+                      </span>
+                    )}
+                    <span className="sidebar-label">
+                      {item.label}
+                    </span>
+                  </Link>
                 )}
-                <span className="sidebar-label">{item.label}</span>
-              </Link>
+
+              </>)
             )}
-            
+
             {shouldRenderHrAfterItem(item.id, index) && (
               <hr className="sidebar-divider" />
             )}
@@ -385,6 +409,11 @@ const styles = `
   text-overflow: ellipsis;
   font-weight: 600;
   font-size: 0.75rem;
+}
+
+.sidebar-label-games {
+  color: #667386;
+  font-size: 0.875rem;
 }
 
 .item-dropdown-icon {
