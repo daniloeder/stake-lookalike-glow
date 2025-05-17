@@ -248,16 +248,6 @@ const styles = `
   vertical-align: middle;
 }
 
-.register-button {
-  background-color: #1d4ed8;
-  color: white;
-  font-weight: 500;
-}
-
-.register-button:hover {
-  background-color: #1e40af;
-}
-
 .control-icons {
   position: absolute;
   bottom: 0;

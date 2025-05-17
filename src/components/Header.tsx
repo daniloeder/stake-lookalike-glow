@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import AuthButtons from "./AuthButtons";
 
 const Header = () => {
   return (
@@ -17,17 +17,7 @@ const Header = () => {
         </div>
 
         <div className="header-right">
-          <Button 
-            variant="ghost" 
-            className="login-button"
-          >
-            Login
-          </Button>
-          <Button 
-            className="register-button"
-          >
-            Register
-          </Button>
+          <AuthButtons />
         </div>
       </div>
     </header>
@@ -74,31 +64,7 @@ const styles = `
 .header-right {
   display: flex;
   gap: 0.75rem;
-  margin-top: 1.25rem;
-}
-
-.login-button {
-  color: white;
-  font-weight: 500;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-.login-button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-.register-button {
-  background-color: #1060B7;
-  color: white;
-  font-weight: 500;
-  padding: 0 1.25rem;
-  transition: transform 0.2s, background-color 0.2s;
-  border-radius: 4px;
-}
-
-.register-button:hover {
-  background-color: #1060B7;
+  margin-top: 1rem;
 }
 
 @media (max-width: 768px) {

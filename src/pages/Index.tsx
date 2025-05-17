@@ -31,11 +31,16 @@ const Index = () => {
         <div className="hero-section">
           <div className="hero-content">
             <h1 className="hero-title">World's Largest Online Casino and Sportsbook</h1>
-            <Link to="/register">
-              <button className="register-button">
-                Register
-              </button>
-            </Link>
+            <button 
+              onClick={() => {
+                // Find auth modal and open it with register mode
+                const registerBtn = document.querySelector('.register-button') as HTMLElement;
+                if (registerBtn) registerBtn.click();
+              }} 
+              className="register-button"
+            >
+              Register
+            </button>
             <div className="social-signup">
               <p className="social-text">Or sign up with</p>
               <div className="social-buttons">
