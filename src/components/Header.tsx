@@ -34,6 +34,8 @@ const styles = `
   top: 0;
   width: 100%;
   z-index: 100;
+  box-shadow: #0003 0 4px 6px -1px, #0000001f 0 2px 4px -1px;
+  touch-action: none;
 }
 
 .header-container {
