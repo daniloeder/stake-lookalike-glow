@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, ChevronRight } from "lucide-react";
@@ -13,6 +12,7 @@ export interface SidebarProps {
   collapsed: boolean;
   toggleSidebar: () => void;
   sidebarItems?: SidebarItem[];
+  onItemClick?: (itemId: string, itemPath: string) => void;
 }
 
 export interface SidebarItem {
@@ -38,7 +38,7 @@ const defaultSidebarItems: SidebarItem[] = [
   // ... keep existing code (defaultSidebarItems array)
 ];
 
-const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems }: SidebarProps) => {
+const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems, onItemClick }: SidebarProps) => {
   const location = useLocation();
   const [openItems, setOpenItems] = useState<string[]>([]);
   const [selectedLanguage, setSelectedLanguage] = useState("english");
@@ -63,6 +63,13 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
 
   const handleLanguageSelect = (id: string) => {
     setSelectedLanguage(id);
+  };
+
+  // Function to handle item click if onItemClick is provided
+  const handleItemClick = (id: string, path: string) => {
+    if (onItemClick) {
+      onItemClick(id, path);
+    }
   };
 
   // Check if we're on the index page
@@ -202,6 +209,7 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems 
                   <Link
                     to={item.path || "#"}
                     className={`sidebar-item-link ${isFadedItem(item.id) ? 'faded-item' : ''}`}
+                    onClick={() => handleItemClick(item.id, item.path || "#")}
                   >
                     {!shouldHideIcon(item.id) && (
                       <span className="sidebar-icon">

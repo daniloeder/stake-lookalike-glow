@@ -1,194 +1,182 @@
 
-import React, { useState, useEffect } from "react";
-import { MessageSquare, Home as HomeIcon, HelpCircle, Search, ChevronUp, X } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { useState } from 'react';
+import { X, Home, MessageSquare, HelpCircle, Search, ChevronRight } from 'lucide-react';
 
-// Define the tab types
-type TabType = "home" | "messages" | "help";
-
-// Message interface for the messages tab
-interface Message {
-  id: number;
-  content: string;
-  time: string;
+interface LiveSupportProps {
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
-// Help item interface for the help tab
-interface HelpCollection {
-  title: string;
-  articles: number;
-}
+const LiveSupport = ({ isOpen = false, onClose = () => {} }: LiveSupportProps) => {
+  const [showPanel, setShowPanel] = useState(isOpen);
+  const [activeTab, setActiveTab] = useState<'home' | 'messages' | 'help'>('home');
 
-const LiveSupport: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<TabType>("home");
-  const [searchQuery, setSearchQuery] = useState("");
-  const location = useLocation();
-
-  // Collections for help tab
-  const helpCollections: HelpCollection[] = [
-    { title: "Getting Started", articles: 3 },
-    { title: "Account", articles: 16 },
-    { title: "Payments", articles: 24 },
-    { title: "Casino", articles: 8 },
-    { title: "Sports", articles: 9 },
-    { title: "Bonuses & Promotions", articles: 12 },
-  ];
-
-  // Check if the current page is the support page
-  useEffect(() => {
-    if (location.pathname === "/support") {
-      setIsOpen(true);
+  const togglePanel = () => {
+    if (showPanel && onClose) {
+      onClose();
     }
-  }, [location]);
-
-  // Helper function to toggle the support panel
-  const toggleSupport = () => setIsOpen(!isOpen);
-
-  // Helper function to change active tab
-  const changeTab = (tab: TabType) => {
-    setActiveTab(tab);
+    setShowPanel(!showPanel);
   };
 
-  // Render content based on the active tab
-  const renderContent = () => {
-    switch (activeTab) {
-      case "home":
-        return (
-          <div className="support-content-home">
-            <div className="support-welcome">
-              <div className="support-top">
-                <X className="close-icon" size={18} onClick={toggleSupport} />
-                <div className="support-logo">
-                  <img src="public/images/stake.png" alt="Stake" className="stake-logo" />
-                </div>
-                <div className="support-profiles">
-                  <div className="profile-images">
-                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=30&h=30&auto=format&fit=crop" alt="Support Agent 1" />
-                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=30&h=30&auto=format&fit=crop" alt="Support Agent 2" />
-                    <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=30&h=30&auto=format&fit=crop" alt="Support Agent 3" />
-                  </div>
-                </div>
-              </div>
-              <div className="greeting-text">
-                <p className="greeting">Hey there 👋</p>
-                <p className="help-message">How can we help?</p>
-              </div>
-            </div>
-            <div className="help-topics">
-              <div className="help-topic-card">
-                <h3>What to do if you are unable to access your Two-Factor Authentication (2FA)?</h3>
-                <p>If you are unable to access your two-factor authentication...</p>
-              </div>
-              <div className="help-topic-card">
-                <h3>How to reset your password?</h3>
-                <p>1. If you've forgotten your password but have linked an email...</p>
-              </div>
-            </div>
-            <div className="search-container">
-              <div className="search-box">
-                <Search size={16} className="search-icon" />
-                <input 
-                  type="text" 
-                  placeholder="Search for help" 
-                  className="search-input" 
-                  value={searchQuery} 
-                  onChange={(e) => setSearchQuery(e.target.value)} 
-                />
-              </div>
-            </div>
-          </div>
-        );
-      case "messages":
-        return (
-          <div className="support-content-messages">
-            <h2 className="messages-title">Messages</h2>
-            <div className="message-container">
-              <div className="no-messages">
-                <MessageSquare size={32} className="no-message-icon" />
-                <p className="no-message-text">No messages</p>
-                <p className="message-subtitle">Messages from the team will be shown here</p>
-              </div>
-            </div>
-          </div>
-        );
-      case "help":
-        return (
-          <div className="support-content-help">
-            <h2 className="help-title">Help</h2>
-            <div className="help-search">
-              <div className="search-box">
-                <Search size={16} className="search-icon" />
-                <input 
-                  type="text" 
-                  placeholder="Search for help" 
-                  className="search-input" 
-                  value={searchQuery} 
-                  onChange={(e) => setSearchQuery(e.target.value)} 
-                />
-              </div>
-            </div>
-            <div className="collections-section">
-              <h3 className="collections-title">7 collections</h3>
-              <div className="collections-grid">
-                {helpCollections.map((collection, index) => (
-                  <div key={index} className="collection-item">
-                    <div className="collection-info">
-                      <h4>{collection.title}</h4>
-                      <p>{collection.articles} articles</p>
-                    </div>
-                    <div className="chevron-icon">
-                      <ChevronUp className="chevron" size={16} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
+  // Update local state when prop changes
+  if (isOpen !== showPanel) {
+    setShowPanel(isOpen);
+  }
+
+  if (!showPanel) {
+    return (
+      <button className="support-bubble" onClick={togglePanel}>
+        <MessageSquare size={24} color="white" />
+      </button>
+    );
+  }
 
   return (
-    <>
-      {!isOpen && (
-        <div className="support-bubble" onClick={toggleSupport}>
-          <HelpCircle size={24} />
-        </div>
-      )}
-      {isOpen && (
-        <div className="support-panel">
-          <div className="support-content">
-            {renderContent()}
-          </div>
-          <div className="support-footer">
-            <div 
-              className={`footer-tab ${activeTab === 'home' ? 'active' : ''}`}
-              onClick={() => changeTab('home')}
-            >
-              <HomeIcon size={20} />
-              <span>Home</span>
+    <div className="support-panel">
+      <button className="close-icon" onClick={togglePanel}>
+        <X size={18} />
+      </button>
+
+      {activeTab === 'home' && (
+        <div className="support-content support-content-home">
+          <div className="support-welcome">
+            <div className="support-top">
+              <div className="support-logo">
+                <img src="/images/logo.png" alt="Stake" className="stake-logo" />
+              </div>
+              <div className="support-profiles">
+                <div className="profile-images">
+                  <img src="/images/stake.png" alt="Support Agent 1" />
+                  <img src="/images/stake.png" alt="Support Agent 2" />
+                  <img src="/images/stake.png" alt="Support Agent 3" />
+                </div>
+              </div>
             </div>
-            <div 
-              className={`footer-tab ${activeTab === 'messages' ? 'active' : ''}`}
-              onClick={() => changeTab('messages')}
-            >
-              <MessageSquare size={20} />
-              <span>Messages</span>
-            </div>
-            <div 
-              className={`footer-tab ${activeTab === 'help' ? 'active' : ''}`}
-              onClick={() => changeTab('help')}
-            >
-              <HelpCircle size={20} />
-              <span>Help</span>
+            <div className="greeting-text">
+              <div className="greeting">Hey there 👋</div>
+              <div className="help-message">How can we help?</div>
             </div>
           </div>
+
+          <div className="help-topics">
+            <div className="search-container mb-4">
+              <div className="search-box">
+                <Search className="search-icon" size={18} />
+                <input 
+                  type="text" 
+                  placeholder="Search for help" 
+                  className="search-input" 
+                />
+              </div>
+            </div>
+
+            <div className="help-topic-card">
+              <h3>Account & Finance</h3>
+              <p>Withdrawals, deposits, account issues</p>
+            </div>
+            <div className="help-topic-card">
+              <h3>Sports & Casino Issues</h3>
+              <p>Game problems, bet issues, sports questions</p>
+            </div>
+            <div className="help-topic-card">
+              <h3>Bonuses & Promotions</h3>
+              <p>Claims, eligibility, terms</p>
+            </div>
+            <div className="help-topic-card">
+              <h3>Responsible Gambling</h3>
+              <p>Limits, self-exclusion, resources</p>
+            </div>
+          </div>
         </div>
       )}
-    </>
+
+      {activeTab === 'messages' && (
+        <div className="support-content support-content-messages">
+          <div className="messages-title">Messages</div>
+          <div className="message-container">
+            <div className="no-messages">
+              <MessageSquare className="no-message-icon" size={48} strokeWidth={1} />
+              <div className="no-message-text">No messages yet</div>
+              <div className="message-subtitle">Your conversations will appear here</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'help' && (
+        <div className="support-content support-content-help">
+          <div className="help-title">Help</div>
+          <div className="help-search mb-4">
+            <div className="search-box">
+              <Search className="search-icon" size={18} />
+              <input 
+                type="text" 
+                placeholder="Search for help" 
+                className="search-input" 
+              />
+            </div>
+          </div>
+          
+          <div className="collections-section">
+            <div className="collections-title">Collections</div>
+            <div className="collections-grid">
+              <div className="collection-item">
+                <div className="collection-info">
+                  <h4>Account</h4>
+                  <p>Registration, verification, security</p>
+                </div>
+                <ChevronRight className="chevron-icon" size={18} />
+              </div>
+              <div className="collection-item">
+                <div className="collection-info">
+                  <h4>Payments</h4>
+                  <p>Deposits, withdrawals, payment methods</p>
+                </div>
+                <ChevronRight className="chevron-icon" size={18} />
+              </div>
+              <div className="collection-item">
+                <div className="collection-info">
+                  <h4>Casino</h4>
+                  <p>Games, issues, how to play</p>
+                </div>
+                <ChevronRight className="chevron-icon" size={18} />
+              </div>
+              <div className="collection-item">
+                <div className="collection-info">
+                  <h4>Sports</h4>
+                  <p>Betting, markets, rules</p>
+                </div>
+                <ChevronRight className="chevron-icon" size={18} />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="support-footer">
+        <div 
+          className={`footer-tab ${activeTab === 'home' ? 'active' : ''}`} 
+          onClick={() => setActiveTab('home')}
+        >
+          <Home size={20} />
+          <span>Home</span>
+        </div>
+        <div 
+          className={`footer-tab ${activeTab === 'messages' ? 'active' : ''}`}
+          onClick={() => setActiveTab('messages')}
+        >
+          <MessageSquare size={20} />
+          <span>Messages</span>
+        </div>
+        <div 
+          className={`footer-tab ${activeTab === 'help' ? 'active' : ''}`}
+          onClick={() => setActiveTab('help')}
+        >
+          <HelpCircle size={20} />
+          <span>Help</span>
+        </div>
+      </div>
+    </div>
   );
 };
 

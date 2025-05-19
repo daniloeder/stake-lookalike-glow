@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -14,6 +15,7 @@ import GamesPage from "./pages/GamesPage";
 import VIPClub from "./pages/VIPClub";
 import BlogPage from "./pages/BlogPage";
 import AffiliatePage from "./pages/AffiliatePage";
+import ResponsibleGambling from "./pages/ResponsibleGambling";
 import NotFound from "./pages/NotFound";
 import { svgIcons, starIcon } from "./utils/svgIcons";
 import "./App.css";
@@ -188,11 +190,16 @@ const indexSidebarItems: SidebarItem[] = [
 // Create a component that will determine which sidebar items to use based on the current route
 const AppContent = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [liveSupportOpen, setLiveSupportOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
+  };
+
+  const toggleLiveSupport = () => {
+    setLiveSupportOpen(!liveSupportOpen);
   };
 
   // Determine which sidebar items to use based on the current route
@@ -209,6 +216,8 @@ const AppContent = () => {
   // Handle specific sidebar item clicks
   const handleSidebarItemClick = (itemId: string, itemPath: string) => {
     if (itemId === "live-support") {
+      toggleLiveSupport();
+    } else if (itemId === "responsible-gambling") {
       navigate(itemPath);
     }
   };
@@ -247,7 +256,7 @@ const AppContent = () => {
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/affiliate" element={<AffiliatePage />} />
             <Route path="/forum" />
-            <Route path="/responsible-gambling" element={<GamesPage title="Responsible Gambling" />} />
+            <Route path="/responsible-gambling" element={<ResponsibleGambling />} />
             <Route path="/support" element={<GamesPage title="Live Support" />} />
             <Route path="/promotions/*" element={<GamesPage title="Promotions" />} />
             <Route path="/sponsorships/*" element={<GamesPage title="Sponsorships" />} />
@@ -256,8 +265,8 @@ const AppContent = () => {
         </div>
       </div>
       
-      {/* Add the LiveSupport component here */}
-      <LiveSupport />
+      {/* Pass the open state to LiveSupport */}
+      <LiveSupport isOpen={liveSupportOpen} onClose={() => setLiveSupportOpen(false)} />
     </div>
   );
 };
