@@ -114,8 +114,6 @@ const mainSidebarItems: SidebarItem[] = [
 
 // Define sidebar items for Index page
 const indexSidebarItems: SidebarItem[] = [
-  { id: "favourites", iconSvg: svgIcons.favourites, label: "Favourites", path: "#" },
-  { id: "providers", iconSvg: svgIcons.providers, label: "Providers", path: "/providers" },
   {
     id: "promotions",
     iconSvg: starIcon,
@@ -248,7 +246,7 @@ const AppContent = () => {
             <Route path="/vip" element={<VIPClub />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/affiliate" element={<AffiliatePage />} />
-            <Route path="/forum" element={<GamesPage title="Forum" />} />
+            <Route path="/forum" />
             <Route path="/responsible-gambling" element={<GamesPage title="Responsible Gambling" />} />
             <Route path="/support" element={<GamesPage title="Live Support" />} />
             <Route path="/promotions/*" element={<GamesPage title="Promotions" />} />
