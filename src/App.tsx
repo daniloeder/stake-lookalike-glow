@@ -1,12 +1,12 @@
-
 import { useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Sidebar, { SidebarItem } from "./components/Sidebar";
 import Header from "./components/Header";
+import LiveSupport from "./components/LiveSupport";
 import Index from "./pages/Index";
 import Casino from "./pages/Casino";
 import Sports from "./pages/Sports";
@@ -191,6 +191,7 @@ const indexSidebarItems: SidebarItem[] = [
 const AppContent = () => {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
@@ -207,12 +208,20 @@ const AppContent = () => {
     return mainSidebarItems;
   };
 
+  // Handle specific sidebar item clicks
+  const handleSidebarItemClick = (itemId: string, itemPath: string) => {
+    if (itemId === "live-support") {
+      navigate(itemPath);
+    }
+  };
+
   return (
     <div className={`app-container ${collapsed ? 'sidebar-collapsed' : ''}`}>
       <Sidebar 
         collapsed={collapsed} 
         toggleSidebar={toggleSidebar} 
-        sidebarItems={getSidebarItems()} 
+        sidebarItems={getSidebarItems()}
+        onItemClick={handleSidebarItemClick}
       />
       <div className="content-container">
         <Header />
@@ -248,6 +257,9 @@ const AppContent = () => {
           </Routes>
         </div>
       </div>
+      
+      {/* Add the LiveSupport component here */}
+      <LiveSupport />
     </div>
   );
 };
