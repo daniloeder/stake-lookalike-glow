@@ -438,10 +438,11 @@ const styles = `
 }
 
 .games-grid, .sports-grid {
-  display: flex;
+  display: grid;
   flex-wrap: wrap;
   gap: 0.75rem;
   justify-content: space-between;
+  grid-template-columns: repeat(6, 1fr);
 }
 
 @media (max-width: 1400px) {

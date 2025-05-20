@@ -1,7 +1,14 @@
 
-import React, { useState } from "react";
+import { useState } from "react";
+import { ScrollArea } from "./ui/scroll-area";
 
-interface BettingData {
+export interface TabItem {
+  id: string;
+  label: string;
+  hasIndicator?: boolean;
+}
+
+interface BetData {
   id: number;
   game: string;
   user: string;
@@ -15,78 +22,155 @@ interface BettingData {
 }
 
 interface BettingTableProps {
-  data: BettingData[];
+  data?: BetData[];
   defaultActiveTab?: string;
-  tabs: Array<{
-    id: string;
-    label: string;
-    hasIndicator?: boolean;
-  }>;
+  tabs?: TabItem[];
 }
 
-const BettingTable: React.FC<BettingTableProps> = ({ 
-  data, 
-  defaultActiveTab = "all-bets", 
-  tabs 
-}) => {
+const BettingTable = ({ data, defaultActiveTab = "casino", tabs }: BettingTableProps) => {
   const [activeTab, setActiveTab] = useState(defaultActiveTab);
+  const isMobile = window.innerWidth <= 768;
   
-  const formatCurrency = (amount: number) => {
-    return amount.toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 7
-    });
+  // Default tabs configuration if none is provided
+  const defaultTabs: TabItem[] = [
+    { id: "my-bets", label: "My Bets" },
+    { id: "all-bets", label: "All Bets" },
+    { id: "high-rollers", label: "High Rollers" },
+    { id: "race-leaderboard", label: "Race Leaderboard", hasIndicator: true },
+  ];
+
+  const tabItems = tabs || defaultTabs;
+  
+  // Default sample betting data if none is provided
+  const defaultBettingData: BetData[] = [
+    { id: 1, game: "Keno", user: "Hidden", time: "5:55 PM", betAmount: 1050.000000, multiplier: "0.00×", payout: -1050.000000, currency: "trx" },
+    { id: 2, game: "Grand Japanese Sp...", user: "Hidden", time: "5:55 PM", betAmount: 2250.265973, multiplier: "1.41×", payout: 3172.875022, currency: "trx", isWin: true },
+    { id: 3, game: "Keno", user: "Hidden", time: "5:55 PM", betAmount: 1050.000000, multiplier: "0.00×", payout: -1050.000000, currency: "trx" },
+    { id: 4, game: "Duck Hunters", user: "Hidden", time: "5:55 PM", betAmount: 46.99530047, multiplier: "103.38×", payout: 4858.554144, currency: "trx", isWin: true },
+    { id: 5, game: "Keno", user: "Hidden", time: "5:55 PM", betAmount: 1050.000000, multiplier: "0.00×", payout: -1050.000000, currency: "trx" },
+    { id: 6, game: "Salon Privé Blackjack...", user: "Hidden", time: "5:55 PM", betAmount: 12252.80070, multiplier: "1.00×", payout: 12252.80070, currency: "usd", isWin: true },
+    { id: 7, game: "Keno", user: "Hidden", time: "5:55 PM", betAmount: 1050.000000, multiplier: "0.00×", payout: -1050.000000, currency: "trx" },
+    { id: 8, game: "Keno", user: "Hidden", time: "5:55 PM", betAmount: 1050.000000, multiplier: "0.00×", payout: -1050.000000, currency: "trx" },
+    { id: 9, game: "Keno", user: "Hidden", time: "5:55 PM", betAmount: 1050.000000, multiplier: "0.00×", payout: -1050.000000, currency: "trx" },
+    { id: 10, game: "Salon Privé Blackjack...", user: "Hidden", time: "5:55 PM", betAmount: 1199.880012, multiplier: "0.60×", payout: -479.95200480, currency: "trx", isWin: false },
+  ];
+
+  const bettingData = data || defaultBettingData;
+
+  const cryptoIcons: Record<string, string> = {
+    trx: "🔷",
+    usd: "💵",
+    "₿": "₿",
+    btc: "₿",
+    eth: "Ξ",
+    cad: "$"
+  };
+
+  const renderGameIcon = (game: string) => {
+    if (game.includes("Keno")) return "📋";
+    if (game.includes("Grand Japanese")) return "🎮";
+    if (game.includes("Duck")) return "🦆";
+    if (game.includes("Blackjack")) return "🃏";
+    if (game.includes("Gold Vault")) return "🎰";
+    if (game.includes("Gates of Olympus")) return "⚡";
+    if (game.includes("Brute Force")) return "⚡";
+    if (game.includes("Plinko")) return "👾";
+    return "🎮";
+  };
+
+  // Render a simplified mobile version of the table
+  const renderMobileTable = () => {
+    return (
+      <div className="mobile-betting-table">
+        {bettingData.map((bet, index) => (
+          <div key={index} className={`mobile-bet-row ${index % 2 === 0 ? "even-row" : "odd-row"}`}>
+            <div className="mobile-bet-game">
+              <span className="game-icon">{renderGameIcon(bet.game)}</span>
+              <span className="game-name">{bet.game}</span>
+            </div>
+            <div className="mobile-bet-payout">
+              <span className={`mobile-payout ${bet.isWin ? 'win' : 'loss'}`}>
+                {typeof bet.payout === 'number' ? bet.payout.toFixed(8) : bet.payout}
+                <span className={`crypto-badge crypto-${bet.currency}`}>
+                  {cryptoIcons[bet.currency] || '💰'}
+                </span>
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
-    <div className="betting-section">
-      <div className="betting-tabs">
-        {tabs.map((tab) => (
+    <div className="betting-container">
+      <div className="tabs">
+        {tabItems.map((tab) => (
           <button
             key={tab.id}
-            className={`betting-tab ${activeTab === tab.id ? 'active' : ''}`}
+            className={`tab ${activeTab === tab.id ? "active" : ""}`}
             onClick={() => setActiveTab(tab.id)}
           >
             {tab.label}
-            {tab.hasIndicator && <span className="live-dot"></span>}
+            {tab.hasIndicator && <span className="tab-indicator"></span>}
           </button>
         ))}
       </div>
       
-      <div className="betting-table-container">
-        <table className="betting-table">
-          <thead>
-            <tr>
-              <th>Game</th>
-              <th>User</th>
-              <th>Time</th>
-              <th>Bet Amount</th>
-              <th>Multiplier</th>
-              <th>Payout</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((bet) => (
-              <tr key={bet.id} className={bet.isWin ? 'win-row' : 'loss-row'}>
-                <td>
-                  <div className="game-cell">
-                    <span className="game-name">{bet.game}</span>
-                    {bet.isHot && <span className="hot-label">HOT</span>}
-                  </div>
-                </td>
-                <td>{bet.user}</td>
-                <td>{bet.time}</td>
-                <td className="amount-cell">
-                  {bet.currency} {formatCurrency(bet.betAmount)}
-                </td>
-                <td className="multiplier-cell">{bet.multiplier}</td>
-                <td className={`payout-cell ${bet.isWin ? 'win-amount' : 'loss-amount'}`}>
-                  {bet.payout > 0 ? '+' : ''}{bet.currency} {formatCurrency(bet.payout)}
-                </td>
+      <div className="table-wrapper">
+        {isMobile ? (
+          renderMobileTable()
+        ) : (
+          <table className="betting-table">
+            <thead className="table-header">
+              <tr className="header-row">
+                <th className="header-cell">Game</th>
+                <th className="header-cell">User</th>
+                <th className="header-cell">Time</th>
+                <th className="header-cell">Bet Amount</th>
+                <th className="header-cell">Multiplier</th>
+                <th className="header-cell">Payout</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="table-body">
+              {bettingData.map((bet, index) => (
+                <tr key={index}
+                  className={"table-row " + (index % 2 === 0 ? "even-row" : "odd-row")}
+                >
+                  <td className="table-cell">
+                    <div className="game-cell">
+                      <span className="game-icon">{renderGameIcon(bet.game)}</span>
+                      {bet.game}
+                    </div>
+                  </td>
+                  <td className="table-cell">
+                    <div className="user-cell">
+                      <span className="user-icon">👤</span>
+                      {bet.user}
+                    </div>
+                  </td>
+                  <td className="table-cell">{bet.time}</td>
+                  <td className="table-cell amount-cell">
+                    {typeof bet.betAmount === 'number' ? bet.betAmount.toFixed(8) : bet.betAmount}
+                    <span className={`crypto-badge crypto-${bet.currency}`}>
+                      {cryptoIcons[bet.currency] || '💰'}
+                    </span>
+                  </td>
+                  <td className={`table-cell multiplier ${bet.isWin ? 'win' : 'loss'}`}>
+                    {bet.isHot && <span className="win-icon">🔥</span>}
+                    {bet.multiplier}
+                  </td>
+                  <td className={`table-cell payout ${bet.isWin ? 'win' : 'loss'}`}>
+                    {typeof bet.payout === 'number' ? bet.payout.toFixed(8) : bet.payout}
+                    <span className={`crypto-badge crypto-${bet.currency}`}>
+                      {cryptoIcons[bet.currency] || '💰'}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
@@ -94,167 +178,206 @@ const BettingTable: React.FC<BettingTableProps> = ({
 
 // CSS styles
 const styles = `
-.betting-section {
-  margin: 2rem 0;
-  background-color: #17242D;
-  border-radius: 0.375rem;
-  overflow: hidden;
+.betting-container {
+  font-family: 'Inter', sans-serif;
+  color: #B1BAD3;
+  width: 100%;
+  margin-top: 2rem;
 }
 
-.betting-tabs {
+.table-wrapper {
+  width: 100%;
+}
+
+.tabs {
   display: flex;
-  background-color: #0c1720;
-  border-top-left-radius: 0.375rem;
-  border-top-right-radius: 0.375rem;
+  margin-bottom: 16px;
+  background-color: rgba(15, 25, 35, 0.5);
+  padding: 6px;
+  border-radius: 50px;
+  width: fit-content;
+  gap: 6px;
   overflow-x: auto;
+  white-space: nowrap;
   scrollbar-width: thin;
-  scrollbar-color: #557086 #0c1720;
+  scrollbar-color: #2F4553 transparent;
 }
 
-.betting-tabs::-webkit-scrollbar {
-  height: 5px;
+.tabs::-webkit-scrollbar {
+  height: 4px;
 }
 
-.betting-tabs::-webkit-scrollbar-track {
-  background: #0c1720;
+.tabs::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.betting-tabs::-webkit-scrollbar-thumb {
-  background-color: #557086;
-  border-radius: 10px;
+.tabs::-webkit-scrollbar-thumb {
+  background-color: #2F4553;
+  border-radius: 4px;
 }
 
-.betting-tab {
-  padding: 0.75rem 1.5rem;
-  background: none;
-  border: none;
-  color: #9ca3af;
-  font-size: 0.875rem;
+.tab {
+  padding: 8px 16px;
+  border-radius: 50px;
   cursor: pointer;
   transition: background-color 0.2s;
-  position: relative;
-  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
 }
 
-.betting-tab:hover {
-  color: white;
+.tab.active {
+  background-color: #2F4553;
 }
 
-.betting-tab.active {
-  color: white;
-  border-bottom: 2px solid #1060B7;
+.tab:hover:not(.active) {
+  background-color: #2F4553;
 }
 
-.live-dot {
-  position: absolute;
-  top: 50%;
-  right: 0.5rem;
-  transform: translateY(-50%);
-  width: 6px;
-  height: 6px;
+.tab-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background-color: #10B981;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.6;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.betting-table-container {
-  width: 100%;
-  overflow-x: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #557086 #17242D;
-}
-
-.betting-table-container::-webkit-scrollbar {
-  height: 5px;
-}
-
-.betting-table-container::-webkit-scrollbar-track {
-  background: #17242D;
-}
-
-.betting-table-container::-webkit-scrollbar-thumb {
-  background-color: #557086;
-  border-radius: 10px;
+  background-color:rgb(17, 248, 25);
+  margin-left: 4px;
 }
 
 .betting-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 650px; /* Ensure a minimum width for mobile scrolling */
 }
 
 .betting-table th {
   text-align: left;
-  padding: 0.75rem 1rem;
-  font-size: 0.75rem;
+  padding: 12px 16px;
+  color: #99a1b3;
   font-weight: 500;
-  color: #9ca3af;
-  border-bottom: 1px solid #1f2937;
-  white-space: nowrap;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .betting-table td {
-  padding: 0.75rem 1rem;
-  font-size: 0.875rem;
-  border-bottom: 1px solid #1f2937;
-  white-space: nowrap;
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: rgba(23, 36, 45, 0.3);
+  font-size: 14px;
+}
+
+.betting-table tr:hover td {
+  background-color: rgba(30, 40, 50, 0.4);
+}
+
+even-row {
+}
+
+.odd-row {
+  background-color: #213743;
 }
 
 .game-cell {
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 
-.game-name {
-  margin-right: 0.5rem;
+.game-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
-.hot-label {
-  background-color: #FF6B01;
-  color: white;
-  font-size: 0.65rem;
-  font-weight: 600;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.amount-cell, .multiplier-cell, .payout-cell {
-  font-family: 'Courier New', monospace;
+.user-icon {
+  opacity: 0.7;
 }
 
-.win-amount {
+.win {
   color: #10B981;
 }
 
-.loss-amount {
+.loss {
   color: #EF4444;
 }
 
+.win-icon {
+  margin-right: 5px;
+}
+
+.crypto-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-size: 10px;
+  margin-left: 4px;
+}
+
+/* Mobile table styling */
+.mobile-betting-table {
+  width: 100%;
+}
+
+.mobile-bet-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mobile-bet-row.even-row {
+  background-color: rgba(23, 36, 45, 0.3);
+}
+
+.mobile-bet-row.odd-row {
+  background-color: #213743;
+}
+
+.mobile-bet-game {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.mobile-bet-payout {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.mobile-payout {
+  display: flex;
+  align-items: center;
+}
+
 @media (max-width: 768px) {
-  .betting-table th, .betting-table td {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.75rem;
+  .betting-container {
+    overflow-x: visible;
   }
   
-  .betting-tab {
-    padding: 0.6rem 1rem;
-    font-size: 0.75rem;
+  .tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    width: auto;
+    max-width: 100%;
   }
   
-  .hot-label {
-    font-size: 0.6rem;
-    padding: 0.15rem 0.35rem;
+  .betting-table {
+    display: none;
   }
 }
 `;
