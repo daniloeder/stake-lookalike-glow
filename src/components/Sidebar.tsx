@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, ChevronRight } from "lucide-react";
+import { Menu, ChevronRight, ChevronLeft } from "lucide-react";
 import SvgIcon from "./SvgIcon";
+import Header from "./Header";
+import SearchBar from "./SearchBar";
 import { svgIcons, starIcon } from "../utils/svgIcons";
 
 // Import SVG icons
@@ -13,6 +15,8 @@ export interface SidebarProps {
   toggleSidebar: () => void;
   sidebarItems?: SidebarItem[];
   onItemClick?: (itemId: string, itemPath: string) => void;
+  isMobile?: boolean;
+  isOpen?: boolean;
 }
 
 export interface SidebarItem {
@@ -35,10 +39,104 @@ interface SidebarSubItem {
 
 // Default sidebar items if none are provided
 const defaultSidebarItems: SidebarItem[] = [
-  // ... keep existing code (defaultSidebarItems array)
+  { id: "favourites", iconSvg: svgIcons.favourites, label: "Favourites", path: "#" },
+  { id: "recent", iconSvg: svgIcons.recent, label: "Recent", path: "#" },
+  { id: "challenges", iconSvg: svgIcons.challenges, label: "Challenges", path: "/challenges" },
+  { id: "my-bets", iconSvg: svgIcons.myBets, label: "My Bets", path: "#" },
+  { id: "games", iconSvg: svgIcons.gameShows, label: "Games", path: "/games" }, // Changed from svgIcons.games to svgIcons.gameShows
+  { id: "stake-originals", iconSvg: svgIcons.stakeOriginals, label: "Stake Originals", path: "/stake-originals" },
+  { id: "stake-exclusives", iconSvg: svgIcons.stakeExclusives, label: "Stake Exclusives", path: "/stake-exclusives" },
+  { id: "slots", iconSvg: svgIcons.slots, label: "Slots", path: "/slots" },
+  { id: "live-casino", iconSvg: svgIcons.liveCasino, label: "Live Casino", path: "/live-casino" },
+  { id: "game-shows", iconSvg: svgIcons.gameShows, label: "Game Shows", path: "/game-shows" },
+  { id: "new-releases", iconSvg: svgIcons.newReleases, label: "New Releases", path: "/new-releases" },
+  { id: "stake-poker", iconSvg: svgIcons.stakePoker, label: "Stake Poker", path: "/stake-poker" },
+  { id: "bonus-buy", iconSvg: svgIcons.bonusBuy, label: "Bonus Buy", path: "/bonus-buy" },
+  { id: "enhanced-rtp", iconSvg: svgIcons.enhancedRtp, label: "Enhanced RTP", path: "/enhanced-rtp" },
+  { id: "table-games", iconSvg: svgIcons.tableGames, label: "Table Games", path: "/table-games" },
+  { id: "blackjack", iconSvg: svgIcons.blackjack, label: "Blackjack", path: "/blackjack" },
+  { id: "baccarat", iconSvg: svgIcons.baccarat, label: "Baccarat", path: "/baccarat" },
+  { id: "roulette", iconSvg: svgIcons.roulette, label: "Roulette", path: "/roulette" },
+  { id: "providers", iconSvg: svgIcons.providers, label: "Providers", path: "/providers" },
+  {
+    id: "promotions",
+    iconSvg: starIcon,
+    label: "Promotions",
+    expandable: true,
+    children: [
+      { id: "weekly-raffle", label: "$75k Weekly Raffle", path: "/promotions/weekly-raffle", iconSvg: starIcon },
+      { id: "race", label: "$100k Race", path: "/promotions/race", iconSvg: starIcon },
+      { id: "race-90-min", label: "$25k Race - 90 Minutes", path: "/promotions/race-90-min", iconSvg: starIcon },
+      { id: "pragmatic", label: "Pragmatic Drops & Wins", path: "/promotions/pragmatic", iconSvg: svgIcons.pragmaticDrops },
+      { id: "view-all", label: "View All", path: "/promotions", iconSvg: svgIcons.viewAll },
+    ],
+  },
+  { id: "affiliate", iconSvg: svgIcons.affiliate, label: "Affiliate", path: "/affiliate" },
+  { id: "vip-club", iconSvg: svgIcons.vipClub, label: "VIP Club", path: "/vip" },
+  { id: "blog", iconSvg: svgIcons.blog, label: "Blog", path: "/blog" },
+  { id: "forum", iconSvg: svgIcons.forum, label: "Forum", path: "/forum" },
+  {
+    id: "sponsorships",
+    iconSvg: starIcon,
+    label: "Sponsorships",
+    expandable: true,
+    children: [
+      { id: "drake", label: "Drake", path: "/sponsorships/drake", iconSvg: svgIcons.drake },
+      { id: "stake-f1-team", label: "Stake F1 Team", path: "/sponsorships/stake-f1-team", iconSvg: svgIcons.stakeF1Team },
+      { id: "ufc", label: "UFC", path: "/sponsorships/ufc", iconSvg: svgIcons.ufc, isSelected: true },
+      { id: "everton", label: "Everton Football Club", path: "/sponsorships/everton", iconSvg: svgIcons.everton },
+      { id: "juventude", label: "Esporte Clube Juventude", path: "/sponsorships/juventude", iconSvg: svgIcons.juventud },
+      { id: "melgar", label: "FBC Melgar", path: "/sponsorships/melgar", iconSvg: svgIcons.melgar },
+      { id: "fortaleza", label: "Fortaleza CEIF", path: "/sponsorships/fortaleza", iconSvg: svgIcons.fortaleza },
+      { id: "nublense", label: "Club Deportivo Ñublense", path: "/sponsorships/nublense", iconSvg: svgIcons.nublense },
+      { id: "enyimba", label: "Enyimba Football Club", path: "/sponsorships/enyimba", iconSvg: svgIcons.enyimba },
+      { id: "davis-cup", label: "Davis Cup", path: "/sponsorships/davis-cup", iconSvg: svgIcons.davisCup },
+      { id: "aguero", label: "Kun Agüero", path: "/sponsorships/aguero", iconSvg: svgIcons.aguero },
+      { id: "adesanya", label: "Israel Adesanya", path: "/sponsorships/adesanya", iconSvg: svgIcons.adesanya },
+      { id: "pereira", label: "Alex Pereira", path: "/sponsorships/pereira", iconSvg: svgIcons.pereira },
+      { id: "shevchenko", label: "Valentina Shevchenko", path: "/sponsorships/shevchenko", iconSvg: svgIcons.shevchenko },
+      { id: "dvalishvili", label: "Merab Dvalishvili", path: "/sponsorships/dvalishvili", iconSvg: svgIcons.dvalishvili },
+      { id: "pantoja", label: "Alexandre Pantoja", path: "/sponsorships/pantoja", iconSvg: svgIcons.pantoja },
+      { id: "borralho", label: "Caio Borralho", path: "/sponsorships/borralho", iconSvg: svgIcons.borralho },
+      { id: "dettori", label: "Frankie Dettori", path: "/sponsorships/dettori", iconSvg: svgIcons.dettori },
+    ],
+  },
+  { id: "responsible-gambling", iconSvg: svgIcons.responsibleGambling, label: "Responsible Gambling", path: "/responsible-gambling" },
+  { id: "live-support", iconSvg: starIcon, label: "Live Support", path: "/support" },
+  {
+    id: "language",
+    iconSvg: starIcon,
+    label: "Language: English",
+    expandable: true,
+    children: [
+      { id: "english", label: "English", path: "/language/english", isLanguageOption: true, iconSvg: starIcon, isSelected: true },
+      { id: "espanol", label: "Español", path: "/language/espanol", isLanguageOption: true, iconSvg: starIcon },
+      { id: "japanese", label: "日本語", path: "/language/japanese", isLanguageOption: true, iconSvg: starIcon },
+      { id: "chinese", label: "中文", path: "/language/chinese", isLanguageOption: true, iconSvg: starIcon },
+      { id: "portuguese", label: "Português", path: "/language/portuguese", isLanguageOption: true, iconSvg: starIcon },
+      { id: "russian", label: "Русский", path: "/language/russian", isLanguageOption: true, iconSvg: starIcon },
+      { id: "french", label: "Français", path: "/language/french", isLanguageOption: true, iconSvg: starIcon },
+      { id: "german", label: "Deutsch", path: "/language/german", isLanguageOption: true, iconSvg: starIcon },
+      { id: "hindi", label: "हिन्दी", path: "/language/hindi", isLanguageOption: true, iconSvg: starIcon },
+      { id: "indonesian", label: "Indonesian", path: "/language/indonesian", isLanguageOption: true, iconSvg: starIcon },
+      { id: "korean", label: "한국어", path: "/language/korean", isLanguageOption: true, iconSvg: starIcon },
+      { id: "polish", label: "Polski", path: "/language/polish", isLanguageOption: true, iconSvg: starIcon },
+      { id: "turkish", label: "Türkçe", path: "/language/turkish", isLanguageOption: true, iconSvg: starIcon },
+      { id: "vietnamese", label: "Tiếng Việt", path: "/language/vietnamese", isLanguageOption: true, iconSvg: starIcon },
+      { id: "finnish", label: "Suomen", path: "/language/finnish", isLanguageOption: true, iconSvg: starIcon },
+      { id: "arabic", label: "اَلْعَرَبِيَّةُ", path: "/language/arabic", isLanguageOption: true, iconSvg: starIcon },
+    ],
+  },
 ];
 
-const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems, onItemClick }: SidebarProps) => {
+const Sidebar = ({ 
+  collapsed, 
+  toggleSidebar, 
+  sidebarItems = defaultSidebarItems, 
+  onItemClick,
+  isMobile = false,
+  isOpen = false
+}: SidebarProps) => {
   const location = useLocation();
   const [openItems, setOpenItems] = useState<string[]>([]);
   const [selectedLanguage, setSelectedLanguage] = useState("english");
@@ -69,6 +167,11 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems,
   const handleItemClick = (id: string, path: string) => {
     if (onItemClick) {
       onItemClick(id, path);
+    }
+    
+    // If mobile, close the sidebar after clicking an item
+    if (isMobile) {
+      toggleSidebar();
     }
   };
 
@@ -104,31 +207,71 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems,
     // We're not hiding any icons now to keep consistency
     return false;
   };
+  
+  const sidebarClass = isMobile 
+    ? `sidebar mobile-sidebar ${isOpen ? 'active' : ''}` 
+    : `sidebar ${collapsed ? 'collapsed' : ''}`;
 
   return (
-    <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
-      <div className="sidebar-header">
-        <button className="toggle-button" onClick={toggleSidebar}>
-          <Menu className="toggle-icon" />
-        </button>
+    <div className={sidebarClass}>
+      {!isMobile ? (
+        <div className="sidebar-header">
+          <button className="toggle-button" onClick={toggleSidebar}>
+            <Menu className="toggle-icon" />
+          </button>
 
-        <div className={`nav-tabs ${collapsed ? 'nav-tabs-collapsed' : ''}`}>
-          <Link
-            to="/casino"
-            className={`nav-tab ${activeTab === "casino" ? "casino-active" : "casino-inactive"}`}
-            onClick={() => setActiveTab("casino")}
-          >
-            <span className="nav-tab-text">Casino</span>
-          </Link>
-          <Link
-            to="/sports"
-            className={`nav-tab ${activeTab === "sports" ? "sports-active" : "sports-inactive"}`}
-            onClick={() => setActiveTab("sports")}
-          >
-            <span className="nav-tab-text">Sports</span>
-          </Link>
+          <div className={`nav-tabs ${collapsed ? 'nav-tabs-collapsed' : ''}`}>
+            <Link
+              to="/casino"
+              className={`nav-tab ${activeTab === "casino" ? "casino-active" : "casino-inactive"}`}
+              onClick={() => setActiveTab("casino")}
+            >
+              <span className="nav-tab-text">Casino</span>
+            </Link>
+            <Link
+              to="/sports"
+              className={`nav-tab ${activeTab === "sports" ? "sports-active" : "sports-inactive"}`}
+              onClick={() => setActiveTab("sports")}
+            >
+              <span className="nav-tab-text">Sports</span>
+            </Link>
+          </div>
         </div>
-      </div>
+      ) : (
+        <>
+        <Header />
+
+        <div className="search-section">
+          <div className="search-dropdown">
+            <button className="search-type-button">
+              Casino <ChevronLeft className="search-icon-dropdown" />
+            </button>
+          </div>
+          <SearchBar placeholder="Search your game" />
+        </div>
+
+        <div className="sidebar-mobile-header">
+          {/* Header component here  */}
+
+          <div className={`nav-tabs mobile-nav-tabs`}>
+            <Link
+              to="/casino"
+              className={`nav-tab ${activeTab === "casino" ? "casino-active" : "casino-inactive"}`}
+              onClick={() => setActiveTab("casino")}
+            >
+              <span className="nav-tab-text">Casino</span>
+            </Link>
+            <Link
+              to="/sports"
+              className={`nav-tab ${activeTab === "sports" ? "sports-active" : "sports-inactive"}`}
+              onClick={() => setActiveTab("sports")}
+            >
+              <span className="nav-tab-text">Sports</span>
+            </Link>
+          </div>
+        </div>
+        </>
+      )}
 
       <div className="sidebar-content">
         {sidebarItems.map((item, index) => (
@@ -174,6 +317,7 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems,
                         key={child.id}
                         to={child.path || "#"}
                         className={`dropdown-item ${child.isSelected ? 'selected' : ''}`}
+                        onClick={() => handleItemClick(child.id, child.path || "#")}
                       >
                         {child.iconSvg && (
                           <span className="sidebar-icon">
@@ -231,6 +375,12 @@ const Sidebar = ({ collapsed, toggleSidebar, sidebarItems = defaultSidebarItems,
           </div>
         ))}
       </div>
+      
+      {isMobile && (
+        <div className="sidebar-mobile-close" onClick={toggleSidebar}>
+          <span>Close</span>
+        </div>
+      )}
     </div>
   );
 };
@@ -609,8 +759,29 @@ const styles = `
   .sidebar.active {
     transform: translateX(0);
   }
+  
+  .mobile-sidebar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    bottom: 60px;
+    height: 100%;
+    background-color: red;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    border-right: none;
+    border-top: 1px solid #1f2937;
+  }
+  
+  .mobile-sidebar.active {
+    transform: translateY(0);
+  }
+  
+  .sidebar-mobile-close {
+    display: none;
+  }
 }
-
 
 .nav-tab.casino-active, .nav-tab.casino-inactive {
   background-image: url("/images/casino-big.jpg");
@@ -635,6 +806,92 @@ const styles = `
 .nav-tab.sports-active:hover,
 .nav-tab.sports-inactive:hover {
   background-image: url("/images/sports-big-active.jpg");
+}
+
+.mobile-sidebar {
+  width: 100%;
+  position: fixed;
+  top: auto;
+  bottom: 60px;
+  height: 100%;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  border-right: none;
+  border-top: 1px solid #1f2937;
+}
+
+.mobile-sidebar.active {
+  transform: translateY(0);
+}
+
+.sidebar-mobile-close {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background-color: #0F1923;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .mobile-sidebar {
+    top: 60px;
+    height: 100%;
+    background-color: #0F212E;
+    overflow-y: auto;
+  }
+  
+  .sidebar-mobile-close {
+    display: none;
+  }
+}
+
+/* Mobile-specific sidebar styles */
+.sidebar-mobile-header {
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0F212E;
+  border-bottom: 1px solid #1f2937;
+}
+
+.mobile-nav-tabs {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+  justify-content: center;
+}
+
+.mobile-nav-tabs .nav-tab {
+  flex: 1;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .mobile-sidebar {
+    top: 120px; /* Header (60px) + search (60px) */
+    height: 100%;
+    background-color: #0F212E;
+    overflow-y: auto;
+    width: 100%;
+    position: fixed;
+    transform: translateY(0);
+    z-index: 90;
+  }
+  
+  .mobile-sidebar .sidebar-content {
+    max-height: calc(100vh - 240px); /* Adjusted for header, nav tabs, search, and mobile nav */
+    overflow-y: auto;
+  }
+  
+  .mobile-sidebar.active {
+    transform: translateY(0);
+  }
 }
 `;
 

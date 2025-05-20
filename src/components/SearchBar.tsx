@@ -70,6 +70,16 @@ const styles = `
 .search-input:focus {
   outline: none;
 }
+
+.mobile-sidebar .search-container {
+  border-left: none;
+  background-color: #132635;
+  margin: 10px;
+  border-radius: 4px;
+}
+.mobile-sidebar .search-input {
+  padding: 0 2.5rem;
+}
 `;
 
 // Add styles to document

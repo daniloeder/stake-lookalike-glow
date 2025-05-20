@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,9 +8,12 @@ import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-ro
 import Sidebar, { SidebarItem } from "./components/Sidebar";
 import Header from "./components/Header";
 import LiveSupport from "./components/LiveSupport";
+import MobileNavBar from "./components/MobileNavBar";
 import Index from "./pages/Index";
 import Casino from "./pages/Casino";
 import Sports from "./pages/Sports";
+import BetsPage from "./pages/BetsPage";
+import ChatPage from "./pages/ChatPage";
 import GamesPage from "./pages/GamesPage";
 import VIPClub from "./pages/VIPClub";
 import BlogPage from "./pages/BlogPage";
@@ -191,11 +194,61 @@ const indexSidebarItems: SidebarItem[] = [
 const AppContent = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [liveSupportOpen, setLiveSupportOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [showSearch, setShowSearch] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Start with sidebar closed
   const location = useLocation();
   const navigate = useNavigate();
+  const contentRef = useRef<HTMLDivElement>(null);
   
+  // Check if device is mobile
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+      
+      // If not mobile, ensure sidebar isn't in mobile open state
+      if (window.innerWidth > 768) {
+        setSidebarOpen(false);
+      }
+    };
+
+    // Initial check
+    checkIfMobile();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIfMobile);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+    };
+  }, []);
+
+  // Effect to adjust content when sidebar is open on mobile
+  useEffect(() => {
+    if (isMobile && sidebarOpen) {
+      document.body.classList.add('mobile-nav-open');
+      
+      if (contentRef.current) {
+        contentRef.current.style.height = 'calc(100vh - 120px)';
+        contentRef.current.style.overflow = 'hidden';
+      }
+    } else {
+      document.body.classList.remove('mobile-nav-open');
+      
+      if (contentRef.current) {
+        contentRef.current.style.height = '';
+        contentRef.current.style.overflow = '';
+      }
+    }
+  }, [sidebarOpen, isMobile]);
+
   const toggleSidebar = () => {
-    setCollapsed(!collapsed);
+    if (isMobile) {
+      setSidebarOpen(!sidebarOpen);
+    } else {
+      setCollapsed(!collapsed);
+    }
   };
 
   const toggleLiveSupport = () => {
@@ -223,20 +276,26 @@ const AppContent = () => {
   };
 
   return (
-    <div className={`app-container ${collapsed ? 'sidebar-collapsed' : ''}`}>
-      <Sidebar 
-        collapsed={collapsed} 
-        toggleSidebar={toggleSidebar} 
-        sidebarItems={getSidebarItems()}
-        onItemClick={handleSidebarItemClick}
-      />
-      <div className="content-container">
+    <div className={`app-container ${collapsed ? 'sidebar-collapsed' : ''} ${isMobile ? 'mobile-view' : ''}`}>
+      {!isMobile && (
+        <Sidebar 
+          collapsed={collapsed} 
+          toggleSidebar={toggleSidebar} 
+          sidebarItems={getSidebarItems()}
+          onItemClick={handleSidebarItemClick}
+        />
+      )}
+      
+      <div className="content-container" ref={contentRef}>
         <Header />
+        
         <div className="page-content">
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/casino" element={<Casino />} />
             <Route path="/sports" element={<Sports />} />
+            <Route path="/bets" element={<BetsPage />} />
+            <Route path="/chat" element={<ChatPage />} />
             <Route path="/stake-originals" element={<GamesPage title="Stake Originals" />} />
             <Route path="/stake-exclusives" element={<GamesPage title="Stake Exclusives" />} />
             <Route path="/slots" element={<GamesPage title="Slots" />} />
@@ -263,10 +322,29 @@ const AppContent = () => {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
+        
+        {isMobile && (
+          <div className="mobile-nav-container">
+            <MobileNavBar toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
+          </div>
+        )}
       </div>
       
-      {/* Pass the open state to LiveSupport */}
-      <LiveSupport isOpen={liveSupportOpen} onClose={() => setLiveSupportOpen(false)} />
+      {isMobile && (
+        <Sidebar 
+          collapsed={false} 
+          toggleSidebar={toggleSidebar}
+          sidebarItems={getSidebarItems()}
+          onItemClick={handleSidebarItemClick}
+          isMobile={true}
+          isOpen={sidebarOpen}
+        />
+      )}
+      
+      {/* Hide support bubble when sidebar is open */}
+      {(!isMobile || !sidebarOpen) && (
+        <LiveSupport isOpen={liveSupportOpen} onClose={() => setLiveSupportOpen(false)} />
+      )}
     </div>
   );
 };

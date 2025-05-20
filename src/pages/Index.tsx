@@ -25,6 +25,9 @@ const Index = () => {
     { id: "race-leaderboard", label: "Race Leaderboard", hasIndicator: true },
   ];
   
+  // Check if we're on mobile
+  const isMobile = window.innerWidth <= 768;
+  
   return (
     <div className="index-page">
       <main className="main-content">
@@ -111,7 +114,7 @@ const Index = () => {
           </div>
           
           <div className="games-grid">
-            {Array.from({ length: 8 }).map((_, index) => (
+            {Array.from({ length: isMobile ? 6 : 8 }).map((_, index) => (
               <div key={index} className="game-card">
                 <div className="game-position">{index+1}</div>
                 <div className="game-image-container">
@@ -149,7 +152,7 @@ const Index = () => {
           </div>
           
           <div className="sports-grid">
-            {Array.from({ length: 8 }).map((_, index) => (
+            {Array.from({ length: isMobile ? 6 : 8 }).map((_, index) => (
               <div key={index} className="game-card">
                 <div className="game-position">{index+1}</div>
                 <div className="game-image-container">
@@ -199,7 +202,7 @@ const styles = `
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0;
 }
 
 .hero-section {
@@ -231,7 +234,6 @@ const styles = `
 }
 
 .register-button {
-  margin-bottom: 1rem;
   padding: 0.75rem 2rem;
   font-size: 1rem;
   font-weight: 600;
@@ -241,6 +243,7 @@ const styles = `
   border-radius: 0.375rem;
   cursor: pointer;
   transition: transform 0.2s, background-color 0.2s;
+  width: 100%;
 }
 
 .register-button:hover {
@@ -282,14 +285,9 @@ const styles = `
   transform: scale(1.1);
 }
 
-.whatsapp {
-  background-color: #25D366;
-  color: white;
-}
-
-.discord {
-  background-color: #5865F2;
-  color: white;
+.social-button img {
+  width: 24px;
+  height: 24px;
 }
 
 .hero-cards {
@@ -462,14 +460,44 @@ const styles = `
   .hero-cards {
     margin-top: 2rem;
     width: 100%;
+    display: flex;
+    flex-direction: row; /* Ensure cards are side by side */
+    gap: 10px;
   }
   
   .hero-card {
+    width: calc(50% - 5px); /* Adjust width for two cards side by side with gap */
+  }
+
+  .auth-buttons {
+    gap: 0.3rem;
+  }
+
+  .login-button {
+    width: 100%;
+    font-size: 0.65rem;
+    padding: 0.5rem 1.2rem;
+  }
+  
+  .register-button {
+    width: 100%;
+    font-size: 0.65rem;
+    padding: 0.5rem 1.2rem;
+  }
+  
+  .social-buttons {
+    justify-content: space-between;
     width: 100%;
   }
   
-  .games-grid, .sports-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .social-button {
+    flex: 1;
+    margin: 0 5px;
+  }
+  
+  .social-button img {
+    width: 20px;
+    height: 20px;
   }
 }
 

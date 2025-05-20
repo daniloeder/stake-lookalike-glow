@@ -1,8 +1,13 @@
 
 import { Link } from "react-router-dom";
 import AuthButtons from "./AuthButtons";
+import SearchBar from "./SearchBar";
+import { useState } from "react";
 
 const Header = () => {
+  const [showSearch, setShowSearch] = useState(false);
+  const isMobile = window.innerWidth <= 768;
+
   return (
     <header className="header">
       <div className="header-container">
@@ -35,7 +40,6 @@ const styles = `
   width: 100%;
   z-index: 100;
   box-shadow: #0003 0 4px 6px -1px, #0000001f 0 2px 4px -1px;
-  touch-action: none;
 }
 
 .header-container {
@@ -66,15 +70,24 @@ const styles = `
 .header-right {
   display: flex;
   gap: 0.75rem;
-  margin-top: 1rem;
+  align-items: center;
+  margin-left: auto;
 }
 
 @media (max-width: 768px) {
   .header-container {
     padding: 0 1rem;
+    width: 100%;
+  }
+  
+  .logo {
+    height: 2.5rem;
+  }
+  
+  .header-right {
+    margin-top: 0;
   }
 }
-
 `;
 
 // Add styles to document
