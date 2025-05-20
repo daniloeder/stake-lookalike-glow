@@ -388,12 +388,7 @@ body {
     gap: 0.5rem !important;
     overflow-x: visible !important;
     width: 100% !important;
-  }
-  
-  .hero-card {
-    width: 48% !important;
-    min-width: 140px;
-    flex-shrink: 0;
+    margin-left: 0;
   }
   
   .card-image {

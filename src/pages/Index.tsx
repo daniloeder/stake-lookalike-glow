@@ -214,7 +214,7 @@ const styles = `
   margin-left: -8%;
   padding-left: 8%;
   padding-right: 8%;
-  width: 116%;
+  width: 106%;
 
   background-image: url('/images/index-header-bg.png');
   background-size: cover;
@@ -292,15 +292,19 @@ const styles = `
 
 .hero-cards {
   display: flex;
+  flex-wrap: nowrap;
   gap: 1rem;
+  margin-left: 2rem;
+  overflow-x: auto;
 }
 
 .hero-card {
+  flex: 1 1 280px;
+  max-width: 100%;
   overflow: hidden;
   border-radius: 0.75rem;
   background-color: #17242D;
   transition: transform 0.2s;
-  width: 280px;
 }
 
 .hero-card:hover {
@@ -434,9 +438,10 @@ const styles = `
 }
 
 .games-grid, .sports-grid {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
+  justify-content: space-between;
 }
 
 @media (max-width: 1400px) {
@@ -460,13 +465,7 @@ const styles = `
   .hero-cards {
     margin-top: 2rem;
     width: 100%;
-    display: flex;
-    flex-direction: row; /* Ensure cards are side by side */
     gap: 10px;
-  }
-  
-  .hero-card {
-    width: calc(50% - 5px); /* Adjust width for two cards side by side with gap */
   }
 
   .auth-buttons {

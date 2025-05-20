@@ -172,7 +172,6 @@ const Footer = () => {
 // CSS styles
 const styles = `
 .footer {
-  width: 120%;
   background-color: #071D2A;
   color: #9ca3af;
   padding: 2.5rem 0;
