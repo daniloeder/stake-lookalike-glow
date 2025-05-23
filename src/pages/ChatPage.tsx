@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Send, Smile, X } from "lucide-react";
 import Header from "@/components/Header";
+import "./ChatPage.css";
 
 interface ChatMessage {
   id: number;

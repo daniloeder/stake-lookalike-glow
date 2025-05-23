@@ -1,0 +1,163 @@
+
+.stake-originals-page {
+  width: 90%;
+  margin-left: 5%;
+  padding-bottom: 2rem;
+}
+
+.page-header {
+  width: 112%;
+  margin-left: -6%;
+  margin-bottom: 1.5rem;
+  padding-left: 6%;
+  padding-right: 6%;
+  background-color: #213743;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: white;
+}
+
+.image-block {
+  width: 25%;
+  height: 7rem;
+  margin-top: -1.5rem;
+  margin-left: auto;
+  background-image: url('/images/games-bg1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.search-section {
+  background-color: #132635;
+  border-radius: 4px;
+  overflow: hidden;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #557086;
+  margin-bottom: 1.5rem;
+}
+
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.view-all-link {
+  color: #1A9AEF;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.view-all-link:hover {
+  color: #2FB4FF;
+  text-decoration: underline;
+}
+
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sort-label {
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.sort-dropdown {
+  position: relative;
+  background-color: #0F212E;
+  border-radius: 4px;
+  padding: 0 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.sort-select {
+  background-color: transparent;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  appearance: none;
+  cursor: pointer;
+  padding-right: 1.5rem;
+}
+
+.sort-select:focus {
+  outline: none;
+}
+
+.sort-arrow {
+  position: absolute;
+  right: 0.5rem;
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.games-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.game-card-wrapper {
+  margin-bottom: 1rem;
+}
+
+.pagination-info {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  margin: 1.5rem 0;
+}
+
+.providers-section {
+  margin: 2rem 0;
+}
+
+.providers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 1200px) {
+  .games-grid-container {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .games-grid-container {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+  
+  .providers-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .games-grid-container {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+  
+  .filter-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+}

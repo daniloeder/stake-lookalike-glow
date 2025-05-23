@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import SectionHeader from "./SectionHeader";
 import PromotionModal from "./PromotionModal";
+import "./PromoBanners.css";
 
 interface PromoBanner {
   id: string;
@@ -97,87 +98,5 @@ const PromoBanners = ({ title = "Promotions" }: PromoBannersProps) => {
     </div>
   );
 };
-
-// CSS styles
-const styles = `
-.promo-banners-section {
-  margin-bottom: 2rem;
-}
-
-.promo-banners-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 1rem;
-  width: 100%;
-}
-
-.promo-banner-item {
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  height: 200px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.promo-banner-item:hover {
-  transform: translateY(-5px);
-}
-
-.promo-banner-image {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
-.promo-banner-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
-}
-
-.promo-banner-content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 1rem;
-}
-
-.promo-banner-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: white;
-  margin-bottom: 0.5rem;
-}
-
-.promo-banner-timer {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #FFD700;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
-.timer-icon {
-  font-size: 1rem;
-}
-
-@media (max-width: 768px) {
-  .promo-banners-grid {
-    grid-template-columns: 1fr;
-  }
-}
-`;
-
-// Add styles to document
-if (typeof document !== 'undefined') {
-  const styleElement = document.createElement('style');
-  styleElement.textContent = styles;
-  document.head.appendChild(styleElement);
-}
 
 export default PromoBanners;

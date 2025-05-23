@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import AuthModal from './AuthModal';
+import "./AuthButtons.css";
 
 interface AuthButtonsProps {
   className?: string;
@@ -44,69 +45,5 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className = '' }) => {
     </div>
   );
 };
-
-// CSS styles
-const styles = `
-.auth-buttons {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.login-button {
-  color: white;
-  font-weight: 500;
-  transition: background-color 0.2s, color 0.2s;
-  padding: 8px 16px;
-  border: none;
-  background: transparent;
-}
-
-.login-button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-.register-button {
-  background-color: #1060B7;
-  color: white;
-  font-weight: 500;
-  padding: 8px 24px;
-  border-radius: 4px;
-  border: none;
-  transition: transform 0.2s, background-color 0.2s;
-}
-
-.register-button:hover {
-  background-color: #1060B7;
-  transform: scale(1.05);
-}
-
-@media (max-width: 768px) {
-  .auth-buttons {
-    width: auto;
-  }
-  
-  .login-button, .register-button {
-    white-space: nowrap;
-    font-size: 0.9rem;
-  }
-  
-  .login-button {
-    padding: 6px 12px;
-  }
-  
-  .register-button {
-    padding: 6px 16px;
-  }
-}
-`;
-
-// Inject CSS
-if (typeof document !== 'undefined') {
-  const styleEl = document.createElement('style');
-  styleEl.innerHTML = styles;
-  document.head.appendChild(styleEl);
-}
 
 export default AuthButtons;

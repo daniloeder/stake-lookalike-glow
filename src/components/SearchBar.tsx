@@ -1,6 +1,7 @@
 
 import { Search } from "lucide-react";
 import { useState } from "react";
+import "./SearchBar.css";
 
 interface SearchBarProps {
   placeholder?: string;
@@ -26,67 +27,5 @@ const SearchBar = ({ placeholder = "Search your game", fullWidth = true, classNa
     </div>
   );
 };
-
-// CSS styles
-const styles = `
-.search-bar {
-  flex: 1;
-}
-
-.search-bar.full-width {
-  width: 100%;
-}
-
-.search-container {
-  position: relative;
-  border-left: 2px solid #557086;
-}
-
-.search-icon {
-  position: absolute;
-  left: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #9ca3af;
-  width: 18px;
-  height: 18px;
-}
-
-.search-input {
-  width: 100%;
-  height: 100%;
-  padding: 0.75rem 1rem 0.75rem 2.5rem;
-  font-size: 0.875rem;
-  background-color: #132635;
-  border: none;
-  color: white;
-}
-
-.search-input::placeholder {
-  color:#9ca3af;
-  font-weight: 600;
-}
-
-.search-input:focus {
-  outline: none;
-}
-
-.mobile-sidebar .search-container {
-  border-left: none;
-  background-color: #132635;
-  margin: 10px;
-  border-radius: 4px;
-}
-.mobile-sidebar .search-input {
-  padding: 0 2.5rem;
-}
-`;
-
-// Add styles to document
-if (typeof document !== 'undefined') {
-  const styleElement = document.createElement('style');
-  styleElement.textContent = styles;
-  document.head.appendChild(styleElement);
-}
 
 export default SearchBar;

@@ -1,0 +1,153 @@
+
+.promotion-modal-content {
+  background-color: #1A2C38 !important;
+  color: white;
+  border: 1px solid #2F4553 !important;
+  padding: 1.5rem !important;
+  max-width: 550px !important;
+}
+
+.promotion-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.promotion-modal-close:hover {
+  color: white;
+}
+
+.promotion-modal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.promotion-modal-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.promotion-modal-icon img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.promotion-default-icon {
+  font-size: 4rem;
+  color: #FFD700;
+}
+
+.promotion-modal-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: white;
+}
+
+.promotion-countdown {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.countdown-unit {
+  text-align: center;
+}
+
+.countdown-value {
+  background-color: #FFD700;
+  color: black;
+  font-size: 1.5rem;
+  font-weight: 700;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.countdown-label {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.promotion-modal-content-section {
+  margin-bottom: 1.5rem;
+}
+
+.promotion-description {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #e0e0e0;
+  text-align: center;
+}
+
+.promotion-modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.promotion-more-btn {
+  padding: 0.75rem 1.5rem;
+  background-color: #2F4553;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.promotion-more-btn:hover {
+  background-color: #3A566B;
+}
+
+.promotion-action-btn {
+  padding: 0.75rem 1.5rem;
+  background-color: #0D7E3E;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.promotion-action-btn:hover {
+  background-color: #0A6731;
+}
+
+@media (max-width: 480px) {
+  .promotion-countdown {
+    gap: 0.5rem;
+  }
+  
+  .countdown-value {
+    width: 40px;
+    height: 40px;
+    font-size: 1.25rem;
+  }
+  
+  .promotion-modal-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}

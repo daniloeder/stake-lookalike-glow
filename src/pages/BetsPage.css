@@ -1,0 +1,126 @@
+
+.bets-page {
+  width: 100%;
+}
+
+.page-content {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.bets-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #1A2C38;
+}
+
+.bets-tabs {
+  display: flex;
+  gap: 1rem;
+}
+
+.bets-tab {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+}
+
+.bets-tab.active {
+  font-weight: 600;
+}
+
+.tab-icon {
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.tab-text {
+  margin-right: 0.5rem;
+}
+
+.tab-dropdown {
+  font-size: 0.75rem;
+  transform: rotate(0deg);
+  transition: transform 0.2s;
+}
+
+.tab-dropdown.active {
+  transform: rotate(180deg);
+}
+
+.bets-close {
+  cursor: pointer;
+  color: #9ca3af;
+}
+
+.bets-table {
+  width: 100%;
+}
+
+.bets-table-header {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  padding: 0.75rem 1rem;
+  background-color: #17242D;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.bets-table-row {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #1A2C38;
+  font-size: 0.875rem;
+}
+
+.bets-table-row.win {
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+.bets-table-row.loss {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.bets-table-cell {
+  display: flex;
+  align-items: center;
+}
+
+.bets-table-cell.game {
+  color: white;
+}
+
+.game-icon {
+  margin-right: 0.5rem;
+}
+
+.payout-amount {
+  font-family: monospace;
+}
+
+.payout-amount.win {
+  color: #10B981;
+}
+
+.payout-amount.loss {
+  color: #EF4444;
+}
+
+.currency-icon {
+  margin-left: 0.5rem;
+  font-weight: bold;
+}

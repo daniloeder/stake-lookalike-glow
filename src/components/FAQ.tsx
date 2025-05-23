@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import "./FAQ.css";
 
 const faqs = [
   {
@@ -72,115 +73,5 @@ const FAQ = () => {
     </div>
   );
 };
-
-// CSS styles
-const styles = `
-.faq-section {
-  margin-bottom: 3rem;
-}
-
-.faq-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.faq-icon {
-  margin-right: 0.5rem;
-  font-size: 1.25rem;
-}
-
-.faq-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: white;
-}
-
-.faq-items {
-  width: 100%;
-}
-
-.faq-item {
-  margin-bottom: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: #213743;
-  transition: background-color 0.2s;
-}
-
-.faq-question {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-  text-align: left;
-  border: none;
-  background: none;
-  color: white;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.question-text {
-  margin-right: 1rem;
-}
-
-.faq-icon-chevron {
-  height: 1.1rem;
-  width: 1.1rem;
-  flex-shrink: 0;
-  color: #9ca3af;
-  transition: transform 0.2s;
-}
-
-.faq-open .faq-icon-chevron {
-  transform: rotate(180deg);
-}
-
-.faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  padding: 0 1rem;
-  color: #d1d5db;
-  transition: max-height 0.3s ease, padding 0.3s ease;
-}
-
-.faq-open .faq-answer {
-  max-height: 500px;
-  padding: 0 1rem 1rem 1rem;
-}
-
-.faq-answer p {
-  white-space: pre-line;
-  line-height: 1.5;
-}
-
-.faq-footer {
-  margin-top: 1rem;
-}
-
-.guides-button {
-  background-color: #213743;
-  color: #FFFFFF;
-  padding: 0.8rem 1.3rem;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.guides-button:hover {
-  background-color: rgba(26, 154, 239, 0.1);
-}
-`;
-
-// Add styles to document
-if (typeof document !== 'undefined') {
-  const styleElement = document.createElement('style');
-  styleElement.textContent = styles;
-  document.head.appendChild(styleElement);
-}
 
 export default FAQ;

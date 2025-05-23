@@ -1,17 +1,21 @@
-
-import { useState } from "react";
-import { ArrowDown } from "lucide-react";
 import SearchBar from "@/components/SearchBar";
 import BettingTable from "@/components/BettingTable";
 import GameCard from "@/components/GameCard";
 import ProviderLogo from "@/components/ProviderLogo";
 import SectionHeader from "@/components/SectionHeader";
 import InfoSection from "@/components/InfoSection";
+import Footer from "@/components/Footer";
+import { ArrowDown } from "lucide-react";
+import '../styles/StakeOriginals.css';
+
+interface StakeOriginalsProps {
+  title: string;
+}
 
 const StakeOriginals = () => {
   const [activeTab, setActiveTab] = useState("my-bets");
 
-  // Sample data for the Stake Originals games
+  // Sample data for the games
   const stakeOriginalGames = [
     { id: 1, name: "Mines", playing: 8675, image: "/images/stake1.avif" },
     { id: 2, name: "Dice", playing: 6133, image: "/images/stake1.avif" },
@@ -64,8 +68,8 @@ const StakeOriginals = () => {
     { id: "race-leaderboard", label: "Race Leaderboard", hasIndicator: true },
   ];
 
-  // Information content for Stake Originals
-  const stakeOriginalsInfo = `
+  // Information content
+  const pageInfo = `
     <p><strong>Stake Originals</strong> are proprietary games developed in-house by the Stake.com team. These games offer a unique and engaging gambling experience, with many featuring provably fair technology that allows players to verify the fairness of each round.</p>
     <p>Our Stake Originals collection includes a wide variety of game types, from classics like <strong>Dice</strong> and <strong>Blackjack</strong> to innovative titles like <strong>Mines</strong>, <strong>Plinko</strong>, and <strong>Crash</strong>. Each game is designed with user experience in mind, featuring intuitive interfaces, transparent mechanics, and competitive house edges.</p>
     <p>What sets Stake Originals apart is the combination of simplicity and strategy. While the games are easy to understand, they offer depth for players who want to develop their own approaches and betting systems. Whether you prefer games of pure chance or those that involve an element of skill, you'll find something to enjoy in our Stake Originals collection.</p>
@@ -74,7 +78,6 @@ const StakeOriginals = () => {
 
   return (
     <div className="stake-originals-page">
-      {/* Page title */}
       <div className="page-header">
         <h1 className="page-title">Stake Originals</h1>
         <div className="image-block"></div>
@@ -85,7 +88,7 @@ const StakeOriginals = () => {
         <SearchBar placeholder="Search your game" />
       </div>
 
-      {/* View all providers link and sort controls */}
+      {/* Filter and sort controls */}
       <div className="filter-bar">
         <div className="sort-control">
           <span className="sort-label">Filter by</span>
@@ -111,7 +114,7 @@ const StakeOriginals = () => {
         </div>
       </div>
 
-      {/* Stake Originals games grid */}
+      {/* Games grid */}
       <div className="games-grid-container">
         {stakeOriginalGames.map((game) => (
           <div key={game.id} className="game-card-wrapper">
@@ -119,209 +122,38 @@ const StakeOriginals = () => {
           </div>
         ))}
       </div>
-      
-      {/* Pagination info */}
+
+      {/* Pagination */}
       <div className="pagination-info">
-        Displaying 16 of 16 games
+        Displaying 23 of 23 games
       </div>
 
       {/* Providers section */}
       <div className="providers-section">
         <SectionHeader title="Providers" showNavigation={true} />
         <div className="providers-grid">
-          {providers.map(provider => (
+          {providers.map((provider) => (
             <ProviderLogo key={provider.id} {...provider} />
           ))}
         </div>
       </div>
 
-      {/* Betting table */}
-      <BettingTable 
-        data={bettingData} 
-        defaultActiveTab="all-bets" 
+      {/* Betting Table */}
+      <BettingTable
+        data={bettingData}
+        defaultActiveTab="all-bets"
         tabs={bettingTabs}
       />
 
-      {/* Info section */}
-      <InfoSection 
-        title="Play Stake Originals Slots & Casino Games Online"
-        content={stakeOriginalsInfo}
+      {/* Info section and footer (shown on all pages) */}
+      <InfoSection
+        title={`Play Stake Originals Slots & Casino Games Online`}
+        content={pageInfo}
       />
+
+      <Footer />
     </div>
   );
 };
-
-// CSS styles
-const styles = `
-.stake-originals-page {
-  width: 90%;
-  margin-left: 5%;
-  padding-bottom: 2rem;
-}
-
-.page-header {
-  width: 112%;
-  margin-left: -6%;
-  margin-bottom: 1.5rem;
-  padding-left: 6%;
-  padding-right: 6%;
-  background-color: #213743;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.page-title {
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: white;
-}
-
-.image-block {
-  width: 25%;
-  height: 7rem;
-  margin-top: -1.5rem;
-  margin-left: auto;
-  background-image: url('/images/games-bg1.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.search-section {
-  background-color: #132635;
-  border-radius: 4px;
-  overflow: hidden;
-  border-width: 2px;
-  border-style: solid;
-  border-color: #557086;
-  margin-bottom: 1.5rem;
-}
-
-.filter-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.view-all-link {
-  color: #1A9AEF;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 600;
-  transition: color 0.2s;
-}
-
-.view-all-link:hover {
-  color: #2FB4FF;
-  text-decoration: underline;
-}
-
-.sort-control {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.sort-label {
-  color: #ffffff;
-  font-size: 0.9rem;
-}
-
-.sort-dropdown {
-  position: relative;
-  background-color: #0F212E;
-  border-radius: 4px;
-  padding: 0 0.5rem;
-  display: flex;
-  align-items: center;
-}
-
-.sort-select {
-  background-color: transparent;
-  color: white;
-  border: none;
-  padding: 0.5rem;
-  font-size: 0.9rem;
-  appearance: none;
-  cursor: pointer;
-  padding-right: 1.5rem;
-}
-
-.sort-select:focus {
-  outline: none;
-}
-
-.sort-arrow {
-  position: absolute;
-  right: 0.5rem;
-  color: #9ca3af;
-  pointer-events: none;
-}
-
-.games-grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.game-card-wrapper {
-  margin-bottom: 1rem;
-}
-
-.pagination-info {
-  text-align: center;
-  color: #9ca3af;
-  font-size: 0.875rem;
-  margin: 1.5rem 0;
-}
-
-.providers-section {
-  margin: 2rem 0;
-}
-
-.providers-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 1rem;
-}
-
-@media (max-width: 1200px) {
-  .games-grid-container {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .games-grid-container {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  }
-  
-  .providers-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  }
-}
-
-@media (max-width: 480px) {
-  .games-grid-container {
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  }
-  
-  .filter-bar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
-  }
-}
-`;
-
-// Add styles to document
-if (typeof document !== 'undefined') {
-  const styleElement = document.createElement('style');
-  styleElement.textContent = styles;
-  document.head.appendChild(styleElement);
-}
 
 export default StakeOriginals;

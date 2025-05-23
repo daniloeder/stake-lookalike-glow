@@ -6,6 +6,7 @@ import SportsBanners from "@/components/SportsBanners";
 import SportsBettingTable from "@/components/SportsBettingTable";
 import SportsCategoryCards from "@/components/SportsCategoryCards";
 import { Search, ArrowLeft, ArrowRight } from "lucide-react";
+import "./Sports.css";
 
 const Sports = () => {
   const [activeCategory, setActiveCategory] = useState<string>("lobby");

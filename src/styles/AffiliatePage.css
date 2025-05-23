@@ -1,0 +1,369 @@
+
+.affiliate-page {
+  width: 90%;
+  margin-left: 5%;
+  padding-bottom: 2rem;
+  color: white;
+}
+
+.affiliate-header {
+  width: 112%;
+  margin-left: -6%;
+  padding: 1.5rem 6%;
+  background-color: #1A2C38;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.affiliate-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.affiliate-icon {
+  color: #0D7E3E;
+  font-size: 1.5rem;
+}
+
+.affiliate-nav {
+  display: flex;
+  margin-bottom: 2rem;
+  background-color: #1A2C38;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.affiliate-tab {
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-weight: 600;
+}
+
+.affiliate-tab:hover {
+  background-color: #213743;
+}
+
+.affiliate-tab.active {
+  background-color: #0D7E3E;
+  color: white;
+}
+
+.affiliate-commission-block {
+  background-color: #1A2C38;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.commission-intro {
+  margin-bottom: 1.5rem;
+  color: #e0e0e0;
+  font-size: 0.95rem;
+}
+
+.commission-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.commission-card {
+  background-color: #213743;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.commission-card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.commission-icon {
+  font-size: 1.5rem;
+}
+
+.commission-card-text {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.commission-formula {
+  padding: 0.75rem;
+  background-color: #1A2C38;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.95rem;
+  color: #e0e0e0;
+}
+
+.affiliate-templates {
+  margin-bottom: 2.5rem;
+}
+
+.affiliate-section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: white;
+}
+
+.affiliate-section-subtitle {
+  font-size: 0.95rem;
+  color: #9ca3af;
+  margin-bottom: 1.5rem;
+}
+
+.templates-image {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.templates-banner {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.affiliate-refer {
+  background-color: #1A2C38;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+  display: flex;
+  gap: 2rem;
+}
+
+.refer-content {
+  flex: 3;
+}
+
+.refer-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.treasure-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.refer-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: white;
+}
+
+.refer-subtitle {
+  font-size: 1rem;
+  color: #9ca3af;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: #9ca3af;
+}
+
+.register-section {
+  margin-top: 2rem;
+}
+
+.register-text {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.register-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.login-btn,
+.register-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.login-btn {
+  background-color: #2F4553;
+  color: white;
+}
+
+.login-btn:hover {
+  background-color: #3A5463;
+}
+
+.register-btn {
+  background-color: #0D7E3E;
+  color: white;
+}
+
+.register-btn:hover {
+  background-color: #0E8F45;
+}
+
+.affiliate-how-it-works {
+  margin-bottom: 2.5rem;
+}
+
+.steps-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.step {
+  text-align: center;
+}
+
+.step-number {
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  background-color: #0D7E3E;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  margin: 0 auto 1rem;
+}
+
+.step-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+}
+
+.video-container {
+  width: 100%;
+  height: 300px;
+  background-color: #1A2C38;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #213743;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.play-button {
+  width: 60px;
+  height: 60px;
+  background-color: #0D7E3E;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.affiliate-advantages {
+  margin-bottom: 2.5rem;
+}
+
+.advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.advantage-card {
+  background-color: #1A2C38;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.advantage-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.advantage-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: white;
+}
+
+.advantage-description {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .affiliate-refer {
+    flex-direction: column;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .steps-container {
+    grid-template-columns: 1fr;
+  }
+
+  .register-buttons {
+    flex-direction: column;
+  }
+
+  .advantages-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Header from "@/components/Header";
 import { X } from "lucide-react";
+import "./BetsPage.css";
 
 const BetsPage = () => {
   const [activeTab, setActiveTab] = useState("high-rollers");
